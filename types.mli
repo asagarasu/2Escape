@@ -5,6 +5,11 @@ type movable = {
 type storable
 type room
 type character
+type textMessage = {
+  from : string;
+  content : string;
+  time : int;
+}
 
 module type Visible = sig
   type t
