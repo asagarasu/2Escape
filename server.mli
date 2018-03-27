@@ -1,7 +1,5 @@
 module type Server = sig
-	
-	val address : string
-	val port : int
+
 	val is_connected : bool
 
 	(**set up connection to the server*)
