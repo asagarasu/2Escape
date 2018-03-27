@@ -24,9 +24,22 @@ module type Storable = sig
 end
 
 module type Character = sig
+  module Body : Movable
+  module Equip : Storable
+  type equip = Equip.t
   type t
-  (*
-  val inv : Storable.t list
-  *)
-  include Movable with type t := t
+  val inv : equip list
+end
+
+module type Room = sig
+  module Decora : Visible
+  module Trick : Movable
+  module Equip : Storable
+  type decora = Decora
+  type trick = Trick
+  type equip = Equip
+  type t
+  val decora_list : decora list
+  val trick : trick list
+  val equip : equip list
 end
