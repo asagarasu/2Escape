@@ -1,4 +1,4 @@
-type t
+type state
 
-val do_command: Command.command -> t -> t
+val do_command: Command.command -> state -> state
 
