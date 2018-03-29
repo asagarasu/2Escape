@@ -1,10 +1,15 @@
 type visible
+
 type movable = {
   mutable stored : int
 }
+
 type storable
+
 type room
+
 type character
+
 type textMessage = {
   from : string;
   content : string;
