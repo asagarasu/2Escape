@@ -1,0 +1,18 @@
+### Starting build.
+# Target: GUI.mli.depends, tags: { extension:mli, file:GUI.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -modules GUI.mli > GUI.mli.depends # cached
+# Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -modules state.mli > state.mli.depends
+# Target: command.mli.depends, tags: { extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -modules command.mli > command.mli.depends
+# Target: command.cmi, tags: { byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -o command.cmi command.mli
+# Target: state.cmi, tags: { byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -o state.cmi state.mli
+# Target: GUI.cmi, tags: { byte, compile, extension:mli, file:GUI.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -o GUI.cmi GUI.mli
++ ocamlfind ocamlc -c -o GUI.cmi GUI.mli
+File "GUI.mli", line 1, characters 50-54:
+Error: Unbound module Js
+Command exited with code 2.
+# Compilation unsuccessful.
