@@ -1,7 +1,5 @@
 open Types
 
-type t
-
 type item
 
 type command =
