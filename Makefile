@@ -1,2 +1,2 @@
 build:  
-	ocamlbuild -use-ocamlfind GUI.cmi -r
+	ocamlbuild -use-ocamlfind GUI.cmi 
