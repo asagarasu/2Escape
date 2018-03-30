@@ -1,15 +1,13 @@
-(* [command] represents a command input by a player. *)
+open Types
+
+type item
 
 type command =
-<<<<<<< HEAD
-| Go of {u:bool; d:bool; l:bool; r:bool}
-| Take of string
-| Drop of string
-
-=======
 | Go of {u : bool; r : bool; l : bool; d : bool}
+<<<<<<< HEAD
 | Take of string
 | Drop of string
->>>>>>> 55851d8f149c4b68b09394a88a94a8f3b3760b6b
-
-
+=======
+| Take of item
+| Drop of item
+>>>>>>> 18d82ef29d3dcb02a20d28b4de5b04c8a536bd66

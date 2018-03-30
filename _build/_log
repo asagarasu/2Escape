@@ -1,10 +1,14 @@
 ### Starting build.
 # Target: GUI.mli.depends, tags: { extension:mli, file:GUI.mli, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -modules GUI.mli > GUI.mli.depends # cached
+ocamlfind ocamldep -modules GUI.mli > GUI.mli.depends
 # Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -modules state.mli > state.mli.depends
 # Target: command.mli.depends, tags: { extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
 ocamlfind ocamldep -modules command.mli > command.mli.depends
+# Target: types.mli.depends, tags: { extension:mli, file:types.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -modules types.mli > types.mli.depends
+# Target: types.cmi, tags: { byte, compile, extension:mli, file:types.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -o types.cmi types.mli
 # Target: command.cmi, tags: { byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
 ocamlfind ocamlc -c -o command.cmi command.mli
 # Target: state.cmi, tags: { byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
