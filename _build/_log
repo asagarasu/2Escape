@@ -1,22 +1,36 @@
 ### Starting build.
-# Target: GUI.mli.depends, tags: { extension:mli, file:GUI.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules GUI.mli > GUI.mli.depends # cached
-# Target: state.mli.depends, tags: { extension:mli, file:state.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules state.mli > state.mli.depends
-# Target: command.mli.depends, tags: { extension:mli, file:command.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules command.mli > command.mli.depends # cached
-# Target: types.mli.depends, tags: { extension:mli, file:types.mli, ocaml, ocamldep, quiet }
-ocamlfind ocamldep -modules types.mli > types.mli.depends # cached
-# Target: types.cmi, tags: { byte, compile, extension:mli, file:types.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o types.cmi types.mli # cached
-# Target: command.cmi, tags: { byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o command.cmi command.mli # cached
-# Target: state.cmi, tags: { byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o state.cmi state.mli
-# Target: GUI.cmi, tags: { byte, compile, extension:mli, file:GUI.mli, interf, ocaml, quiet }
-ocamlfind ocamlc -c -o GUI.cmi GUI.mli
-+ ocamlfind ocamlc -c -o GUI.cmi GUI.mli
-File "GUI.mli", line 1, characters 50-54:
-Error: Unbound module Js
-Command exited with code 2.
-# Compilation unsuccessful.
+# Target: GUI.mli.depends, tags: { package(js_of_ocaml), extension:mli, file:GUI.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules GUI.mli > GUI.mli.depends
+# Target: state.mli.depends, tags: { package(js_of_ocaml), extension:mli, file:state.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules state.mli > state.mli.depends # cached
+# Target: command.mli.depends, tags: { package(js_of_ocaml), extension:mli, file:command.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules command.mli > command.mli.depends # cached
+# Target: types.mli.depends, tags: { package(js_of_ocaml), extension:mli, file:types.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules types.mli > types.mli.depends # cached
+# Target: types.cmi, tags: { package(js_of_ocaml), byte, compile, extension:mli, file:types.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o types.cmi types.mli # cached
+# Target: command.cmi, tags: { package(js_of_ocaml), byte, compile, extension:mli, file:command.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o command.cmi command.mli # cached
+# Target: state.cmi, tags: { package(js_of_ocaml), byte, compile, extension:mli, file:state.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o state.cmi state.mli # cached
+# Target: GUI.cmi, tags: { package(js_of_ocaml), byte, compile, extension:mli, file:GUI.mli, interf, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o GUI.cmi GUI.mli
+# Target: GUI.ml.depends, tags: { package(js_of_ocaml), extension:ml, file:GUI.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules GUI.ml > GUI.ml.depends
+# Target: GUI.cmo, tags: { package(js_of_ocaml), byte, compile, extension:cmo, extension:ml, file:GUI.cmo, file:GUI.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o GUI.cmo GUI.ml
+# Target: state.ml.depends, tags: { package(js_of_ocaml), extension:ml, file:state.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules state.ml > state.ml.depends
+# Target: state.cmo, tags: { package(js_of_ocaml), byte, compile, extension:cmo, extension:ml, file:state.cmo, file:state.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o state.cmo state.ml
+# Target: types.ml.depends, tags: { package(js_of_ocaml), extension:ml, file:types.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules types.ml > types.ml.depends
+# Target: command.ml.depends, tags: { package(js_of_ocaml), extension:ml, file:command.ml, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules command.ml > command.ml.depends
+# Target: types.cmo, tags: { package(js_of_ocaml), byte, compile, extension:cmo, extension:ml, file:types.cmo, file:types.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o types.cmo types.ml
+# Target: command.cmo, tags: { package(js_of_ocaml), byte, compile, extension:cmo, extension:ml, file:command.cmo, file:command.ml, implem, ocaml, quiet, traverse }
+ocamlfind ocamlc -c -package js_of_ocaml -o command.cmo command.ml
+# Target: GUI.byte, tags: { package(js_of_ocaml), byte, dont_link_with, extension:byte, file:GUI.byte, link, ocaml, program, quiet, traverse }
+ocamlfind ocamlc -linkpkg -package js_of_ocaml types.cmo command.cmo state.cmo GUI.cmo -o GUI.byte
+# Compilation successful.
