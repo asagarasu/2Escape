@@ -1,4 +1,4 @@
 *.zip
 *.pdf
 test_gui.ml
-/_build/
+_build/*
