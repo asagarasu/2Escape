@@ -1,8 +1,7 @@
 ### Starting build.
-# Target: test_gui.ml.depends, tags: { package(js_of_ocaml), extension:ml, file:test_gui.ml, ocaml, ocamldep, quiet, traverse }
-ocamlfind ocamldep -package js_of_ocaml -modules test_gui.ml > test_gui.ml.depends
-+ ocamlfind ocamldep -package js_of_ocaml -modules test_gui.ml > test_gui.ml.depends
-File "test_gui.ml", line 5, characters 4-10:
-Error: Syntax error
+# Target: GUI.mli.depends, tags: { package(js_of_ocaml), extension:mli, file:GUI.mli, ocaml, ocamldep, quiet, traverse }
+ocamlfind ocamldep -package js_of_ocaml -modules GUI.mli > GUI.mli.depends
++ ocamlfind ocamldep -package js_of_ocaml -modules GUI.mli > GUI.mli.depends
+ocamlfind: Package `js_of_ocaml' not found
 Command exited with code 2.
 # Compilation unsuccessful.
