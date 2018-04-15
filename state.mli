@@ -15,8 +15,12 @@ open Types
    * update_state
    * diff : state -> command -> command -> log
 *)
+
+
 type t
 
 val do_command: Command.command -> t -> t
 
 val save: string -> unit
+
+val update_state:
