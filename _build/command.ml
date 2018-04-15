@@ -1,6 +1,6 @@
 open Types
 
-type t
+type t = unit
 
 type item
 

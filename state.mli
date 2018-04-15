@@ -1,3 +1,7 @@
-type state
+open Types
 
-val do_command: Command.command -> state -> state
+type t
+
+val do_command: Command.command -> t -> t
+
+val save: string -> unit
