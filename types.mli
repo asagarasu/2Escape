@@ -28,19 +28,14 @@ end
 
 module type Movable = sig
   type t
-  (*
-  val valid_move : Command.t -> t -> boolean
-  val move_to : Command.t -> t -> t
-  *)
+  val valid_move : Command.t -> t -> bool
   include Visible with type t := t
 end
 
 module type Storable = sig
   type t
   val is_stored : t -> bool
-  (*
-  val valid_store : Command.t -> t -> boolean
-  *)
+  val valid_store : Command.t -> t -> bool
   val inv_description : t -> string
   include Visible with type t := t
 end
@@ -70,12 +65,10 @@ module type Character = sig
   type equip = Equip.t
   type room_loc = Room_loc.t
   type t
-(*
   val move : t -> Command.t -> t
   val move_to : t -> room_loc -> t
   val take : t -> Command.t -> equip -> t
   val drop : t -> Command.t -> equip -> t
-*)
   val current_room : t -> room_loc
   val inv : t -> equip list
   val hp : t -> int
