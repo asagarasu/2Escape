@@ -9,18 +9,20 @@ open Types
    * map_matrix of the rooms
    * location of characters/objects
    * inventory
-   * chart
+   * chat
 
    [state] has functions:
-   * update_state
-   * diff : state -> command -> command -> log
+   * do_command
+   * diff
+   * save
 *)
 
 
 type t
+type log
 
-val do_command: Command.command -> t -> t
-
-val save: string -> unit
-
-val update_state:
+val do_command : Command.command -> t -> t
+(* [diff] takes in two verified commands to make up a log record to send
+   to the clients. *)
+val diff : Command.command -> Command.command -> log
+val save : t -> unit
