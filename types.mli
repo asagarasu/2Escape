@@ -10,7 +10,6 @@ type room
 
 type character
 
-
 type textMessage = {
   from : string;
   content : string;
@@ -18,11 +17,12 @@ type textMessage = {
 }
 
 (* [state_value] is a state, which maps
-   1)row_colum_rooms, aka the room id of the current state_value
+   1) row_colum_rooms, aka the room id of the current state_value
    2) map_matrix
    3) location: location of the character/items
-   4) inventory: what the player is currently carring
-   5) chat: the message chat*)
+   4) inventory: what the player is currently carrying
+   5) chat: the message chat
+*)
 type state_value ={
   row_col_rooms: (int*int*room)list;
   map_matrix: room;

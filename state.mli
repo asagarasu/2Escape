@@ -16,13 +16,20 @@ open Types
    * diff
    * save
 *)
-
-
 type t
-type log
+type log = {
+  room_id : string;
+  row : int;
+  col : int;
+  change : Command.t
+}
 
+(* [do_command] takes in a command and the current state and update the state *)
 val do_command : Command.command -> t -> t
+
 (* [diff] takes in two verified commands to make up a log record to send
    to the clients. *)
 val diff : Command.command -> Command.command -> log
+
+(* [save] takes in the current state and save to a json file *)
 val save : t -> unit
