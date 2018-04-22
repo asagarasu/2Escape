@@ -1,8 +1,8 @@
 open Types
 
-type t = unit
+type t
 
-type item
+type item = Types.storable
 
 type command =
 | Go of {u : bool; r : bool; l : bool; d : bool}
