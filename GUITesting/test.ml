@@ -11,7 +11,9 @@ let start () =
   let body = Js.Opt.get (document##getElementById (js"body")) fail in 
   
   let div = Html.createDiv document in 
+  div##style##cssText <- js "margin-bottom:20px;";
   (*div##style##cssText <- js "";*)
+  (*div##style##cssText <- js "float : left;";*)
 
   let style =
     js "border-collapse:collapse;line-height: 0; opacity: 1; margin-left:auto; margin-right:auto; background-color: black" in
@@ -30,14 +32,43 @@ let start () =
         let td = tr##insertCell (-1) in
         td##style##cssText <- td_style;
         let img = Html.createImg document in
-        img##src <- js "boulder.png";
+        begin match x mod 2 with 
+        | 0 -> img##src <- js "boulder.png" 
+        | _ -> img##src <- js "grass.png"
+        end;
         Dom.appendChild td img;
         Dom.appendChild tr td
       done ;
       Dom.appendChild m tr
     done;
+
+    let div2 = Html.createDiv document in 
+    div2##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; margin: auto;";
+    let textArea = Html.createTextarea document in 
+
+    let chat = Html.createDiv document in 
+    textArea##defaultValue <- js "wtf";
+    textArea##cols <- 49;
+    textArea##rows <- 10;
+    textArea##readOnly <- Js.bool true;
+    textArea##style##cssText <- js "resize: none";
+
+    let input = Html.createInput ~_type: (js "text") ~name: (js "sample") document in 
+    input##defaultValue <- js "something";
+    input##size <- 50;
+    input##onkeydown <- Html.handler (fun ev -> textArea##value <- js "omg"; Js.bool true);
+
+    let inputdiv = Html.createDiv document in 
+    let outputdiv = Html.createDiv document in 
+    Dom.appendChild inputdiv input;
+    Dom.appendChild outputdiv textArea;
     Dom.appendChild div m;
+    Dom.appendChild chat outputdiv;
+    Dom.appendChild chat inputdiv;
+    (*chat##style##cssText <- js "float : left;";*)
+    Dom.appendChild div2 chat;
     body##style##cssText <- js"font-family: sans-serif; text-align: center; background-color: #e8e8e8;";
-    Dom.appendChild body div
+    Dom.appendChild body div;
+    Dom.appendChild body div2
 
 let _ = start ()
