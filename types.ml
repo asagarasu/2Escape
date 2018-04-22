@@ -35,21 +35,22 @@ type movable = {
   id: string;
   dialogue : string;
   length_height : int * int;
-  canvas_loc : int * int;
+  canvas_loc : (int * int) ref;
   weight : int;
 }
 
 module type Movable = sig
   type t = movable
   val get_weight : t -> int
-  val update_loc : t -> int * int -> t
+  val update_loc : t -> int * int -> unit
   include Visible with type t := t
 end
 
 module Movable = struct
   include Visible
+  let get_canvas_loc t = !t.canvas_loc
   let get_weight t = t.weight
-  let update_loc t loc = { t with canvas_loc = loc }
+  let update_loc t loc = t.canvas_loc := loc
 end
 
 
@@ -76,6 +77,7 @@ end
 
 module Storable = struct
   include Visible
+  let get_canvas_loc t = !t.canvas_loc
   let get_weight t = t.weight
   let is_stored t = t.stored
   let to_store t = { t with stored = true }
@@ -128,7 +130,15 @@ end
 
 
 
-type character
+type character = {
+  id: string;
+  dialogue : string ref;
+  length_height : int * int;
+  body : movable;
+  inventory : (storable list) ref;
+  room_loc : room ref;
+  hp: int ref;
+}
 
 module type Character = sig
   module Body : Movable
@@ -136,14 +146,40 @@ module type Character = sig
   module Room_loc : Room
   type equip = Equip.t
   type room_loc = Room_loc.t
-  type t
-(*
-  val move : t -> Command.t -> t
-  val move_to : t -> room_loc -> t
-  val take : t -> Command.t -> equip -> t
-  val drop : t -> Command.t -> equip -> t
-*)
-  val current_room : t -> room_loc
-  val inv : t -> equip list
-  val hp : t -> int
+  type t = character
+  val get_id : t -> string
+  val get_dialogue : t -> string
+  val get_length_height : t -> int * int
+  val get_canvas_loc : t -> int * int
+  val get_body : t -> movable
+  val get_inventory : t -> storable list
+  val get_room_loc : t -> room
+  val get_hp : t -> int
+  val update_dialogue : t -> string -> unit
+  val move_to : t -> int * int -> unit
+  val take_equip : t -> equip -> unit
+  val drop_equip : t -> equip -> unit
+  val to_room : t -> room -> unit
+  val change_hp : t -> int -> unit
+end
+
+module Character = struct
+  let get_id t = t.id
+  let get_dialogue t = !t.dialogue
+  let get_length_height t = t.length_height
+  let get_canvas_loc t = !t.body.canvas_loc
+  let get_body t = t.body
+  let get_inventory t = !t.inventory
+  let get_room_loc t = !t.room_loc
+  let get_hp t = !t.hp
+  let update_dialogue t dialogue = t.dialogue := dialogue
+  let move_to t loc = t.body.canvas_loc := loc
+  let take_equip t equip =
+    let equip_list = equip::!(t.inventory) in
+    t.inventory := equip_list
+  let drop_equip t equip =
+    let equip_list = List.filter (fun x -> equip <> x) !(t.inventory) in
+    t.inventory := equip_list
+  let to_room t room = t.room_loc := room
+  let change_hp t change = let hp = !(t.hp) + change in t.hp := hp
 end
