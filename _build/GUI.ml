@@ -1,1 +1,0 @@
-let draw_state canvas state = failwith "Unimplemented"

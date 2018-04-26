@@ -1,4 +1,6 @@
 *.zip
 *.pdf
-test_gui.ml
+GUITesting/_build/
+_build/
+.DS_Store
 _tags
