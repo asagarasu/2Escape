@@ -1,7 +1,35 @@
 open Types
 
+(* [state] is the type serving as the main game state. It can only
+   be changed after verfying the commands received from the
+   clients.
+
+   [state] contains values:
+   * row_col_rooms (room_id)
+   * map_matrix of the rooms
+   * location of characters/objects
+   * inventory
+   * chat
+
+   [state] has functions:
+   * do_command
+   * diff
+   * save
+*)
 type t
+type log = {
+  room_id : string;
+  row : int;
+  col : int;
+  change : Command.t
+}
 
-val do_command: Command.command -> t -> t
+(* [do_command] takes in a command and the current state and update the state *)
+val do_command : Command.command -> t -> t
 
-val save: string -> unit
+(* [diff] takes in two verified commands to make up a log record to send
+   to the clients. *)
+val diff : Command.command -> Command.command -> log
+
+(* [save] takes in the current state and save to a json file *)
+val save : t -> unit

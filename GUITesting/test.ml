@@ -7,6 +7,8 @@ let document = Html.document
 
 let fail = fun _ -> assert false
 
+let failint = fun _ -> 0
+
 let start () = 
   let body = Js.Opt.get (document##getElementById (js"body")) fail in 
   
@@ -47,16 +49,22 @@ let start () =
     let textArea = Html.createTextarea document in 
 
     let chat = Html.createDiv document in 
-    textArea##defaultValue <- js "wtf";
+    textArea##defaultValue <- js "This is your chat box, use it to talk with the other person!\n";
     textArea##cols <- 49;
     textArea##rows <- 10;
     textArea##readOnly <- Js.bool true;
     textArea##style##cssText <- js "resize: none";
 
     let input = Html.createInput ~_type: (js "text") ~name: (js "sample") document in 
-    input##defaultValue <- js "something";
+    input##defaultValue <- js "";
     input##size <- 50;
-    input##onkeydown <- Html.handler (fun ev -> textArea##value <- js "omg"; Js.bool true);
+    let handler1 = (fun ev ->  
+    match ev##keyCode with 
+    13 ->  textArea##value <- (textArea##value)##concat_3((js "\n"),(input##value),(js "\n"));
+           textArea##scrollTop <- textArea##scrollHeight;
+           input##value <- js ""
+    | _ -> ()) in
+    input##onkeydown <- Html.handler (fun ev -> handler1 ev; Js.bool true);
 
     let inputdiv = Html.createDiv document in 
     let outputdiv = Html.createDiv document in 

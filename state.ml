@@ -1,9 +1,7 @@
 open Types
 
-type t = unit
-
-let do_command c t = 
+let do_command c t =
   failwith "Unimplemented"
 
-let save s = 
+let save s =
   failwith "Unimplemented"

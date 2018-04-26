@@ -1,8 +1,6 @@
 type visible
 
-type movable = {
-  mutable stored : int
-}
+type movable
 
 type storable
 
@@ -16,51 +14,59 @@ type textMessage = {
   time : int;
 }
 
+(* [state_value] is a state, which maps
+   1) row_colum_rooms, aka the room id of the current state_value
+   2) map_matrix
+   3) location: location of the character/items
+   4) inventory: what the player is currently carrying
+   5) chat: the message chat
+*)
+type state_value ={
+  row_col_rooms: (int*int*room)list;
+  map_matrix: room;
+  inventory: string;
+  chat: textMessage;
+}
+
 module type Visible = sig
   type t
-(* val texture : Texture.t *)
-  val object_id : t -> string
-  val dialogue : t -> string
-  val size_box : t -> int * int
-  val canvas_box : t -> int * int
-  val weight : t -> int
+  val get_object_id : t -> string
+  val get_dialogue : t -> string
+  val get_size_box : t -> int * int
+  val get_canvas_loc : t -> int * int
 end
 
 module type Movable = sig
-  type t
-  (*
-  val valid_move : Command.t -> t -> boolean
-  val move_to : Command.t -> t -> t
-  *)
+  type t = movable
+  val get_weight : t -> int
+  val update_loc : t -> int * int -> unit
   include Visible with type t := t
 end
 
 module type Storable = sig
   type t
+  val get_weight : t -> int
   val is_stored : t -> bool
-  (*
-  val valid_store : Command.t -> t -> boolean
-  *)
-  val inv_description : t -> string
+  val to_store : t -> t
+  val to_remove : t -> t
+  val get_inv_description : t -> string
   include Visible with type t := t
 end
 
 module type Room = sig
-  module Decora : Visible
   module Trick : Movable
   module Equip : Storable
   type decora = Decora
   type trick = Trick
   type equip = Equip
-  type t
-  val room_id : t -> string
-  val cutscenes : t -> string
-  val decora_list : t -> decora list
-  val trick_list : t -> trick list
-  val equip_list : t -> equip list
-  val exit_list : t -> trick list
-  val drop_equip : t -> trick -> t
-  val take_equip : t -> trick -> t
+  type t = room
+  val get_room_id : t -> string
+  val get_cutscenes : t -> string
+  val get_trick_list : t -> trick list
+  val get_equip_list : t -> equip list
+  val get_exit_list : t -> trick list
+  val equip_dropped : t -> equip -> unit
+  val equip_taken : t -> equip -> unit
 end
 
 module type Character = sig
@@ -69,14 +75,19 @@ module type Character = sig
   module Room_loc : Room
   type equip = Equip.t
   type room_loc = Room_loc.t
-  type t
-(*
-  val move : t -> Command.t -> t
-  val move_to : t -> room_loc -> t
-  val take : t -> Command.t -> equip -> t
-  val drop : t -> Command.t -> equip -> t
-*)
-  val current_room : t -> room_loc
-  val inv : t -> equip list
-  val hp : t -> int
+  type t = character
+  val get_id : t -> string
+  val get_dialogue : t -> string
+  val get_length_height : t -> int * int
+  val get_canvas_loc : t -> int * int
+  val get_body : t -> movable
+  val get_inventory : t -> storable list
+  val get_room_loc : t -> room
+  val get_hp : t -> int
+  val update_dialogue : t -> string -> unit
+  val move_to : t -> int * int -> unit
+  val take_equip : t -> equip -> unit
+  val drop_equip : t -> equip -> unit
+  val to_room : t -> room -> unit
+  val change_hp : t -> int -> unit
 end
