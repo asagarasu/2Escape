@@ -1,6 +1,6 @@
 type t
 
-val create_client: Unix.file_descr -> Unix.file_descr -> t
+val create_client: unit -> unit = <fun>
 
 val send_command: Command.t -> t -> unit
 
