@@ -1,10 +1,9 @@
 type textMessage = {
+  id : int;
   from : string;
   content : string;
   time : int;
 }
-
-
 
 type visible = {
   id: string;
@@ -37,11 +36,13 @@ type movable = {
   length_height : int * int;
   canvas_loc : (int * int) ref;
   weight : int;
+  is_door : bool;
 }
 
 module type Movable = sig
   type t = movable
   val get_weight : t -> int
+  val get_is_door : t -> bool
   val update_loc : t -> int * int -> unit
   include Visible with type t := t
 end
@@ -50,6 +51,7 @@ module Movable = struct
   include Visible
   let get_canvas_loc t = !t.canvas_loc
   let get_weight t = t.weight
+  let get_is_door t = t.is_door
   let update_loc t loc = t.canvas_loc := loc
 end
 
@@ -90,6 +92,8 @@ end
 type room = {
   room_id : string;
   cutscenes : string;
+  row : int;
+  rol : int;
   matrix : (bool list) list;
   trick_list : movable list;
   equip_list : (storable list) ref;
@@ -105,6 +109,8 @@ module type Room = sig
   type t = room
   val get_room_id : t -> string
   val get_cutscenes : t -> string
+  val get_row : t -> int
+  val get_rol : t -> int
   val get_trick_list : t -> trick list
   val get_equip_list : t -> equip list
   val get_exit_list : t -> trick list
@@ -115,6 +121,8 @@ end
 module Room = struct
   let get_room_id t = t.room_id
   let get_cutscenes t = t.cutscenes
+  let get_row t = t.row
+  let get_rol t = t.rol
   let get_trick_list t = t.trick_list
   let get_equip_list t = t.equip_list
   let get_exit_list t = t.exit_list
