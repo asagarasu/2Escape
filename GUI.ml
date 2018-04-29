@@ -76,7 +76,7 @@ let start () =
             else img##src <- js "sprites/boulder.png"); 
             Dom.appendChild elt img;
             currentloc.x := !(currentloc.x) + 1; 
-            if !(currentloc.x) = row##cells##length then (currentloc.y := !(currentloc.y) + 1; currentloc.x := 0) else ()
+            if !(currentloc.x) = 25 then (currentloc.y := !(currentloc.y) + 1; currentloc.x := 0) else ()
     | _ -> ()); Js.bool true) in 
     document##onkeydown <- Html.handler gamehandler;
 

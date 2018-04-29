@@ -12,13 +12,13 @@ type text = Types.textMessage
 
 type objects = | Item of item | Trick of trick | Character of character
 
-type dirction = | Left | Right | Up | Down
+type direction = | Left | Right | Up | Down
 
 type command =
-| Go of dirction
+| Go of direction
 | Take of item
 | Drop of item
-| Move of trick * dirction
+| Move of trick * direction
 
 let makeDiff p comd =
   let current = (Types.Character.get_canvas_loc p) in
