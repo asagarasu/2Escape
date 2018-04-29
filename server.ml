@@ -14,9 +14,8 @@ let print_out ic oc =
 
 let main_server  serv_fun =
    try
-   let ip = "10.131.16.128" in
    let port = 40005 in
-   let addr = ADDR_INET ((inet_addr_of_string ip), port)
+   let addr = ADDR_INET (get_my_addr (), port)
    in establish_server print_out addr
        with
          Failure _ ->
