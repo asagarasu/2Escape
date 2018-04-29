@@ -17,11 +17,18 @@ open Types
    * save
 *)
 type t
-type log = {
-  room_id : string;
+
+type entry = {
   row : int;
   col : int;
-  change : Command.t
+  newval : string;
+}
+
+type log = {
+  room_id : string;
+  rows : int;
+  cols : int;
+  change : entry list
 }
 
 (* [do_command] takes in a command and the current state and update the state *)
@@ -29,7 +36,7 @@ val do_command : Command.command -> t -> t
 
 (* [diff] takes in two verified commands to make up a log record to send
    to the clients. *)
-val diff : Command.command -> Command.command -> log
+val diff : t -> t -> log
 
-(* [save] takes in the current state and save to a json file *)
-val save : t -> unit
+(* [save] takes in the current state, and a string value where to save, and saves it to the file *)
+val save : t -> string -> unit

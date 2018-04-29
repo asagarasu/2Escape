@@ -4,8 +4,6 @@ type textMessage = {
   time : int;
 }
 
-
-
 type visible = {
   id: string;
   dialogue : string;
