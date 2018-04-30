@@ -2,8 +2,6 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
-type command = | Go of direction
-               
 type character = {id : int; direction : direction}
 
 type movable = {id : string}
@@ -12,9 +10,19 @@ type storable = {id : string}
 
 type immovable = {id : string}
 
-type exit = {is_open : bool; to_room : string}
+type exit = {mutable is_open : bool; to_room : string}
 
-type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
+type keyloc = {
+  id : string;
+  mutable is_solved : bool;
+  exit_effect : string * int * int;
+  immovable_effect : string * int * int;
+}
+
+type command =
+| Go of direction
+| Take
+| Drop of storable
 
 type tile = {
   mutable ch : character option;
