@@ -28,6 +28,13 @@ module Visible = struct
   let get_canvas_loc t = t.canvas_loc
 end
 
+type state_value ={
+  row_col_rooms: (int*int*room)list;
+  map_matrix: room;
+  inventory: string;
+  chat: textMessage;
+}
+
 
 
 type movable = {
