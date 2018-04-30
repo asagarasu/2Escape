@@ -97,6 +97,8 @@ let send_movement ev : unit =
     | 38 -> State.Go State.Up
     | 39 -> State.Go State.Right
     | 40 -> State.Go State.Down
+    | 18 -> State.Take
+    | _ -> failwith "Unimplemented"
   in 
     failwith "Send Movement to client TODO"
 
