@@ -2,6 +2,8 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
+type command = | Go of direction
+               
 type character = {id : int; direction : direction}
 
 type movable = {id : string}
@@ -15,9 +17,9 @@ type exit = {is_open : bool; to_room : string * int * int}
 type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
 
 type tile = {
-  mutable ch : character option; 
-  mutable mov : movable option; 
-  mutable store : storable option; 
+  mutable ch : character option;
+  mutable mov : movable option;
+  mutable store : storable option;
   mutable immov : immovable option;
   mutable ex : exit option;
   mutable kl : keyloc option;
@@ -51,7 +53,6 @@ type log = {
   change : entry list
 }
 
-val do_command : int -> Command.command -> t -> log * log
+val do_command : int -> command -> t -> log * log
 
 val save : t -> string -> unit
-
