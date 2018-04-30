@@ -2,14 +2,7 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
-let command_dir_trans (d : Command.direction) : direction = 
-  match d with 
-  | Up -> Up
-  | Down -> Down
-  | Left -> Left
-  | Right -> Right
-
-type command = | Go of direction
+type command = | Go of direction | Message of string
 
 type character = {id : int; direction : direction}
 
@@ -39,12 +32,18 @@ type room = {
   cols : int
 }
 
+type message = {
+  id : int;
+  message : string
+}
+
 type t = {
   roommap : (string, room) Hashtbl.t;
   mutable pl1_loc : string * int * int;
   mutable pl2_loc : string * int * int;
   mutable pl1_inv : string list;
-  mutable pl2_inv : string list
+  mutable pl2_inv : string list;
+  mutable chat : message list
 }
 
 type entry = {
@@ -57,20 +56,25 @@ type log = {
   room_id : string;
   rows : int;
   cols : int;
-  change : entry list
+  change : entry list;
+  chat : message option
 }
 
 let create_empty_logs (rm1 : room) (rm2 : room) : log * log =
-  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []},
-   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []})
+  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; chat = None},
+   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; chat = None})
 
-let create_log rm entry_l : log =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l;}
+let create_log (rm : room) (entry_l : entry list) : log =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
 
-let update_room sendroom changedroom entries = 
+let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log = 
   if sendroom = changedroom then 
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries}
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
   else 
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []}
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
+
+let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log * log = 
+  {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
+  {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
 
 let direct (d:direction) : int * int = match d with
   | Left -> (-1,0)
@@ -108,7 +112,9 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
           end
     with 
        Invalid_argument _ -> create_empty_logs room1 room2
-  )
+    )
+  | Message s -> update_chat room1 room2 playerid s
+  | _ -> failwith "Unimplemented"
 
 let save (st : t) (file : string) =
   failwith "Unimplemented"

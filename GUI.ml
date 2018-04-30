@@ -34,7 +34,7 @@ let start () =
           | 0 -> img##src <- js "sprites/boulder.png" 
           | _ -> img##src <- js "sprites/grass.png"
           end;
-          Dom.appendChild td img;
+          (if x = 0 && y = 0 then () else Dom.appendChild td img);
           Dom.appendChild tr td
         done ;
         Dom.appendChild gametable tr
@@ -68,13 +68,11 @@ let start () =
     (match ev##keyCode with 
     32 -> let row = Js.Opt.get (gametable##rows##item(!(currentloc.y))) fail in 
           let elt = Js.Opt.get (row##cells##item(!(currentloc.x))) fail in 
-          let tempimg = Js.Opt.get (elt##firstChild) fail in 
-          elt##removeChild(tempimg);
           let img = Html.createImg document in 
             (if (!(currentloc.x) mod 2) = 0 then 
               img##src <- js "sprites/grass.png"
             else img##src <- js "sprites/boulder.png"); 
-            Dom.appendChild elt img;
+            replace_child elt img;
             currentloc.x := !(currentloc.x) + 1; 
             if !(currentloc.x) = 25 then (currentloc.y := !(currentloc.y) + 1; currentloc.x := 0) else ()
     | _ -> ()); Js.bool true) in 
@@ -88,9 +86,9 @@ let start () =
     Dom.appendChild chat outputdiv;
     Dom.appendChild chat inputdiv;
     (*chat##style##cssText <- js "float : left;";*)
-    Dom.appendChild div2 chat;
+    (*Dom.appendChild div2 chat;*)
     body##style##cssText <- js"font-family: sans-serif; text-align: center; background-color: #e8e8e8;";
     Dom.appendChild body div;
-    Dom.appendChild body div2
+    Dom.appendChild body chat
 
 let _ = start ()
