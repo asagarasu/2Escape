@@ -9,20 +9,19 @@ let document = Html.document
 
 let fail = fun _ -> assert false
 
-type location = {x : int ref; y : int ref}
+let td_style = js"padding: 0; width: 20px; height: 20px;"
 
-let load_association_sprites = 
-  failwith "Create the document"
+type location = {x : int ref; y : int ref}
 
 (* Gets the image to show from a tile *)
 let get_dominant (tile: State.tile) : string = 
-  if bool_opt tile.ch = true then "player " ^ string_of_int (access_opt tile.ch).id else
+  if bool_opt tile.ch = true then "player" ^ string_of_int (access_opt tile.ch).id else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else
   if bool_opt tile.store = true then (access_opt tile.store).id else
   if bool_opt tile.immov = true then (access_opt tile.immov).id else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
-    (if is_open then "exit open" else "exit closed") else
+    (if is_open then "exitopen" else "exitclosed") else
   if bool_opt tile.kl = true then (access_opt tile.kl).id else
   "empty"
 
@@ -43,10 +42,9 @@ let replace_table_elt tbl (entry : State.entry) : unit =
     img##src <- match_name (get_dominant entry.newtile);
     replace_child elt img
 
-let td_style = js"padding: 0; width: 20px; height: 20px;"
-
 (* Redraws the whold table based on a log *)
 let re_draw_whole tbl (log : State.log) : unit =  
+  tbl##style##opacity <- Js.def (js "0");
   let tbl_rows = tbl##rows##length in
   let tbl_cols = if tbl_rows = 0 then 0 else
     (Js.Opt.get (tbl##rows##item(0)) fail)##cells##length in 
@@ -69,13 +67,14 @@ let re_draw_whole tbl (log : State.log) : unit =
           Dom.appendChild tbl tr
         done;
         List.iter (replace_table_elt tbl) log.change
-    end
+    end;
+    tbl##style##opacity <- Js.def (js "1")
 
 (* Helper method to update chat based on log *)
   let receive_message chatArea (log : State.log) : unit = 
     match log.chat with 
     | Some message -> chatArea##value <- chatArea##value##concat(js ("\nPlayer" ^ string_of_int message.id ^ " : " ^ message.message));
-                      chatArea##scrollTop <- chatArea##scrollHeight;
+                      chatArea##scrollTop <- chatArea##scrollHeight; ()
     | None -> ()
 
 (* Helper method to update the GUI based on log *)
@@ -87,7 +86,8 @@ let update_gui gametable chatArea (log : State.log) : unit =
 let send_message input ev : unit = match ev##keyCode with 
     | 13 -> let command = State.Message (Js.to_string input##value) in 
             input##value <- js "";
-            failwith "Send Message to client TODO"
+            ignore "Send Message to client TODO"; 
+            ()
     | _ -> ()
 
 (* Helper method to send a movement command*)
@@ -100,11 +100,19 @@ let send_movement ev : unit =
     | 18 -> State.Take
     | _ -> failwith "Unimplemented"
   in 
-    failwith "Send Movement to client TODO"
+    ignore "send message to client TODO"
+
+(* example log*)
+let (emptytile : State.tile) = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
+
+let (log1 : State.log) = {room_id = "example"; rows = 2; cols = 2; 
+  change = [{row = 0; col = 0; newtile = emptytile}; {row = 1; col = 0; newtile = emptytile};
+  {row = 0; col = 1; newtile = emptytile}; {row = 1; col = 1; newtile = emptytile}]; 
+  chat = Some {id = 1; message = "hi"}}
 
 (* Start method *)
-let start _ = 
-  let body = Js.Opt.get (document##getElementById (js"body")) fail in
+let start () = 
+  let body = Js.Opt.get (document##getElementById (js "body")) fail in
   
   let gamediv = Html.createDiv document in 
     gamediv##style##cssText <- js "margin-bottom:20px;";
@@ -114,7 +122,6 @@ let start _ =
     margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
   
   let chatdiv = Html.createDiv document in 
-    chatdiv##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; margin: auto;";
 
   let chatscreen = Html.createTextarea document in 
     chatscreen##defaultValue <- js "This is your chat box, use it to talk with the other person!\n";
@@ -126,3 +133,21 @@ let start _ =
   let chatinput = Html.createInput document in
     chatinput##defaultValue <- js "";
     chatinput##size <- 50;
+    chatinput##onkeydown <- Html.handler (fun ev -> send_message chatinput ev; Js.bool true);
+
+  let chatinputdiv = Html.createDiv document in 
+    Dom.appendChild chatinputdiv chatinput;
+
+  let chatoutputdiv = Html.createDiv document in 
+    Dom.appendChild chatoutputdiv chatscreen;
+
+  document##onkeydown <- Html.handler (fun _ -> update_gui gametable chatscreen log1; Js.bool true);
+
+  Dom.appendChild gamediv gametable;
+  Dom.appendChild chatdiv chatoutputdiv;
+  Dom.appendChild chatdiv chatinputdiv;
+  body##style##cssText <- js "font-family: sans-serif; text-align: center; background-color: #e8e8e8;";
+  Dom.appendChild body gamediv;
+  Dom.appendChild body chatdiv
+
+let _ = start ()

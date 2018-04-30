@@ -40,8 +40,8 @@ let start () =
         Dom.appendChild gametable tr
       done;
 
-    let div2 = Html.createDiv document in 
-    div2##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; margin: auto;";
+    (*let div2 = Html.createDiv document in 
+    div2##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; margin: auto;";*)
     let textArea = Html.createTextarea document in 
 
     let chat = Html.createDiv document in 
