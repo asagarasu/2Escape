@@ -1,0 +1,64 @@
+{
+  "rooms": [{
+    "id": "room1",
+    "room": [{
+      "id": "room1",
+      "tiles": [
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ],
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ],
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "player1", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ],
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ],
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "player2", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ],
+      [
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+      ]
+    ],
+      "rows": "6",
+      "cols": "6"
+    }],
+  }],
+  "pl1_loc": ["room1","3","3","up"],
+  "pl2_loc": ["room1","5","5","down"],
+  "pl1_inv": [],
+  "pl2_inv": []
+}
