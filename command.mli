@@ -10,13 +10,13 @@ type character
 
 type objects = | Item of item | Trick of trick | Character of character
 
-type dirction = | Left | Right | Up | Down
+type direction = | Left | Right | Up | Down
 
 type command =
-  | Go of dirction
+  | Go of direction
   | Take of item
   | Drop of item
-  | Move of trick * dirction
+  | Move of trick * direction
 
 type log
 
