@@ -23,7 +23,7 @@
       [
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
-        { "ch" : "player1", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : ["1","up"], "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
@@ -41,7 +41,7 @@
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
-        { "ch" : "player2", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
+        { "ch" : ["2","down"], "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
         { "ch" : "", "mov" : "", "store" : "", "immov" : "", "ex" : "", "kl" : "" },
       ],
       [
