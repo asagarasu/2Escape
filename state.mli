@@ -2,7 +2,7 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
-type command = | Go of direction
+type command = | Go of direction | Message of string | Take | Drop of string
                
 type character = {id : int; direction : direction}
 
@@ -12,7 +12,7 @@ type storable = {id : string}
 
 type immovable = {id : string}
 
-type exit = {is_open : bool; to_room : string * int * int}
+type exit = {mutable is_open : bool; to_room : string * int * int}
 
 type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
 
@@ -32,12 +32,18 @@ type room = {
   cols : int
 }
 
+type message = {
+  id : int;
+  message : string
+}
+
 type t = {
   roommap : (string, room) Hashtbl.t;
   mutable pl1_loc : string * int * int;
   mutable pl2_loc : string * int * int;
   mutable pl1_inv : string list;
-  mutable pl2_inv : string list
+  mutable pl2_inv : string list;
+  mutable chat : message list
 }
 
 type entry = {
@@ -46,11 +52,13 @@ type entry = {
   newtile : tile;
 }
 
+
 type log = {
   room_id : string;
   rows : int;
   cols : int;
-  change : entry list
+  change : entry list;
+  chat : message option
 }
 
 (* do_command takes a command generates the logs to send out to players one and two

@@ -2,6 +2,8 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
+type command = | Go of direction | Message of string | Take | Drop of string
+
 type character = {id : int; direction : direction}
 
 type movable = {id : string}
@@ -13,11 +15,6 @@ type immovable = {id : string}
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
 type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
-
-type command =
-| Go of direction
-| Take
-| Drop of storable
 
 type tile = {
   mutable ch : character option;
@@ -35,12 +32,18 @@ type room = {
   cols : int
 }
 
+type message = {
+  id : int;
+  message : string
+}
+
 type t = {
   roommap : (string, room) Hashtbl.t;
   mutable pl1_loc : string * int * int;
   mutable pl2_loc : string * int * int;
   mutable pl1_inv : string list;
-  mutable pl2_inv : string list
+  mutable pl2_inv : string list;
+  mutable chat : message list
 }
 
 type entry = {
@@ -53,7 +56,8 @@ type log = {
   room_id : string;
   rows : int;
   cols : int;
-  change : entry list
+  change : entry list;
+  chat : message option
 }
 
 let empty_keyloc = {
@@ -64,16 +68,20 @@ let empty_keyloc = {
 }
 
 let create_empty_logs (rm1 : room) (rm2 : room) : log * log =
-  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []},
-   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []})
+  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; chat = None},
+   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; chat = None})
 
-let create_log rm entry_l : log =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l;}
+let create_log (rm : room) (entry_l : entry list) : log =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
 
-let update_room sendroom changedroom entries =
-  if sendroom = changedroom then
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries}
-  else
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []}
+let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log = 
+  if sendroom = changedroom then 
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
+  else 
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
+
+let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log * log = 
+  {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
+  {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
 
 let direct (d:direction) : int * int = match d with
   | Left -> (-1,0)
@@ -81,9 +89,9 @@ let direct (d:direction) : int * int = match d with
   | Up -> (0,1)
   | Down -> (0,-1)
 
-let check_keyloc (keyloc:keyloc option) (item:storable) st (r1:string) (r2:string) : 'a option =
+let check_keyloc (keyloc:keyloc option) (item: string) st (r1:string) (r2:string) : 'a option =
     let k_l = (match keyloc with | Some a -> a | None -> empty_keyloc ) in
-    if k_l.id = item.id
+    if k_l.id = item
     then
       match k_l.exit_effect, k_l.immovable_effect with
       | ("",_,_) , (a1,x1,y1)  ->
@@ -155,7 +163,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
   )
   | Drop n ->
     let inv = if playerid = 1 then st.pl1_inv else st.pl2_inv in
-    if List.mem n.id inv then
+    if List.mem n inv then
       (
         try
           let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
@@ -163,10 +171,10 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
             match tile.store with
             | Some s -> create_empty_logs room1 room2
             | None ->
-              (tile.store <- Some n;
+              (tile.store <- Some {id = n};
                (if playerid = 1
-                then st.pl1_inv <- List.filter (fun x -> x <> n.id) st.pl1_inv
-                else st.pl2_inv <- List.filter (fun x -> x <> n.id) st.pl2_inv);
+                then st.pl1_inv <- List.filter (fun x -> x <> n) st.pl1_inv
+                else st.pl2_inv <- List.filter (fun x -> x <> n) st.pl2_inv);
                let entry_l = [{row = curr_player_x ; col = curr_player_y ; newtile = tile;}] in
                match check_keyloc tile.kl n st room1_string room2_string with
                | Some (r,e) ->
@@ -185,6 +193,8 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
           Invalid_argument _ -> create_empty_logs room1 room2
       )
     else create_empty_logs room1 room2
+  | Message s -> update_chat room1 room2 playerid s
+  | _ -> failwith "Unimplemented"
 
 let save (st : t) (file : string) =
   failwith "Unimplemented"
