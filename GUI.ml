@@ -71,7 +71,7 @@ let start () =
           let tempimg = Js.Opt.get (elt##firstChild) fail in 
           elt##removeChild(tempimg);
           let img = Html.createImg document in 
-            (if ((!(currentloc.x) + !(currentloc.y)) mod 2) = 0 then 
+            (if (!(currentloc.x) mod 2) = 0 then 
               img##src <- js "sprites/grass.png"
             else img##src <- js "sprites/boulder.png"); 
             Dom.appendChild elt img;
