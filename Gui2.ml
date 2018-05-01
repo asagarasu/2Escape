@@ -174,7 +174,7 @@ let start () =
 
   let gametable = Html.createTable document in 
     gametable##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; \
-    margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
+    margin-left:auto; margin-right:auto; background-color: black;";
   
   let chatdiv = Html.createDiv document in 
 
