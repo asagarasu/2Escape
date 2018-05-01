@@ -1,5 +1,13 @@
 open Unix
 
+let send_command = 
+	failwith ""
+
+let receive_state =
+	failwith ""
+	
+(**read the input line and send to the server
+ *receive the *)
 let client_fun ic oc =
    try
      while true do
