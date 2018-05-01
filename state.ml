@@ -48,14 +48,6 @@ type t = {
   mutable chat : message list
 }
 
-let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
-
-let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
-
-let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
-
-let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
-
 type entry = {
   row : int;
   col : int;
@@ -274,7 +266,7 @@ let room_to_json (t:room) =
   let rows = `Int t.rows in
   let cols = `Int t.cols in
   let tll = Array.to_list (Array.map Array.to_list t.tiles) in
-  let tiles = `List (List.map (fun x -> `List (List.map tile_to_json x)) tll) in
+  let tiles = `List (List.rev (List.map (fun x -> `List (List.map tile_to_json x)) tll)) in
   `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
 
 let chat_to_json (t:message) =

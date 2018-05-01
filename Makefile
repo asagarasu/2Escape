@@ -1,3 +1,5 @@
+test:
+	ocamlbuild -use-ocamlfind state_test.byte && ./state_test.byte
 build:
 	ocamlbuild -use-ocamlfind -plugin-tag "package(js_of_ocaml.ocamlbuild)" -no-links Gui2.d.js
 	ocamlbuild -use-ocamlfind state.byte &&./state.byte
