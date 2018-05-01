@@ -3,7 +3,7 @@ open Helper
 type direction = Up | Down | Left | Right
 
 type command = | Go of direction | Message of string | Take | Drop of string
-               
+
 type character = {id : int; direction : direction}
 
 type movable = {id : string}
@@ -80,3 +80,5 @@ val logify : int -> t -> log'
 
 (* [save] takes in the current state and save to a json string *)
 val save : t -> string -> unit
+
+val read : string -> t

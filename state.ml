@@ -1,4 +1,6 @@
 open Helper
+open Yojson
+open Yojson.Basic.Util
 
 type direction = Up | Down | Left | Right
 
@@ -39,12 +41,20 @@ type message = {
 
 type t = {
   roommap : (string, room) Hashtbl.t;
-  mutable pl1_loc : string * int * int;
-  mutable pl2_loc : string * int * int;
+  mutable pl1_loc : string * int * int ;
+  mutable pl2_loc : string * int * int ;
   mutable pl1_inv : string list;
   mutable pl2_inv : string list;
   mutable chat : message list
 }
+
+let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
+
+let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
+
+let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
+
+let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
 
 type entry = {
   row : int;
@@ -73,13 +83,13 @@ let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
 
 let create_log (rm : room) (entry_l : entry list) : log' =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
 
-let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' = 
-  if sendroom = changedroom then 
+let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' =
+  if sendroom = changedroom then
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
-  else 
+  else
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
 
-let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' = 
+let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
   {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
   {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
 
@@ -196,19 +206,19 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
       )
     else create_empty_logs room1 room2
   | Message s -> update_chat room1 room2 playerid s
-  | _ -> failwith "Unimplemented"
 
-let logify (playerid : int) (st : t) : log' = 
+
+let logify (playerid : int) (st : t) : log' =
   let room1_string = fst_third st.pl1_loc in
   let room1 = Hashtbl.find st.roommap room1_string in
-  let entrymap = (Array.mapi (fun (y : int) (row : tile array) -> 
-          Array.mapi (fun (x : int) (t : tile) -> 
+  let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
+          Array.mapi (fun (x : int) (t : tile) ->
             {row = y; col = x; newtile = t}
           ) row
         ) room1.tiles) in
   let entryarrlist = (Array.map Array.to_list entrymap) in
   let entrylistlist = Array.to_list entryarrlist in
-  let entrylist = List.flatten entrylistlist in 
+  let entrylist = List.flatten entrylistlist in
   {
     room_id = room1_string;
     rows = room1.rows;
@@ -216,6 +226,162 @@ let logify (playerid : int) (st : t) : log' =
     change = entrylist;
     chat = None
   }
-  
-let save (st : t) (file : string) =
-  failwith "Unimplemented"
+
+
+
+(** Save a game : Converting state to json **)
+let ch_to_json (t:character) =
+  let id = `Int t.id in
+  let direction =
+    `String (match t.direction with | Up -> "up" | Down -> "down"
+                                    | Right -> "right" | Left -> "left" )
+  in
+  `List [id;direction]
+
+let ex_to_json (t:exit) =
+  let is_open = `Bool t.is_open in
+  let triple = t.to_room in
+  let to_room = `List [`String (fst_third triple);
+                       `Int (snd_third triple);
+                       `Int (thd_third triple)] in
+  `Assoc [("is_open",is_open);("to_room",to_room)]
+
+let kl_to_json (t:keyloc) =
+  let id = `String t.id in
+  let is_solved = `Bool t.is_solved in
+  let ex_triple = t.exit_effect in
+  let exit_effect = `List [`String (fst_third ex_triple);
+                       `Int (snd_third ex_triple);
+                       `Int (thd_third ex_triple)] in
+  let im_triple = t.immovable_effect in
+  let immovable_effect = `List [`String (fst_third im_triple);
+                       `Int (snd_third im_triple);
+                       `Int (thd_third im_triple)] in
+  `Assoc [("id",id);("is_solved",is_solved);
+          ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
+
+let tile_to_json (t:tile) =
+  let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
+  let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
+  let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
+  `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
+
+let room_to_json (t:room) =
+  let id = `String t.id in
+  let rows = `Int t.rows in
+  let cols = `Int t.cols in
+  let tll = Array.to_list (Array.map Array.to_list t.tiles) in
+  let tiles = `List (List.map (fun x -> `List (List.map tile_to_json x)) tll) in
+  `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
+
+let chat_to_json (t:message) =
+  let id = `Int t.id in
+  let message = `String t.message in
+  `Assoc [("id",id);("message",message)]
+
+let state_to_json (t:t) =
+  let roommap = `List (Hashtbl.fold (fun k v acc -> (room_to_json v)::acc) t.roommap []) in
+  let loc1_triple = t.pl1_loc in
+  let pl1_loc = `List [`String (fst_third loc1_triple);
+                       `Int (snd_third loc1_triple);
+                       `Int (thd_third loc1_triple)] in
+  let loc2_triple = t.pl2_loc in
+  let pl2_loc = `List [`String (fst_third loc2_triple);
+                       `Int (snd_third loc2_triple);
+                       `Int (thd_third loc2_triple)] in
+  let pl1_inv = `List (List.map (fun x -> `String x) t.pl1_inv) in
+  let pl2_inv = `List (List.map (fun x -> `String x) t.pl2_inv) in
+  let chat = `List (List.map chat_to_json t.chat) in
+  `Assoc [("roommap",roommap);("pl1_loc",pl1_loc);("pl2_loc",pl2_loc);
+          ("pl1_inv",pl1_inv);("pl2_inv",pl2_inv);("chat",chat);]
+
+let save (st : t) (file : string) = Yojson.Basic.to_file file (state_to_json st)
+
+
+
+(** Load a game : Converting json to state **)
+let ch_of_json j =
+  let ch_id = List.nth j 0 |> to_int in
+  let ch_di =
+    (match List.nth j 1 |> to_string with
+     | "up" -> Up | "down" -> Down | "right" -> Right | "left" -> Left | _ -> Up )
+  in
+  Some { id = ch_id ; direction = ch_di }
+
+let ex_of_json j =
+  let trl =  j |> member "to_room" |> to_list in
+  Some {
+    is_open = j |> member "is_open" |> to_bool;
+    to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
+  }
+
+let kl_of_json j =
+  let eel = j |> member "exit_effect" |> to_list in
+  let iel = j |> member "immovable_effect" |> to_list in
+  Some {
+    id = j |> member "id" |> to_string;
+    is_solved = j |> member "is_solved" |> to_bool;
+    exit_effect = (List.nth eel 0 |> to_string , List.nth eel 1 |> to_int, List.nth eel 2 |> to_int);
+    immovable_effect = (List.nth iel 0 |> to_string , List.nth iel 1 |> to_int, List.nth iel 2 |> to_int);
+  }
+
+let tile_of_json j =
+  let ch_s = j |> member "ch" |> to_list in
+  let mov_s = j |> member "mov" |> to_string in
+  let store_s = j |> member "store" |> to_string in
+  let immov_s = j |> member "immov" |> to_string in
+  let ex_s = j |> member "ex" |> to_string in
+  let kl_s = j |> member "kl" |> to_string in
+  {
+    ch = if ch_s = [] then None else ch_of_json ch_s;
+    mov = if mov_s = "" then None else Some { id = mov_s };
+    store = if store_s = "" then None else Some { id = store_s };
+    immov = if immov_s = "" then None else Some { id = immov_s };
+    ex = if ex_s = "" then None else j |> member "ex" |> ex_of_json;
+    kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
+  }
+
+let rec make_tiles_list (l : 'a list) (matrix : tile list list) : tile list list =
+  match l with
+  | h::t -> make_tiles_list t [(List.map tile_of_json (to_list h))]@matrix
+  | [] -> matrix
+
+let room_of_json j =
+  let tl = j |> member "tiles" |> to_list in
+  let tll =  make_tiles_list tl [] in
+  {
+    id = j |> member "id" |> to_string;
+    rows = j |> member "rows" |> to_int;
+    cols = j |> member "cols" |> to_int;
+    tiles = Array.of_list (List.map Array.of_list tll);
+  }
+
+let rooms_of_json rooms :(string, room) Hashtbl.t =
+  let parsed_rooms = List.map room_of_json rooms in
+  let r_hashtb : (string, room) Hashtbl.t = Hashtbl.create (List.length parsed_rooms) in
+  let hash (r:room) = Hashtbl.add r_hashtb r.id r in
+  List.iter hash parsed_rooms; r_hashtb
+
+let chat_of_json j = {
+  id = j |> member "id" |> to_int;
+  message = j |> member "message" |> to_string;
+}
+
+let state_of_json j =
+  let loc1 = j |> member "pl1_loc" |> to_list in
+  let loc2 = j |> member "pl2_loc" |> to_list in
+  {
+    roommap = j |> member "roommap" |> to_list |> rooms_of_json;
+    pl1_loc = (List.nth loc1 0 |> to_string, List.nth loc1 1 |> to_int, List.nth loc1 2 |> to_int);
+    pl2_loc = (List.nth loc2 0 |> to_string, List.nth loc2 1 |> to_int, List.nth loc2 2 |> to_int);
+    pl1_inv = j |> member "pl1_inv" |> to_list |> List.map to_string;
+    pl2_inv = j |> member "pl2_inv" |> to_list |> List.map to_string;
+    chat = j |> member "chat" |> to_list |> List.map chat_of_json;
+  }
+
+let read (file : string) : t =
+  let j = Yojson.Basic.from_file file in
+  state_of_json j
