@@ -53,7 +53,7 @@ type entry = {
 }
 
 
-type log = {
+type log' = {
   room_id : string;
   rows : int;
   cols : int;
@@ -61,13 +61,22 @@ type log = {
   chat : message option
 }
 
-(* do_command takes a command generates the logs to send out to players one and two
+(** 
+ * do_command takes a command generates the logs to send out to players one and two
  *
  * returns: the logs [log1, log2], where log1 is a short summary of player 1's changes
  *           and [log2] is a short summary of player 2's changes
  * effects: the state is changed accordingly
  *)
-val do_command : int -> command -> t -> log * log
+val do_command : int -> command -> t -> log' * log'
+
+(**
+ * logify intial state creates a [log] of the initial state for initialization purposes 
+ * with player id [playerid]
+ *
+ * returns: the [log] of the state [st]
+ *)
+val logify : int -> t -> log'
 
 (* [save] takes in the current state and save to a json string *)
 val save : t -> string -> unit
