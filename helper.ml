@@ -1,7 +1,20 @@
-let fst_third (a,b,c) = a
+(**
+ * Helper function to return the first element of a triplet
+ *
+ * Returns: the [a] in [(a, _, _)]
+ *)
+let fst_third (a,_, _) = a
 
-let snd_third (a,b,c) = b
+(**
+ * Helper function to return the second element of a triplet
+ * 
+ * Returns: the [b] in [(_, b, _)]
+ *)
+let snd_third (_,b,_) = b
 
+(**
+ *
+ *)
 let thd_third (a,b,c) = c
 
 let access_ll (y : int) (x : int) (ll : 'a list list) : 'a option = 
