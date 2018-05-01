@@ -13,19 +13,12 @@ let fst_third (a,_, _) = a
 let snd_third (_,b,_) = b
 
 (**
- *
+ * Helper function to return the third element of a triplet
  *)
-let thd_third (a,b,c) = c
-
-let access_ll (y : int) (x : int) (ll : 'a list list) : 'a option = 
-  try 
-    let row = List.nth ll y in 
-    Some (List.nth row x)
-  with 
-    Failure _ -> None
+let thd_third (_,_,c) = c
 
 (**
- * Helper to return whether the x is a [Some _]
+ * Helper to return whether an option has a value
  * 
  * returns : [true] if x is [Some _] and [false] if x is [None]
  *)

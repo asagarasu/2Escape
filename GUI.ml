@@ -1,6 +1,5 @@
 open Js_of_ocaml
 open Js_of_ocaml_lwt
-
 open Helper 
 
 module Html = Dom_html
@@ -12,25 +11,45 @@ let fail = fun _ -> assert false
 
 let td_style = js"padding: 0; width: 20px; height: 20px;"
 
-type location = {x : int ref; y : int ref}
-
-(* Gets the image to show from a tile *)
+(** 
+ * Gets the string of the item to display. 
+ * The precedence for display is as follows:
+ * 
+ * Character > KeyLoc > Exits > Movables > 
+ * Storables > Immovables > Empty
+ *
+ * requires: [tile] is a [State.tile]
+ * returns: the string
+ *)
 let get_dominant (tile: State.tile) : string = 
-  if bool_opt tile.ch = true then "player" ^ string_of_int (access_opt tile.ch).id else
+  if bool_opt tile.ch = true then "player" 
+    ^ string_of_int (access_opt tile.ch).id else
+  if bool_opt tile.kl = true then (access_opt tile.kl).id else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else
   if bool_opt tile.store = true then (access_opt tile.store).id else
   if bool_opt tile.immov = true then (access_opt tile.immov).id else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
     (if is_open then "exitopen" else "exitclosed") else
-  if bool_opt tile.kl = true then (access_opt tile.kl).id else
   "empty"
 
-(* Matches the name to a sprite *)
+(**
+ * Matches the name of a string to the img sprite
+ * 
+ * requires: [name] is a valid sprite
+ * returns: an image string to be drawn
+ *)
 let match_name (name : string) : Js.js_string Js.t = 
   js ("sprites/" ^ name ^ ".png")
 
-(* Helper method to replace the child of a parent *)
+(**
+ * Helper method to replace the child of a parent 
+ * 
+ * requires: [p] is a parent node, [n] is a child node
+ * returns: a unit ()
+ * effects: [p]'s node's are replaced by [n]. If none, then 
+ *          [n] is just appended
+ *)
 let replace_child p n =
   Js.Opt.iter (p##firstChild) (fun c -> Dom.removeChild p c);
   Dom.appendChild p n
@@ -43,7 +62,11 @@ let replace_table_elt tbl (entry : State.entry) : unit =
     img##src <- match_name (get_dominant entry.newtile);
     replace_child elt img
 
-(* Redraws the whold table based on a log *)
+(**
+ * Redraws the whold table based on a log 
+ *
+ * requires
+ *)
 let re_draw_whole tbl (log : State.log') : unit =  
   tbl##style##opacity <- Js.def (js "0");
   let tbl_rows = tbl##rows##length in
@@ -74,8 +97,10 @@ let re_draw_whole tbl (log : State.log') : unit =
 (* Helper method to update chat based on log *)
   let receive_message chatArea (log : State.log') : unit = 
     match log.chat with 
-    | Some message -> chatArea##value <- chatArea##value##concat(js ("\nPlayer" ^ string_of_int message.id ^ " : " ^ message.message));
-                      chatArea##scrollTop <- chatArea##scrollHeight; ()
+    | Some message -> chatArea##value 
+        <- chatArea##value##concat(js ("\nPlayer" ^ string_of_int message.id 
+          ^ " : " ^ message.message));
+        chatArea##scrollTop <- chatArea##scrollHeight; ()
     | None -> ()
 
 (* Helper method to update the GUI based on log *)
@@ -128,17 +153,23 @@ let send_message_temp tbl chat state input ev : unit =
   | _ -> Html.stopPropagation ev
 
 (* example log test case for GUI*)
-let (emptytile : State.tile) = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
+let (emptytile : State.tile) = {ch = None; mov = None; 
+  store = None; immov = None; ex = None; kl = None}
 
 let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2; 
-  change = [{row = 0; col = 0; newtile = emptytile}; {row = 1; col = 0; newtile = emptytile};
-  {row = 0; col = 1; newtile = emptytile}; {row = 1; col = 1; newtile = emptytile}]; 
+  change = [{row = 0; col = 0; newtile = emptytile}; 
+    {row = 1; col = 0; newtile = emptytile};
+  {row = 0; col = 1; newtile = emptytile}; 
+    {row = 1; col = 1; newtile = emptytile}]; 
   chat = Some {id = 1; message = "hi"}}
 
-let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; mov = None; store = None; immov = None; ex = None; kl = None}
-let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up}; mov = None; store = None; immov = None; ex = None; kl = None}
+let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; 
+  mov = None; store = None; immov = None; ex = None; kl = None}
+let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up}; 
+  mov = None; store = None; immov = None; ex = None; kl = None}
 
-let get_emptytile () : State.tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
+let get_emptytile () : State.tile = {ch = None; mov = None; 
+  store = None; immov = None; ex = None; kl = None}
 
 
 let (room1 : State.room) = {
@@ -176,13 +207,15 @@ let start () =
     gamediv##style##cssText <- js "margin-bottom:20px;";
 
   let gametable = Html.createTable document in 
-    gametable##style##cssText <- js "border-collapse:collapse;line-height: 0; opacity: 1; \
+    gametable##style##cssText <- js 
+    "border-collapse:collapse;line-height: 0; opacity: 1; \
     margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
   
   let chatdiv = Html.createDiv document in 
 
   let chatscreen = Html.createTextarea document in 
-    chatscreen##defaultValue <- js "This is your chat box, use it to talk with the other person!\n";
+    chatscreen##defaultValue <- js 
+      "This is your chat box, use it to talk with the other person!\n";
     chatscreen##cols <- 49;
     chatscreen##rows <- 10;
     chatscreen##readOnly <- Js.bool true;
@@ -193,7 +226,8 @@ let start () =
   let chatinput = Html.createInput document in
     chatinput##defaultValue <- js "";
     chatinput##size <- 50;
-    chatinput##onkeydown <- Html.handler (fun ev -> send_message_temp gametable chatscreen emptystate chatinput ev; Js.bool true);
+    chatinput##onkeydown <- Html.handler (fun ev -> 
+      send_message_temp gametable chatscreen emptystate chatinput ev; Js.bool true);
 
   let chatinputdiv = Html.createDiv document in 
     Dom.appendChild chatinputdiv chatinput;
@@ -201,12 +235,14 @@ let start () =
   let chatoutputdiv = Html.createDiv document in 
     Dom.appendChild chatoutputdiv chatscreen;
 
-  document##onkeydown <- Html.handler (fun ev -> send_movement_temp gametable chatscreen emptystate ev; Js.bool true);
+  document##onkeydown <- Html.handler (fun ev -> 
+    send_movement_temp gametable chatscreen emptystate ev; Js.bool true);
 
   Dom.appendChild gamediv gametable;
   Dom.appendChild chatdiv chatoutputdiv;
   Dom.appendChild chatdiv chatinputdiv;
-  body##style##cssText <- js "font-family: sans-serif; text-align: center; background-color: #e8e8e8;";
+  body##style##cssText <- js "font-family: 
+    sans-serif; text-align: center; background-color: #e8e8e8;";
   Dom.appendChild body gamediv;
   Dom.appendChild body chatdiv
 
