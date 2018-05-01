@@ -101,12 +101,68 @@ let drop_2_l =
 
 let get_room st = Hashtbl.find st.roommap "test"
 
+let log1 = {
+  room_id = "test";
+  rows = 3;
+  cols = 3;
+  change = [{row = 1; col = 0; newtile = {ch = Some {id = 1; direction = Down};
+            mov = None; store = None; immov = None; ex = None; kl = None}};
+            {row = 0; col = 0; newtile = {ch = None;
+            mov = None; store = None; immov = None;ex = None; kl = None}};
+
+           ];
+  chat = None;
+}
+let log2 = {
+  room_id = "test";
+  rows = 3;
+  cols = 3;
+  change = [{row = 1; col = 0; newtile = {ch = Some {id = 1; direction = Down};
+             mov = None; store = None; immov = None; ex = None; kl = None}};
+            {row = 0; col = 0; newtile = {ch = None;
+             mov = None; store = None; immov = None;ex = None; kl = None}};
+           ];
+  chat = None;
+}
+
+let log3 = {
+  room_id = "test";
+  rows = 3;
+  cols = 3;
+  change = [{row = 1; col = 0; newtile = {ch = Some {id = 2; direction = Left};
+            mov = None; store = None; immov = None; ex = None; kl = None}};
+            {row = 1; col = 1; newtile = {ch = None;
+            mov = None; store = None; immov = None;ex = None; kl = None}};
+
+           ];
+  chat = None;
+}
+let log4 = {
+  room_id = "test";
+  rows = 3;
+  cols = 3;
+  change = [{row = 1; col = 0; newtile = {ch = Some {id = 2; direction = Left};
+             mov = None; store = None; immov = None; ex = None; kl = None}};
+            {row = 1; col = 1; newtile = {ch = None;
+             mov = None; store = None; immov = None;ex = None; kl = None}};
+           ];
+  chat = None;
+}
+
+let direc_1 =
+  do_command 1 (Go Down) t_state
+
+let direc_2 =
+  do_command 2 (Go Left) t_state
+
 let tests = [
   "save&load" >:: (fun _ -> assert_equal t_room (get_room sl));
   "take_1" >:: (fun _ -> assert_equal take_1_l take_1);
   "take_2" >:: (fun _ -> assert_equal log_empty take_2);
   "drop_1" >:: (fun _ -> assert_equal log_empty drop_1);
   "drop_2" >:: (fun _ -> assert_equal drop_2_l drop_2);
+  "direction1" >:: (fun _ -> assert_equal direc_1 (log1,log2));
+  "direction2" >:: (fun _ -> assert_equal direc_2 (log3,log4));
 ]
 
 let suite =
