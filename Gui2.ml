@@ -112,11 +112,19 @@ let send_movement ev : unit =
   in 
     ignore "send message to client TODO"
 
-(* Temporary method to send a movement command and have something happen *)
+(* Temporary method to send a movement command and have something happen no client/server *)
 let send_movement_temp tbl chat state ev : unit = 
   match key_direction ev with 
   | Some c -> update_gui tbl chat (fst (State.do_command 1 c state))
   | None -> ()
+
+(* Temporary method to send a text command and have something happen no client/server *)
+let send_message_temp tbl chat state input ev : unit = 
+  match ev##keyCode with 
+  | 13 -> let c = State.Message (Js.to_string input##value) in 
+          input##value <- js "";
+          update_gui tbl chat (fst (State.do_command 1 c state))
+  | _ -> ()
 
 (* example log*)
 let (emptytile : State.tile) = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
@@ -130,6 +138,7 @@ let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; mov 
 let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up}; mov = None; store = None; immov = None; ex = None; kl = None}
 
 let get_emptytile () : State.tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
+
 let (room1 : State.room) = {
   id = "room1"; 
   tiles = (let arr = Array.make_matrix 5 5 emptytile in 
@@ -181,7 +190,7 @@ let start () =
   let chatinput = Html.createInput document in
     chatinput##defaultValue <- js "";
     chatinput##size <- 50;
-    chatinput##onkeydown <- Html.handler (fun ev -> send_message chatinput ev; Js.bool true);
+    chatinput##onkeydown <- Html.handler (fun ev -> send_message_temp gametable chatscreen emptystate chatinput ev; Js.bool true);
 
   let chatinputdiv = Html.createDiv document in 
     Dom.appendChild chatinputdiv chatinput;
