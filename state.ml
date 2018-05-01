@@ -153,7 +153,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   | Take -> (
     try
       let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
-      (match tile.mov with
+      (match tile.store with
        | Some item ->
          tile.store <- None;
          (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
