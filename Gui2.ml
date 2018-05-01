@@ -43,7 +43,7 @@ let replace_table_elt tbl (entry : State.entry) : unit =
     replace_child elt img
 
 (* Redraws the whold table based on a log *)
-let re_draw_whole tbl (log : State.log) : unit =  
+let re_draw_whole tbl (log : State.log') : unit =  
   tbl##style##opacity <- Js.def (js "0");
   let tbl_rows = tbl##rows##length in
   let tbl_cols = if tbl_rows = 0 then 0 else
@@ -71,14 +71,14 @@ let re_draw_whole tbl (log : State.log) : unit =
     tbl##style##opacity <- Js.def (js "1")
 
 (* Helper method to update chat based on log *)
-  let receive_message chatArea (log : State.log) : unit = 
+  let receive_message chatArea (log : State.log') : unit = 
     match log.chat with 
     | Some message -> chatArea##value <- chatArea##value##concat(js ("\nPlayer" ^ string_of_int message.id ^ " : " ^ message.message));
                       chatArea##scrollTop <- chatArea##scrollHeight; ()
     | None -> ()
 
 (* Helper method to update the GUI based on log *)
-let update_gui gametable chatArea (log : State.log) : unit = 
+let update_gui gametable chatArea (log : State.log') : unit = 
   re_draw_whole gametable log;
   receive_message chatArea log
 
@@ -89,6 +89,16 @@ let send_message input ev : unit = match ev##keyCode with
             ignore "Send Message to client TODO"; 
             ()
     | _ -> ()
+
+(* Helper method to get a movement command by arrow key *)
+let key_direction ev : State.command option = 
+  match ev##keyCode with 
+  | 37 -> Some (State.Go State.Left)
+  | 38 -> Some (State.Go State.Up)
+  | 39 -> Some (State.Go State.Right)
+  | 40 -> Some (State.Go State.Down)
+  | 18 -> Some State.Take
+  | _ -> None 
 
 (* Helper method to send a movement command*)
 let send_movement ev : unit = 
@@ -102,13 +112,49 @@ let send_movement ev : unit =
   in 
     ignore "send message to client TODO"
 
+(* Temporary method to send a movement command and have something happen *)
+let send_movement_temp tbl chat state ev : unit = 
+  match key_direction ev with 
+  | Some c -> update_gui tbl chat (fst (State.do_command 1 c state))
+  | None -> ()
+
 (* example log*)
 let (emptytile : State.tile) = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
 
-let (log1 : State.log) = {room_id = "example"; rows = 2; cols = 2; 
+let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2; 
   change = [{row = 0; col = 0; newtile = emptytile}; {row = 1; col = 0; newtile = emptytile};
   {row = 0; col = 1; newtile = emptytile}; {row = 1; col = 1; newtile = emptytile}]; 
   chat = Some {id = 1; message = "hi"}}
+
+let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; mov = None; store = None; immov = None; ex = None; kl = None}
+let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up}; mov = None; store = None; immov = None; ex = None; kl = None}
+
+let get_emptytile () : State.tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
+let (room1 : State.room) = {
+  id = "room1"; 
+  tiles = (let arr = Array.make_matrix 5 5 emptytile in 
+    for y = 0 to 4 do
+      for x = 0 to 4 do
+        arr.(y).(x) <- get_emptytile ()
+      done
+    done;
+    arr.(0).(0) <- player1tile;
+    arr.(4).(4) <- player2tile;
+    arr);
+  rows = 5; 
+  cols = 5
+}
+
+(* example states*)
+let (emptystate : State.t) = {
+  roommap = (let map = (Hashtbl.create 1) in Hashtbl.add map "room1" room1; map);
+  pl1_loc = ("room1", 0, 0);
+  pl2_loc = ("room1", 4, 4);
+  pl1_inv = [];
+  pl2_inv = [];
+  chat = []
+}
+
 
 (* Start method *)
 let start () = 
@@ -130,6 +176,8 @@ let start () =
     chatscreen##readOnly <- Js.bool true;
     chatscreen##style##cssText <- js "resize: none";
 
+  update_gui gametable chatscreen (State.logify 1 emptystate);
+
   let chatinput = Html.createInput document in
     chatinput##defaultValue <- js "";
     chatinput##size <- 50;
@@ -141,7 +189,7 @@ let start () =
   let chatoutputdiv = Html.createDiv document in 
     Dom.appendChild chatoutputdiv chatscreen;
 
-  document##onkeydown <- Html.handler (fun _ -> update_gui gametable chatscreen log1; Js.bool true);
+  document##onkeydown <- Html.handler (fun ev -> send_movement_temp gametable chatscreen emptystate ev; Js.bool true);
 
   Dom.appendChild gamediv gametable;
   Dom.appendChild chatdiv chatoutputdiv;

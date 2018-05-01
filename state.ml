@@ -52,7 +52,7 @@ type entry = {
   newtile : tile;
 }
 
-type log = {
+type log' = {
   room_id : string;
   rows : int;
   cols : int;
@@ -67,27 +67,27 @@ let empty_keyloc = {
   immovable_effect = ("",-1,-1);
 }
 
-let create_empty_logs (rm1 : room) (rm2 : room) : log * log =
+let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
   ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; chat = None},
    {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; chat = None})
 
-let create_log (rm : room) (entry_l : entry list) : log =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
+let create_log (rm : room) (entry_l : entry list) : log' =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
 
-let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log = 
+let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' = 
   if sendroom = changedroom then 
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
   else 
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
 
-let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log * log = 
+let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' = 
   {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
   {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
 
 let direct (d:direction) : int * int = match d with
   | Left -> (-1,0)
   | Right -> (1,0)
-  | Up -> (0,1)
-  | Down -> (0,-1)
+  | Up -> (0,-1)
+  | Down -> (0,1)
 
 let check_keyloc (keyloc:keyloc option) (item: string) st (r1:string) (r2:string) : 'a option =
     let k_l = (match keyloc with | Some a -> a | None -> empty_keyloc ) in
@@ -115,7 +115,7 @@ let check_keyloc (keyloc:keyloc option) (item: string) st (r1:string) (r2:string
       | _ , _  -> None
     else None
 
-let do_command (playerid : int) (comm : command) (st : t) : log * log =
+let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   let room1_string = fst_third st.pl1_loc in
   let room2_string = fst_third st.pl1_loc in
   let room1 = Hashtbl.find st.roommap room1_string in
@@ -127,7 +127,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
   match comm with
   | Go d ->
     let pair = direct d in
-    let next_player_y = curr_player_y + fst pair in
+    let next_player_y = curr_player_y + snd pair in
     let next_player_x = curr_player_x + fst pair in
     (
     try
@@ -139,8 +139,10 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
           begin
             newtile.ch <- Some { id = playerid ; direction = d };
             oldtile.ch <- None;
-            let entry_l = [{ row = next_player_x ; col = next_player_y ; newtile = newtile; };
-                          { row = curr_player_x ; col = curr_player_y ; newtile = oldtile; }] in
+            let entry_l = [{ row = next_player_y ; col = next_player_x ; newtile = newtile; };
+                          { row = curr_player_y ; col = curr_player_x ; newtile = oldtile; }] in
+            (if playerid = 1 then st.pl1_loc <- room1_string, next_player_x, next_player_y else
+            st.pl2_loc <- room2_string, next_player_x, next_player_y);
             (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
           end
     with
@@ -196,5 +198,24 @@ let do_command (playerid : int) (comm : command) (st : t) : log * log =
   | Message s -> update_chat room1 room2 playerid s
   | _ -> failwith "Unimplemented"
 
+let logify (playerid : int) (st : t) : log' = 
+  let room1_string = fst_third st.pl1_loc in
+  let room1 = Hashtbl.find st.roommap room1_string in
+  let entrymap = (Array.mapi (fun (y : int) (row : tile array) -> 
+          Array.mapi (fun (x : int) (t : tile) -> 
+            {row = y; col = x; newtile = t}
+          ) row
+        ) room1.tiles) in
+  let entryarrlist = (Array.map Array.to_list entrymap) in
+  let entrylistlist = Array.to_list entryarrlist in
+  let entrylist = List.flatten entrylistlist in 
+  {
+    room_id = room1_string;
+    rows = room1.rows;
+    cols = room1.cols;
+    change = entrylist;
+    chat = None
+  }
+  
 let save (st : t) (file : string) =
   failwith "Unimplemented"
