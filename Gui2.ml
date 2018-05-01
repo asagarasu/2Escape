@@ -124,7 +124,7 @@ let send_message_temp tbl chat state input ev : unit =
   | 13 -> let c = State.Message (Js.to_string input##value) in 
           input##value <- js "";
           update_gui tbl chat (fst (State.do_command 1 c state))
-  | _ -> ()
+  | _ -> Html.stopPropagation ev
 
 (* example log*)
 let (emptytile : State.tile) = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}
