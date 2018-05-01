@@ -219,14 +219,86 @@ let logify (playerid : int) (st : t) : log' =
     chat = None
   }
 
-let save (st : t) (file : string) =
-  failwith "Unimplemented"
 
+
+(** Save a game : Converting state to json **)
+let ch_to_json (t:character) =
+  let id = `Int t.id in
+  let direction =
+    `String (match t.direction with | Up -> "up" | Down -> "down"
+                                    | Right -> "right" | Left -> "left" )
+  in
+  `List [id;direction]
+
+let ex_to_json (t:exit) =
+  let is_open = `Bool t.is_open in
+  let triple = t.to_room in
+  let to_room = `List [`String (fst_third triple);
+                       `Int (snd_third triple);
+                       `Int (thd_third triple)] in
+  `Assoc [("is_open",is_open);("to_room",to_room)]
+
+let kl_to_json (t:keyloc) =
+  let id = `String t.id in
+  let is_solved = `Bool t.is_solved in
+  let ex_triple = t.exit_effect in
+  let exit_effect = `List [`String (fst_third ex_triple);
+                       `Int (snd_third ex_triple);
+                       `Int (thd_third ex_triple)] in
+  let im_triple = t.immovable_effect in
+  let immovable_effect = `List [`String (fst_third im_triple);
+                       `Int (snd_third im_triple);
+                       `Int (thd_third im_triple)] in
+  `Assoc [("id",id);("is_solved",is_solved);
+          ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
+
+let tile_to_json (t:tile) =
+  let ch = match t.ch with | None -> `String "" | Some a -> ch_to_json a in
+  let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
+  let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
+  `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
+
+let room_to_json (t:room) =
+  let id = `String t.id in
+  let rows = `Int t.rows in
+  let cols = `Int t.cols in
+  let tll = Array.to_list (Array.map Array.to_list t.tiles) in
+  let tiles = `List (List.map (fun x -> `List (List.map tile_to_json x)) tll) in
+  `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
+
+let chat_to_json (t:message) =
+  let id = `Int t.id in
+  let message = `String t.message in
+  `Assoc [("id",id);("message",message)]
+
+let state_to_json (t:t) =
+  let roommap = `List (Hashtbl.fold (fun k v acc -> (room_to_json v)::acc) t.roommap []) in
+  let loc1_triple = t.pl1_loc in
+  let pl1_loc = `List [`String (fst_third loc1_triple);
+                       `Int (snd_third loc1_triple);
+                       `Int (thd_third loc1_triple)] in
+  let loc2_triple = t.pl2_loc in
+  let pl2_loc = `List [`String (fst_third loc2_triple);
+                       `Int (snd_third loc2_triple);
+                       `Int (thd_third loc2_triple)] in
+  let pl1_inv = `List (List.map (fun x -> `String x) t.pl1_inv) in
+  let pl2_inv = `List (List.map (fun x -> `String x) t.pl2_inv) in
+  let chat = `List (List.map chat_to_json t.chat) in
+  `Assoc [("roommap",roommap);("pl1_loc",pl1_loc);("pl2_loc",pl2_loc);
+          ("pl1_inv",pl1_inv);("pl2_inv",pl2_inv);("chat",chat);]
+
+let save (st : t) (file : string) = Yojson.Basic.to_file file (state_to_json st)
+
+
+
+(** Load a game : Converting json to state **)
 let ch_of_json j =
-  let chl = j |> member "ch" |> to_list in
-  let ch_id = List.nth chl 0 |> to_int in
+  let ch_id = List.nth j 0 |> to_int in
   let ch_di =
-    (match List.nth chl 1 |> to_string with
+    (match List.nth j 1 |> to_string with
      | "up" -> Up | "down" -> Down | "right" -> Right | "left" -> Left | _ -> Up )
   in
   Some { id = ch_id ; direction = ch_di }
@@ -249,13 +321,19 @@ let kl_of_json j =
   }
 
 let tile_of_json j =
+  let ch_s = j |> member "ch" |> to_string in
+  let mov_s = j |> member "mov" |> to_string in
+  let store_s = j |> member "store" |> to_string in
+  let immov_s = j |> member "immov" |> to_string in
+  let ex_s = j |> member "ex" |> to_string in
+  let kl_s = j |> member "kl" |> to_string in
   {
-    ch = j |> member "ch" |> ch_of_json;
-    mov = Some { id = j |> member "mov" |> to_string };
-    store = Some { id = j |> member "store" |> to_string };
-    immov = Some { id = j |> member "immov" |> to_string };
-    ex = j |> member "ex" |> ex_of_json;
-    kl = j |> member "kl" |> kl_of_json;
+    ch = if ch_s = "" then None else j |> member "ch" |> to_list |> ch_of_json;
+    mov = if mov_s = "" then None else Some { id = mov_s };
+    store = if store_s = "" then None else Some { id = store_s };
+    immov = if immov_s = "" then None else Some { id = immov_s };
+    ex = if ex_s = "" then None else j |> member "ex" |> ex_of_json;
+    kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
   }
 
 let rec make_tiles_list (l : 'a list) (matrix : tile list list) : tile list list =
@@ -297,4 +375,5 @@ let state_of_json j =
   }
 
 let read (file : string) : t =
-  failwith ""
+  let j = Yojson.Basic.from_file file in
+  state_of_json j
