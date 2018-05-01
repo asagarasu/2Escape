@@ -254,9 +254,9 @@ let kl_to_json (t:keyloc) =
 
 let tile_to_json (t:tile) =
   let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
-  let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let mov = match t.mov with | None -> `String "" | Some a -> `String a.id in
+  let store = match t.store with | None -> `String "" | Some a -> `String a.id in
+  let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
   let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
   let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
   `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
