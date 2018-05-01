@@ -48,6 +48,14 @@ type t = {
   mutable chat : message list
 }
 
+let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
+
+let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
+
+let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
+
+let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
+
 type entry = {
   row : int;
   col : int;
@@ -253,7 +261,7 @@ let kl_to_json (t:keyloc) =
           ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
 
 let tile_to_json (t:tile) =
-  let ch = match t.ch with | None -> `String "" | Some a -> ch_to_json a in
+  let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
   let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
   let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
   let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
@@ -321,14 +329,14 @@ let kl_of_json j =
   }
 
 let tile_of_json j =
-  let ch_s = j |> member "ch" |> to_string in
+  let ch_s = j |> member "ch" |> to_list in
   let mov_s = j |> member "mov" |> to_string in
   let store_s = j |> member "store" |> to_string in
   let immov_s = j |> member "immov" |> to_string in
   let ex_s = j |> member "ex" |> to_string in
   let kl_s = j |> member "kl" |> to_string in
   {
-    ch = if ch_s = "" then None else j |> member "ch" |> to_list |> ch_of_json;
+    ch = if ch_s = [] then None else ch_of_json ch_s;
     mov = if mov_s = "" then None else Some { id = mov_s };
     store = if store_s = "" then None else Some { id = store_s };
     immov = if immov_s = "" then None else Some { id = immov_s };
@@ -343,7 +351,7 @@ let rec make_tiles_list (l : 'a list) (matrix : tile list list) : tile list list
 
 let room_of_json j =
   let tl = j |> member "tiles" |> to_list in
-  let tll = make_tiles_list tl [] in
+  let tll =  make_tiles_list tl [] in
   {
     id = j |> member "id" |> to_string;
     rows = j |> member "rows" |> to_int;
