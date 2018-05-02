@@ -14,7 +14,8 @@ type immovable = {id : string}
 
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
-type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
+type keyloc = {id : string; key : string; 
+  is_solved : bool; exit_effect : string * int * int list; immovable_effect : string * int * int list}
 
 type tile = {
   mutable ch : character option;

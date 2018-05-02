@@ -27,7 +27,8 @@ type immovable = {id : string}
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key *)
-type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
+type keyloc = {id : string; key : string; 
+  is_solved : bool; exit_effect : string * int * int list; immovable_effect : string * int * int list}
 
 (* type representing a tile in the room *)
 type tile = {
