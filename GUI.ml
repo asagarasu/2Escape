@@ -54,7 +54,13 @@ let replace_child p n =
   Js.Opt.iter (p##firstChild) (fun c -> Dom.removeChild p c);
   Dom.appendChild p n
 
-(* Replaces the table element based on an entry *)
+(**
+ * Reassigns a picture in [tbl] to the new picture in [entry]
+ *
+ * requires : [entry] has [row] and [col] within the bounds for [tbl]
+ * returns : unit ()
+ * effects : [tbl]'s picture is redrawn (if precondition is met)
+ *)
 let replace_table_elt tbl (entry : State.entry) : unit = 
   let row = Js.Opt.get tbl##rows##item(entry.row) fail in 
   let elt = Js.Opt.get row##cells##item(entry.col) fail in 
@@ -63,9 +69,12 @@ let replace_table_elt tbl (entry : State.entry) : unit =
     replace_child elt img
 
 (**
- * Redraws the whold table based on a log 
+ * Reassigns pictures to the whole table [tbl] based on [log] 
  *
- * requires
+ * requires: [tbl] is the g
+ * returns: unit ()
+ * effects: reassigns the various entries in [tbl] by their 
+ *          new pictures from [log]
  *)
 let re_draw_whole tbl (log : State.log') : unit =  
   tbl##style##opacity <- Js.def (js "0");
@@ -94,7 +103,13 @@ let re_draw_whole tbl (log : State.log') : unit =
     end;
     tbl##style##opacity <- Js.def (js "1")
 
-(* Helper method to update chat based on log *)
+(**
+ * Helper method to update chat based on log 
+ * 
+ * requires: [chatArea] is a [Js.textArea Js.t] that has the chat
+ *           [log] is a valid [State.log']
+ * effects: the chat is in [log] is appended to [chatArea]
+ *)
   let receive_message chatArea (log : State.log') : unit = 
     match log.chat with 
     | Some message -> chatArea##value 
@@ -103,20 +118,37 @@ let re_draw_whole tbl (log : State.log') : unit =
         chatArea##scrollTop <- chatArea##scrollHeight; ()
     | None -> ()
 
-(* Helper method to update the GUI based on log *)
+(**
+ * Helper method to update the GUI based on log 
+ *
+ * requires: gametable is a valid table and chatArea is a valid chatArea
+ * effects: redraws the GUI based on [log]
+ *)
 let update_gui gametable chatArea (log : State.log') : unit = 
   re_draw_whole gametable log;
   receive_message chatArea log
 
-(* Helper method send a string command *)
+(**
+ * Helper method send a message command 
+ *
+ * requires: input is a valid textInput, ev is a valid event
+ * effects: sends a message with the info in [input] to the client
+            if key is enter key. Otherwise event is ignored
+ * notes: TODO
+ *)
 let send_message input ev : unit = match ev##keyCode with 
     | 13 -> let command = State.Message (Js.to_string input##value) in 
             input##value <- js "";
             ignore "Send Message to client TODO"; 
             ()
-    | _ -> ()
+    | _ -> Html.stopPropagation ev
 
-(* Helper method to get a movement command by arrow key *)
+(** 
+ * Helper method to get a movement command by arrow key 
+ * 
+ * requires: [ev] is a valid keyEvent
+ * returns: a command associated with [ev], otherwise nothing
+ *)
 let key_direction ev : State.command option = 
   match ev##keyCode with 
   | 37 -> Some (State.Go State.Left)
@@ -126,7 +158,13 @@ let key_direction ev : State.command option =
   | 18 -> Some State.Take
   | _ -> None 
 
-(* Helper method to send a movement command*)
+(**
+ * Helper method to send a movement command to client 
+ *
+ * requires: [ev] is a valid keyEvent
+ * effects: a command associated with [ev] is sent to the client
+ * Notes: TODO
+ *)
 let send_movement ev : unit = 
   let keydirection = match ev##keyCode with 
     | 37 -> State.Go State.Left
@@ -138,6 +176,7 @@ let send_movement ev : unit =
   in 
     ignore "send message to client TODO"
 
+(* Start temporary stuff for prototype working without client/server *)
 (* Temporary method to send a movement command and have something happen no client/server *)
 let send_movement_temp tbl chat state ev : unit = 
   match key_direction ev with 
@@ -197,9 +236,9 @@ let (emptystate : State.t) = {
   chat = []
 }
 
-(* end examples *)
+(* end temporary stuff *)
 
-(* Start method *)
+(* Main method to start the javascript *)
 let start () = 
   let body = Js.Opt.get (document##getElementById (js "body")) fail in
   

@@ -2,22 +2,34 @@ open Helper
 open Yojson
 open Yojson.Basic.Util
 
+(* Commands *)
+
+(* Direction character can move *)
 type direction = Up | Down | Left | Right
 
+(* Various commands the player can make to affect the state/chat *)
 type command = | Go of direction | Message of string | Take | Drop of string
 
+(* State *)
+(* character type detailing the number and direction of the character *)
 type character = {id : int; direction : direction}
 
+(* type representing a movable object *)
 type movable = {id : string}
 
+(* type representing a storable object *)
 type storable = {id : string}
 
+(* type representing an immovable object *)
 type immovable = {id : string}
 
+(* type representing an exit in the room *)
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
+(* type representing a location for a key *)
 type keyloc = {id : string; is_solved : bool; exit_effect : string * int * int; immovable_effect : string * int * int}
 
+(* type representing a tile in the room *)
 type tile = {
   mutable ch : character option;
   mutable mov : movable option;
@@ -27,6 +39,7 @@ type tile = {
   mutable kl : keyloc option;
 }
 
+(* type representing a room in the state *)
 type room = {
   id : string;
   mutable tiles : tile array array;
@@ -34,11 +47,13 @@ type room = {
   cols : int
 }
 
+(* type representing a message in the state *)
 type message = {
   id : int;
   message : string
 }
 
+(* type representing a state *)
 type t = {
   roommap : (string, room) Hashtbl.t;
   mutable pl1_loc : string * int * int ;
@@ -48,6 +63,7 @@ type t = {
   mutable chat : message list
 }
 
+(* various tests *)
 let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
 
 let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
@@ -55,13 +71,16 @@ let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|
 let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
 
 let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
+(* end tests *)
 
+(* type representing a log entry *)
 type entry = {
   row : int;
   col : int;
   newtile : tile;
 }
 
+(* type representing a log of information to pass to client*)
 type log' = {
   room_id : string;
   rows : int;
@@ -70,6 +89,7 @@ type log' = {
   chat : message option
 }
 
+(* used for various other stuff *)
 let empty_keyloc = {
   id = "";
   is_solved = true;
@@ -77,28 +97,64 @@ let empty_keyloc = {
   immovable_effect = ("",-1,-1);
 }
 
+(**
+ * Helper method to create two empty logs
+ *
+ * requires: [rm1] and [rm2] are valid rooms
+ * returns: two emtpy logs with the room information
+ *)
 let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
   ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; chat = None},
    {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; chat = None})
 
-let create_log (rm : room) (entry_l : entry list) : log' =  {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
+(**
+ * Helper method to create a log based on a list of changed entries
+ *
+ * requires: [rm1] and [rm2] are valid rooms, [entry_l] is a valid entry list
+ * returns: a [log'] with the information slotted in
+ *)
+let create_log (rm : room) (entry_l : entry list) : log' =  
+    {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
 
+(**
+ * Helper method to update a room by a new room iff it is the correct room to update
+ *
+ * requires: [sendroom] is the room that sent, [changedroom] is the room that is changed
+ *           [entries] is a valid entries list
+ * returns: a [log'] of any possible changes
+ *)
 let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' =
   if sendroom = changedroom then
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
   else
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
 
+(**
+ * Helper method to update the chat
+ *
+ * requires: [room1] [room2] [id] and [message] are valid rooms, int and string
+ * returns: a [log' * log'] of the updated chat
+ *)
 let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
   {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
   {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
 
+(**
+ * Helper method to get the direction vector of each command.Arg
+ * Up is -1 because we are dealing with javascript tables
+ *
+ * requires: d is a direction
+ * returns: the vector (pm 1, 0) or (0, pm 1), depending on direction
+ *)
 let direct (d:direction) : int * int = match d with
   | Left -> (-1,0)
   | Right -> (1,0)
   | Up -> (0,-1)
   | Down -> (0,1)
 
+(** 
+ * Helper method to check a 
+ *)
 let check_keyloc (keyloc:keyloc option) (item: string) st (r1:string) (r2:string) : 'a option =
     let k_l = (match keyloc with | Some a -> a | None -> empty_keyloc ) in
     if k_l.id = item
