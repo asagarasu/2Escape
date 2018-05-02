@@ -23,8 +23,8 @@ type storable = {id : string}
 (* type representing an immovable object *)
 type immovable = {id : string}
 
-(* type representing an exit in the room and two possible locations*)
-type exit = {mutable is_open : bool; to_room : string * (int * int) * (int * int)}
+(* type representing an exit in the room *)
+type exit = {mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key *)
 type keyloc = {id : string; key : string; 
@@ -284,10 +284,8 @@ let ex_to_json (t:exit) =
   let is_open = `Bool t.is_open in
   let triple = t.to_room in
   let to_room = `List [`String (fst_third triple);
-                       `Int (fst (snd_third triple));
-                       `Int (snd (snd_third triple));
-                       `Int (fst (thd_third triple));
-                       `Int (snd (thd_third triple))] in
+                       `Int (snd_third triple);
+                       `Int (thd_third triple)] in
   `Assoc [("is_open",is_open);("to_room",to_room)]
 
 (* Helper method to turn a [kl] to a json *)
@@ -368,9 +366,7 @@ let ex_of_json j =
   let trl =  j |> member "to_room" |> to_list in
   Some {
     is_open = j |> member "is_open" |> to_bool;
-    to_room = List.nth trl 0 |> to_string , 
-      (List.nth trl 1 |> to_int, List.nth trl 2 |> to_int), 
-      (List.nth trl 3 |> to_int, List.nth trl 4 |> to_int);
+    to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
   }
 
 (* Helper method to read a [kl] from a json *)
