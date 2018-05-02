@@ -28,7 +28,7 @@ type exit = {mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key *)
 type keyloc = {id : string; key : string; 
-  is_solved : bool; exit_effect : string * int * int list; immovable_effect : string * int * int list}
+  is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -70,12 +70,19 @@ type entry = {
   newtile : tile;
 }
 
+(* Type representing inventory changes *)
+type invchange = {
+  add : string list;
+  remove : string list
+}
+
 (* type representing a log of information to pass to client*)
 type log' = {
   room_id : string;
   rows : int;
   cols : int;
   change : entry list;
+  inv_change : invchange;
   chat : message option
 }
 
@@ -86,17 +93,17 @@ type log' = {
  * returns: two emtpy logs with the room information
  *)
 let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
-  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; chat = None},
-   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; chat = None})
+  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; inv_change = {add = []; remove = []}; chat = None},
+   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; inv_change = {add = []; remove = []}; chat = None})
 
 (**
- * Helper method to create a log based on a list of changed entries
+ * Helper method to create a log based on a list of changed entries in room
  *
  * requires: [rm1] and [rm2] are valid rooms, [entry_l] is a valid entry list
  * returns: a [log'] with the information slotted in
  *)
 let create_log (rm : room) (entry_l : entry list) : log' =  
-    {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; chat = None}
+    {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; inv_change = {add = []; remove = []}; chat = None}
 
 (**
  * Helper method to update a room by a new room iff it is the correct room to update
@@ -107,9 +114,11 @@ let create_log (rm : room) (entry_l : entry list) : log' =
  *)
 let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' =
   if sendroom = changedroom then
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = entries; chat = None}
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
+    change = entries; inv_change = {add = []; remove = []}; chat = None}
   else
-    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; change = []; chat = None}
+    {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
+      change = []; inv_change = {add = []; remove = []}; chat = None}
 
 (**
  * Helper method to update the chat
@@ -118,8 +127,10 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
  * returns: a [log' * log'] of the updated chat
  *)
 let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
-  {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; chat = Some {id = id; message = message}},
-  {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; chat = Some {id = id; message = message}}
+  {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; 
+    inv_change = {add = []; remove = []}; chat = Some {id = id; message = message}},
+  {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; 
+    inv_change = {add = []; remove = []}; chat = Some {id = id; message = message}}
 
 (**
  * Helper method to get the direction vector of each command.Arg
@@ -176,19 +187,16 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
        Invalid_argument _ -> create_empty_logs room1 room2
   )
   | Take -> (
-    try
-      let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
-      (match tile.store with
-       | Some item ->
-         tile.store <- None;
-         (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
-          else st.pl2_inv <- item.id::st.pl2_inv);
-         let entry_l = [{ row = curr_player_x ; col = curr_player_y ; newtile = tile; }]
-         in
-         (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
-       | None -> create_empty_logs room1 room2)
-    with
-      Invalid_argument _ -> create_empty_logs room1 room2
+    let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
+    (match tile.store with
+      | Some item ->
+        tile.store <- None;
+        (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
+        else st.pl2_inv <- item.id::st.pl2_inv);
+        let entry_l = [{ row = curr_player_x ; col = curr_player_y ; newtile = tile; }]
+        in
+        (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+      | None -> create_empty_logs room1 room2)
   )
   | Drop n ->
     let inv = if playerid = 1 then st.pl1_inv else st.pl2_inv in
@@ -248,6 +256,7 @@ let logify (playerid : int) (st : t) : log' =
     rows = room1.rows;
     cols = room1.cols;
     change = entrylist;
+    inv_change = {add = []; remove = []};
     chat = None
   }
 
@@ -276,16 +285,17 @@ let ex_to_json (t:exit) =
 (* Helper method to turn a [kl] to a json *)
 let kl_to_json (t:keyloc) =
   let id = `String t.id in
+  let key = `String t.key in
   let is_solved = `Bool t.is_solved in
-  let ex_triple = t.exit_effect in
-  let exit_effect = `List [`String (fst_third ex_triple);
-                       `Int (snd_third ex_triple);
-                       `Int (thd_third ex_triple)] in
-  let im_triple = t.immovable_effect in
-  let immovable_effect = `List [`String (fst_third im_triple);
-                       `Int (snd_third im_triple);
-                       `Int (thd_third im_triple)] in
-  `Assoc [("id",id);("is_solved",is_solved);
+  let exit_effect = `List (List.map (fun exeffect -> 
+                    `List [`String (fst_third exeffect);
+                       `Int (snd_third exeffect);
+                       `Int (thd_third exeffect)]) t.exit_effect) in
+  let immovable_effect = `List (List.map (fun immeffect ->
+                    `List [`String (fst_third immeffect);
+                       `Int (snd_third immeffect);
+                       `Int (thd_third immeffect)]) t.immovable_effect) in
+  `Assoc [("id",id); ("key",key); ("is_solved",is_solved);
           ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
 
 (* Helper method to turn a [tile] into a json *)
@@ -359,9 +369,14 @@ let kl_of_json j =
   let iel = j |> member "immovable_effect" |> to_list in
   Some {
     id = j |> member "id" |> to_string;
+    key = j |> member "key" |> to_string;
     is_solved = j |> member "is_solved" |> to_bool;
-    exit_effect = (List.nth eel 0 |> to_string , List.nth eel 1 |> to_int, List.nth eel 2 |> to_int);
-    immovable_effect = (List.nth iel 0 |> to_string , List.nth iel 1 |> to_int, List.nth iel 2 |> to_int);
+    exit_effect = List.map (fun exiteffect ->  
+      let exittriple = exiteffect |> to_list in
+      List.nth exittriple 0 |> to_string, List.nth exittriple 1 |> to_int, List.nth exittriple 2 |> to_int) eel;
+    immovable_effect = List.map (fun immeffect -> 
+      let immtriple = immeffect |> to_list in 
+      List.nth immtriple 0 |> to_string, List.nth immtriple 1 |> to_int, List.nth immtriple 2 |> to_int) iel; 
   }
 
 (* Helper method to read a [tile] from a json *)

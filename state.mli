@@ -15,7 +15,7 @@ type immovable = {id : string}
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
 type keyloc = {id : string; key : string; 
-  is_solved : bool; exit_effect : string * int * int list; immovable_effect : string * int * int list}
+  is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 type tile = {
   mutable ch : character option;
@@ -53,12 +53,18 @@ type entry = {
   newtile : tile;
 }
 
+type invchange = {
+  add : string list;
+  remove : string list
+}
+
 
 type log' = {
   room_id : string;
   rows : int;
   cols : int;
   change : entry list;
+  inv_change : invchange;
   chat : message option
 }
 
