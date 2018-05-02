@@ -197,7 +197,8 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
           Invalid_argument _ -> create_empty_logs room1 room2
       )
     else create_empty_logs room1 room2
-  | Message s -> update_chat room1 room2 playerid s
+  | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
+      update_chat room1 room2 playerid s
 
 
 let logify (playerid : int) (st : t) : log' =
