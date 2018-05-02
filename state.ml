@@ -23,8 +23,8 @@ type storable = {id : string}
 (* type representing an immovable object *)
 type immovable = {id : string}
 
-(* type representing an exit in the room *)
-type exit = {mutable is_open : bool; to_room : string * int * int}
+(* type representing an exit in the room and two possible locations*)
+type exit = {mutable is_open : bool; to_room : string * (int * int) * (int * int)}
 
 (* type representing a location for a key *)
 type keyloc = {id : string; key : string; 
@@ -183,6 +183,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             st.pl2_loc <- room2_string, next_player_x, next_player_y);
             (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
           end
+          (*TODO other things*)
     with
        Invalid_argument _ -> create_empty_logs room1 room2
   )
@@ -190,12 +191,17 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
     (match tile.store with
       | Some item ->
-        tile.store <- None;
-        (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
-        else st.pl2_inv <- item.id::st.pl2_inv);
-        let entry_l = [{ row = curr_player_x ; col = curr_player_y ; newtile = tile; }]
-        in
-        (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+          begin 
+            match tile.kl with
+            | Some _ -> create_empty_logs room1 room2
+            | None -> 
+              tile.store <- None;
+              (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
+              else st.pl2_inv <- item.id::st.pl2_inv);
+              let entry_l = [{ row = curr_player_x ; col = curr_player_y ; newtile = tile; }]
+              in
+              (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+          end 
       | None -> create_empty_logs room1 room2)
   )
   | Drop n ->
@@ -278,8 +284,10 @@ let ex_to_json (t:exit) =
   let is_open = `Bool t.is_open in
   let triple = t.to_room in
   let to_room = `List [`String (fst_third triple);
-                       `Int (snd_third triple);
-                       `Int (thd_third triple)] in
+                       `Int (fst (snd_third triple));
+                       `Int (snd (snd_third triple));
+                       `Int (fst (thd_third triple));
+                       `Int (snd (thd_third triple))] in
   `Assoc [("is_open",is_open);("to_room",to_room)]
 
 (* Helper method to turn a [kl] to a json *)
@@ -360,7 +368,9 @@ let ex_of_json j =
   let trl =  j |> member "to_room" |> to_list in
   Some {
     is_open = j |> member "is_open" |> to_bool;
-    to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
+    to_room = List.nth trl 0 |> to_string , 
+      (List.nth trl 1 |> to_int, List.nth trl 2 |> to_int), 
+      (List.nth trl 3 |> to_int, List.nth trl 4 |> to_int);
   }
 
 (* Helper method to read a [kl] from a json *)

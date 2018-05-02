@@ -12,7 +12,7 @@ type storable = {id : string}
 
 type immovable = {id : string}
 
-type exit = {mutable is_open : bool; to_room : string * int * int}
+type exit = {mutable is_open : bool; to_room : string * (int * int) * (int * int)}
 
 type keyloc = {id : string; key : string; 
   is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
