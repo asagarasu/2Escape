@@ -63,17 +63,6 @@ type t = {
   mutable chat : message list
 }
 
-(* various tests *)
-let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
-
-let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
-
-let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
-
-let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
-(* end tests *)
-
-(* type representing a log entry *)
 type entry = {
   row : int;
   col : int;
@@ -87,14 +76,6 @@ type log' = {
   cols : int;
   change : entry list;
   chat : message option
-}
-
-(* used for various other stuff *)
-let empty_keyloc = {
-  id = "";
-  is_solved = true;
-  exit_effect = ("",-1,-1);
-  immovable_effect = ("",-1,-1);
 }
 
 (**
@@ -153,34 +134,13 @@ let direct (d:direction) : int * int = match d with
   | Down -> (0,1)
 
 (** 
- * Helper method to check a 
+ * Helper method to do a player command based on the player's id
+ * command, and the current state
+ * 
+ * requires: playerid is 1 or 2, everything else is valid
+ * returns: a [log' * log'] of changes to be sent to players 1 and 2
+ * effects: [st] is effected by the command and is changed accordingly
  *)
-let check_keyloc (keyloc:keyloc option) (item: string) st (r1:string) (r2:string) : 'a option =
-    let k_l = (match keyloc with | Some a -> a | None -> empty_keyloc ) in
-    if k_l.id = item
-    then
-      match k_l.exit_effect, k_l.immovable_effect with
-      | ("",_,_) , (a1,x1,y1)  ->
-        let r = Hashtbl.find st.roommap a1 in
-        let tile = r.tiles.(y1).(x1) in
-        tile.immov <- None;
-        if a1 = r1 || a1 = r2
-        then Some (a1,{row = x1 ; col = y1 ; newtile = tile;})
-        else None
-      | (a2,x2,y2) , ("",_,_) ->
-        let r = Hashtbl.find st.roommap a2 in
-        let tile = r.tiles.(y2).(x2) in
-        (match tile.ex with
-         | Some ex ->
-           ex.is_open <- true;
-           if a2 = r1 || a2 = r2
-           then Some (a2,{row = x2 ; col = y2 ; newtile = tile;})
-           else None
-         | None -> None
-        )
-      | _ , _  -> None
-    else None
-
 let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   let room1_string = fst_third st.pl1_loc in
   let room2_string = fst_third st.pl1_loc in
@@ -217,7 +177,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   | Take -> (
     try
       let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
-      (match tile.mov with
+      (match tile.store with
        | Some item ->
          tile.store <- None;
          (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
@@ -243,8 +203,9 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                (if playerid = 1
                 then st.pl1_inv <- List.filter (fun x -> x <> n) st.pl1_inv
                 else st.pl2_inv <- List.filter (fun x -> x <> n) st.pl2_inv);
-               let entry_l = [{row = curr_player_x ; col = curr_player_y ; newtile = tile;}] in
-               match check_keyloc tile.kl n st room1_string room2_string with
+               let entry_l = [{row = curr_player_x ; col = curr_player_y ; newtile = tile;}] in 
+                failwith "TODO"
+               (*match check_keyloc tile.kl n st room1_string room2_string with
                | Some (r,e) ->
                  if r = room1.id then
                    let entry_l' = e::entry_l in
@@ -254,16 +215,22 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                  else
                    (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
                | None ->
-                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)*)
               )
           )
         with
           Invalid_argument _ -> create_empty_logs room1 room2
       )
     else create_empty_logs room1 room2
-  | Message s -> update_chat room1 room2 playerid s
+  | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
+      update_chat room1 room2 playerid s
 
-
+(**
+ * Helper method to convert all of a state into a log' based on the player's id
+ *
+ * requires: playerid is 1 or 2, st is a valid state
+ * returns: a log' representation of player [playerid]'s state
+ *)
 let logify (playerid : int) (st : t) : log' =
   let room1_string = fst_third st.pl1_loc in
   let room1 = Hashtbl.find st.roommap room1_string in
@@ -286,6 +253,8 @@ let logify (playerid : int) (st : t) : log' =
 
 
 (** Save a game : Converting state to json **)
+
+(* Helper method to turn a [ch] to a json*)
 let ch_to_json (t:character) =
   let id = `Int t.id in
   let direction =
@@ -294,6 +263,7 @@ let ch_to_json (t:character) =
   in
   `List [id;direction]
 
+(* Helper method to turn a [ex] into a json*)
 let ex_to_json (t:exit) =
   let is_open = `Bool t.is_open in
   let triple = t.to_room in
@@ -302,6 +272,7 @@ let ex_to_json (t:exit) =
                        `Int (thd_third triple)] in
   `Assoc [("is_open",is_open);("to_room",to_room)]
 
+(* Helper method to turn a [kl] to a json *)
 let kl_to_json (t:keyloc) =
   let id = `String t.id in
   let is_solved = `Bool t.is_solved in
@@ -316,28 +287,32 @@ let kl_to_json (t:keyloc) =
   `Assoc [("id",id);("is_solved",is_solved);
           ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
 
+(* Helper method to turn a [tile] into a json *)
 let tile_to_json (t:tile) =
   let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
-  let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let mov = match t.mov with | None -> `String "" | Some a -> `String a.id in
+  let store = match t.store with | None -> `String "" | Some a -> `String a.id in
+  let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
   let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
   let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
   `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
 
+(* Helper method to turn a [room] into a json *)
 let room_to_json (t:room) =
   let id = `String t.id in
   let rows = `Int t.rows in
   let cols = `Int t.cols in
   let tll = Array.to_list (Array.map Array.to_list t.tiles) in
-  let tiles = `List (List.map (fun x -> `List (List.map tile_to_json x)) tll) in
+  let tiles = `List (List.rev (List.map (fun x -> `List (List.map tile_to_json x)) tll)) in
   `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
 
+(* Helper method to turn a [message] into a json *)
 let chat_to_json (t:message) =
   let id = `Int t.id in
   let message = `String t.message in
   `Assoc [("id",id);("message",message)]
 
+(* Helper method to turn a [state.t] into a json *)
 let state_to_json (t:t) =
   let roommap = `List (Hashtbl.fold (fun k v acc -> (room_to_json v)::acc) t.roommap []) in
   let loc1_triple = t.pl1_loc in
@@ -354,11 +329,13 @@ let state_to_json (t:t) =
   `Assoc [("roommap",roommap);("pl1_loc",pl1_loc);("pl2_loc",pl2_loc);
           ("pl1_inv",pl1_inv);("pl2_inv",pl2_inv);("chat",chat);]
 
+(* Helper method to turn a state into a file *)
 let save (st : t) (file : string) = Yojson.Basic.to_file file (state_to_json st)
 
 
 
 (** Load a game : Converting json to state **)
+(* Helper method to read of [ch] from a json *)
 let ch_of_json j =
   let ch_id = List.nth j 0 |> to_int in
   let ch_di =
@@ -367,6 +344,7 @@ let ch_of_json j =
   in
   Some { id = ch_id ; direction = ch_di }
 
+(* Helper method to read an [ex] from a json *)
 let ex_of_json j =
   let trl =  j |> member "to_room" |> to_list in
   Some {
@@ -374,6 +352,7 @@ let ex_of_json j =
     to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
   }
 
+(* Helper method to read a [kl] from a json *)
 let kl_of_json j =
   let eel = j |> member "exit_effect" |> to_list in
   let iel = j |> member "immovable_effect" |> to_list in
@@ -384,6 +363,7 @@ let kl_of_json j =
     immovable_effect = (List.nth iel 0 |> to_string , List.nth iel 1 |> to_int, List.nth iel 2 |> to_int);
   }
 
+(* Helper method to read a [tile] from a json *)
 let tile_of_json j =
   let ch_s = j |> member "ch" |> to_list in
   let mov_s = j |> member "mov" |> to_string in
@@ -400,11 +380,13 @@ let tile_of_json j =
     kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
   }
 
+(* Helper method to read a [tiles] list from a json *)
 let rec make_tiles_list (l : 'a list) (matrix : tile list list) : tile list list =
   match l with
   | h::t -> make_tiles_list t [(List.map tile_of_json (to_list h))]@matrix
   | [] -> matrix
 
+(* Helper method to read a [room] from a json *)
 let room_of_json j =
   let tl = j |> member "tiles" |> to_list in
   let tll =  make_tiles_list tl [] in
@@ -415,17 +397,20 @@ let room_of_json j =
     tiles = Array.of_list (List.map Array.of_list tll);
   }
 
+(* Helper method to create a Hashtbl from parsed rooms *)
 let rooms_of_json rooms :(string, room) Hashtbl.t =
   let parsed_rooms = List.map room_of_json rooms in
   let r_hashtb : (string, room) Hashtbl.t = Hashtbl.create (List.length parsed_rooms) in
   let hash (r:room) = Hashtbl.add r_hashtb r.id r in
   List.iter hash parsed_rooms; r_hashtb
 
+(* Helper method to get chat from a json *)
 let chat_of_json j = {
   id = j |> member "id" |> to_int;
   message = j |> member "message" |> to_string;
 }
 
+(* Helper method to get the state of a json *)
 let state_of_json j =
   let loc1 = j |> member "pl1_loc" |> to_list in
   let loc2 = j |> member "pl2_loc" |> to_list in
