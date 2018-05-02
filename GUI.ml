@@ -155,7 +155,8 @@ let key_direction ev : State.command option =
   | 38 -> Some (State.Go State.Up)
   | 39 -> Some (State.Go State.Right)
   | 40 -> Some (State.Go State.Down)
-  | 18 -> Some State.Take
+  | 90 -> Some State.Take
+  | 88 -> Some (State.Drop "item1")
   | _ -> None 
 
 (**
@@ -171,7 +172,8 @@ let send_movement ev : unit =
     | 38 -> State.Go State.Up
     | 39 -> State.Go State.Right
     | 40 -> State.Go State.Down
-    | 18 -> State.Take
+    | 90 -> State.Take
+    | 88 -> State.Drop "item1"
     | _ -> failwith "Unimplemented"
   in 
     ignore "send message to client TODO"
@@ -200,6 +202,7 @@ let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2;
     {row = 1; col = 0; newtile = emptytile};
   {row = 0; col = 1; newtile = emptytile}; 
     {row = 1; col = 1; newtile = emptytile}]; 
+  inv_change = {add = []; remove = []};
   chat = Some {id = 1; message = "hi"}}
 
 let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; 
@@ -210,6 +213,8 @@ let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up};
 let get_emptytile () : State.tile = {ch = None; mov = None; 
   store = None; immov = None; ex = None; kl = None}
 
+let (itemtile : State.tile) = {ch = None; mov = None; 
+  store = Some {id = "item1"}; immov = None; ex = None; kl = None}
 
 let (room1 : State.room) = {
   id = "room1"; 
@@ -221,6 +226,7 @@ let (room1 : State.room) = {
     done;
     arr.(0).(0) <- player1tile;
     arr.(4).(4) <- player2tile;
+    arr.(2).(2) <- itemtile;
     arr);
   rows = 5; 
   cols = 5

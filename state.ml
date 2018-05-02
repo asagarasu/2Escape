@@ -26,9 +26,12 @@ type immovable = {id : string}
 (* type representing an exit in the room *)
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
-(* type representing a location for a key *)
+(* type representing a location for a key 
+ * exit_effect are (room name, col, row)
+ * immovable_effect are (room name, col, row) 
+ *)
 type keyloc = {id : string; key : string; 
-  is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
+  mutable is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -113,13 +116,51 @@ let create_log (rm : room) (entry_l : entry list) : log' =
  * returns: a [log'] of any possible changes
  *)
 let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' =
-  if sendroom = changedroom then
+  if sendroom.id = changedroom.id then
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
     change = entries; inv_change = {add = []; remove = []}; chat = None}
   else
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
       change = []; inv_change = {add = []; remove = []}; chat = None}
 
+(**
+ * Helper method to update a log based on [playerid] adding an [item]
+ * to their inventory
+ *
+ * requires: [logs] is a log pair [playerid] is one or two, and
+ *           [item] is a string
+ * returns: an updated log pair when adding [item] to player [playerid's] inventory
+ *)
+let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' = 
+  if playerid = 1 then
+    {room_id = (fst logs).room_id; rows = (fst logs).rows; cols = (fst logs).cols;
+      change = (fst logs).change; inv_change = {add = item :: 
+        (fst logs).inv_change.add; remove = (fst logs).inv_change.remove};
+          chat = (fst logs).chat}, (snd logs)
+  else
+    (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows;
+      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = item ::
+        (snd logs).inv_change.add; remove = (snd logs).inv_change.remove};
+          chat = (snd logs).chat}
+
+(**
+ * Helper method to update a log based on [playerid] dropping an [item]
+ * from their inventory
+ *
+ * requires: [logs] is a log pair [playerid] is one or two, and
+ *           [item] is a string
+ * returns: an updated log pair when removing [item] from player [playerid]'s inventory
+ *)
+let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' = 
+  if playerid = 1 then
+    {room_id = (fst logs).room_id; rows = (fst logs).rows; cols = (fst logs).cols;
+      change = (fst logs).change; inv_change = {add = (fst logs).inv_change.add; 
+        remove = item :: (fst logs).inv_change.remove};
+          chat = (fst logs).chat}, (snd logs)
+  else
+    (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows;
+      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = (snd logs).inv_change.add; 
+        remove = item :: (snd logs).inv_change.remove}; chat = (snd logs).chat}
 (**
  * Helper method to update the chat
  *
@@ -146,7 +187,7 @@ let direct (d:direction) : int * int = match d with
   | Down -> (0,1)
 
 (** 
- * Helper method to do a player command based on the player's id
+ * Method to do a player command based on the player's id
  * command, and the current state
  * 
  * requires: playerid is 1 or 2, everything else is valid
@@ -161,6 +202,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   let curr_player_x = if playerid = 1 then snd_third st.pl1_loc else snd_third st.pl2_loc in
   let curr_player_y = if playerid = 1 then thd_third st.pl1_loc else thd_third st.pl2_loc in
   let curr_room = if playerid = 1 then room1 else room2 in
+  let curr_room_id = curr_room.id in 
 
   match comm with
   | Go d ->
@@ -187,7 +229,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     with
        Invalid_argument _ -> create_empty_logs room1 room2
   )
-  | Take -> (
+  | Take -> 
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
     (match tile.store with
       | Some item ->
@@ -196,46 +238,85 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             | Some _ -> create_empty_logs room1 room2
             | None -> 
               tile.store <- None;
-              (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
-              else st.pl2_inv <- item.id::st.pl2_inv);
-              let entry_l = [{ row = curr_player_x ; col = curr_player_y ; newtile = tile; }]
+              (if playerid = 1 then st.pl1_inv <- item.id :: st.pl1_inv
+              else st.pl2_inv <- item.id :: st.pl2_inv);
+              let entry_l = [{ row = curr_player_y ; col = curr_player_x ; newtile = tile }]
               in
-              (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+              add_item_logs (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l) playerid item.id
           end 
       | None -> create_empty_logs room1 room2)
-  )
-  | Drop n ->
+  | Drop item ->
     let inv = if playerid = 1 then st.pl1_inv else st.pl2_inv in
-    if List.mem n inv then
-      (
-        try
-          let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
-          (
-            match tile.store with
-            | Some s -> create_empty_logs room1 room2
-            | None ->
-              (tile.store <- Some {id = n};
-               (if playerid = 1
-                then st.pl1_inv <- List.filter (fun x -> x <> n) st.pl1_inv
-                else st.pl2_inv <- List.filter (fun x -> x <> n) st.pl2_inv);
-               let entry_l = [{row = curr_player_x ; col = curr_player_y ; newtile = tile;}] in 
-                failwith "TODO"
-               (*match check_keyloc tile.kl n st room1_string room2_string with
-               | Some (r,e) ->
-                 if r = room1.id then
-                   let entry_l' = e::entry_l in
-                   (update_room room1 curr_room entry_l', update_room room2 curr_room entry_l)
-                 else if r = room2.id then
-                   (update_room room1 curr_room entry_l, update_room room2 room2 [e])
-                 else
-                   (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
-               | None ->
-                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)*)
-              )
-          )
-        with
-          Invalid_argument _ -> create_empty_logs room1 room2
-      )
+    let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
+    if List.mem item inv then
+      begin 
+        if bool_opt tile.store then create_empty_logs room1 room2
+        else if bool_opt tile.ex then create_empty_logs room1 room2
+        else if bool_opt tile.kl then 
+          begin
+            let kl = access_opt tile.kl in 
+            if kl.key = item then 
+              begin
+                tile.store <- Some {id = item};
+                kl.is_solved <- true;
+                let stentryl = 
+                  match room1_string, room2_string with
+                  | a, b when a = curr_room_id && b = curr_room_id -> 
+                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}],
+                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}]
+                  | a, _ when a = curr_room_id -> 
+                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}], []
+                  | _, a when a = curr_room_id -> 
+                    [], [{ row = curr_player_y; col = curr_player_x; newtile = tile}]
+                  | _ -> [], []
+                 in
+                let changedExitsEntries = List.fold_left (fun curr_entries ex_effect ->
+                  let alteredroom = Hashtbl.find st.roommap (fst_third ex_effect) in 
+                  let alteredrow = thd_third ex_effect in 
+                  let alteredcol = snd_third ex_effect in
+                  let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
+                  (access_opt alteredtile.ex).is_open <- true;
+                  match room1_string, room2_string with 
+                  | a, b when a = room1_string && b = room2_string -> 
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries), 
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | a, _ when a = room1_string -> 
+                  { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries), 
+                    (snd curr_entries)
+                  | _, a when a = room2_string -> 
+                    (fst curr_entries),
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | _ -> curr_entries) stentryl kl.exit_effect in
+                let allEntries = List.fold_left (fun curr_entries imm_effect ->
+                  let alteredroom = Hashtbl.find st.roommap (fst_third imm_effect) in 
+                  let alteredrow = thd_third imm_effect in 
+                  let alteredcol = snd_third imm_effect in 
+                  let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in 
+                  alteredtile.immov <- None;
+                  match room1_string, room2_string with 
+                  | a, b when a = room1_string && b = room2_string -> 
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | a, _ when a = room1_string -> 
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    snd curr_entries
+                  | _, a when a = room2_string -> 
+                    fst curr_entries, 
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | _ -> curr_entries) changedExitsEntries kl.immovable_effect in 
+                drop_item_logs (create_log room1 (fst allEntries), create_log room2 (snd allEntries)) playerid item
+              end 
+            else create_empty_logs room1 room2
+          end
+        else 
+          begin 
+            tile.store <- Some {id = item};
+            (if playerid = 1 then st.pl1_inv <- List.filter (fun x -> x <> item) st.pl1_inv
+            else st.pl2_inv <- List.filter (fun x -> x <> item) st.pl2_inv);
+            let entry_l = [{ row = curr_player_y; col = curr_player_x; newtile = tile}] in 
+            drop_item_logs (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l) playerid item
+          end 
+      end
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
       update_chat room1 room2 playerid s
