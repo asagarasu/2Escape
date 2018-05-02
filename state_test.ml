@@ -22,7 +22,23 @@ let roommap = let h = Hashtbl.create 2 in Hashtbl.add h "test" room; h
 let state = { roommap = roommap; pl1_loc = ("test",0,0); pl2_loc = ("test",1,1);
                 pl1_inv = []; pl2_inv = ["good"]; chat = []; }
 
+let chat_1 = do_command 1 (Message "yes") state
 
+let chat_log_1 = ({room_id = "test"; rows = 3; cols = 3; change = [];
+                 chat = Some {id = 1; message = "yes"}},
+                {room_id = "test"; rows = 3; cols = 3; change = [];
+                 chat = Some {id = 1; message = "yes"}})
+
+let chat_2 = do_command 2 (Message "no") state
+
+let chat_log_2 = ({room_id = "test"; rows = 3; cols = 3; change = [];
+                   chat = Some {id = 2; message = "no"}},
+                  {room_id = "test"; rows = 3; cols = 3; change = [];
+                   chat = Some {id = 2; message = "no"}})
+
+let chat_state = { roommap = roommap; pl1_loc = ("test",0,0); pl2_loc = ("test",1,1);
+                     pl1_inv = []; pl2_inv = ["good"];
+                     chat = [{ id = 2; message = "no" };{ id = 1; message = "yes" }]; }
 
 let l_room =
   {id = "test";
@@ -98,7 +114,7 @@ let drop_1_l =
 
 let sl = save state "test.json"; read "test.json"
 
-let gel_room st = Hashtbl.find st.roommap "test"
+let get_room st = Hashtbl.find st.roommap "test"
 
 let take_1 = do_command 1 Take l_state
 let take_1_ = do_command 1 Take l_state
@@ -195,7 +211,7 @@ let direc_2 =
 
 
 let tests = [
-  "save&load" >:: (fun _ -> assert_equal room (gel_room sl));
+  "save&load" >:: (fun _ -> assert_equal room (get_room sl));
 
   "take_1" >:: (fun _ -> assert_equal take_1_l take_1);
   "take_1_" >:: (fun _ -> assert_equal log_empty take_1_);
@@ -203,7 +219,11 @@ let tests = [
   "drop_1" >:: (fun _ -> assert_equal drop_1_l drop_1);
   "drop_1_" >:: (fun _ -> assert_equal log_empty drop_1_);
   "drop_1__" >:: (fun _ -> assert_equal log_empty drop_1__);
-  "drop_1_r" >:: (fun _ -> assert_equal l_room_1 (gel_room l_state));
+  "drop_1_r" >:: (fun _ -> assert_equal l_room_1 (get_room l_state));
+
+  "chat_1" >:: (fun _ -> assert_equal chat_log_1 chat_1);
+  "chat_2" >:: (fun _ -> assert_equal chat_log_2 chat_2);
+  "chat_st" >:: (fun _ -> assert_equal chat_state state);
 
   "direction1" >:: (fun _ -> assert_equal direc_1 (log1,log2));
   "direction2" >:: (fun _ -> assert_equal direc_2 log_empty);
