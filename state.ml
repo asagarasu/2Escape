@@ -48,14 +48,6 @@ type t = {
   mutable chat : message list
 }
 
-let testtile = {ch = Some {id = 1; direction = Up}; mov = None; store = None; immov = None; ex = None; kl = None }
-
-let testroom = { id = "t" ; tiles = [|[|testtile;testtile|];[|testtile;testtile|]|]; rows = 1; cols = 1;}
-
-let troommap = let h = Hashtbl.create 2 in Hashtbl.add h "t" testroom; h
-
-let tt = {roommap = troommap; pl1_loc = ("afd",-1,-1); pl2_loc = ("adf",-1,-1);pl1_inv = []; pl2_inv = []; chat = [];}
-
 type entry = {
   row : int;
   col : int;
@@ -161,7 +153,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   | Take -> (
     try
       let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
-      (match tile.mov with
+      (match tile.store with
        | Some item ->
          tile.store <- None;
          (if playerid = 1 then st.pl1_inv <- item.id::st.pl1_inv
@@ -262,9 +254,9 @@ let kl_to_json (t:keyloc) =
 
 let tile_to_json (t:tile) =
   let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
-  let mov = match t.mov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let store = match t.store with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
-  let immov = match t.immov with | None -> `String "" | Some a -> `Assoc [("id",`String a.id)] in
+  let mov = match t.mov with | None -> `String "" | Some a -> `String a.id in
+  let store = match t.store with | None -> `String "" | Some a -> `String a.id in
+  let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
   let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
   let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
   `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
@@ -274,7 +266,7 @@ let room_to_json (t:room) =
   let rows = `Int t.rows in
   let cols = `Int t.cols in
   let tll = Array.to_list (Array.map Array.to_list t.tiles) in
-  let tiles = `List (List.map (fun x -> `List (List.map tile_to_json x)) tll) in
+  let tiles = `List (List.rev (List.map (fun x -> `List (List.map tile_to_json x)) tll)) in
   `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
 
 let chat_to_json (t:message) =
