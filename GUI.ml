@@ -24,10 +24,11 @@ let td_style = js"padding: 0; width: 20px; height: 20px;"
 let get_dominant (tile: State.tile) : string = 
   if bool_opt tile.ch = true then "player" 
     ^ string_of_int (access_opt tile.ch).id else
-  if bool_opt tile.kl = true then (access_opt tile.kl).id else
+  if bool_opt tile.kl = true then (access_opt tile.kl).id 
+    ^ "_" ^ string_of_bool (access_opt tile.kl).is_solved else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else
   if bool_opt tile.store = true then (access_opt tile.store).id else
-  if bool_opt tile.immov = true then (access_opt tile.immov).id else
+  if bool_opt tile.immov = true then (access_opt tile.immov).id  else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
     (if is_open then "exitopen" else "exitclosed") else
@@ -221,13 +222,16 @@ let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None;
 
 let (kltile : State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = None; kl = Some {id = "kl1"; key = "item1"; 
-    is_solved = false; exit_effect = []; immovable_effect = []}}
+    is_solved = false; exit_effect = [("room1", 7, 6)]; immovable_effect = []}}
+
+let (exittile: State.tile) = {ch = None; mov = None; immov = None;
+  store = None; ex = Some {is_open = false; to_room = ("room1", 9, 0)}; kl = None}
 
 let (room1 : State.room) = {
   id = "room1"; 
-  tiles = (let arr = Array.make_matrix 5 5 emptytile in 
-    for y = 0 to 4 do
-      for x = 0 to 4 do
+  tiles = (let arr = Array.make_matrix 10 10 emptytile in 
+    for y = 0 to 9 do
+      for x = 0 to 9 do
         arr.(y).(x) <- get_emptytile ()
       done
     done;
@@ -236,16 +240,17 @@ let (room1 : State.room) = {
     arr.(2).(2) <- itemtile;
     arr.(3).(3) <- movtile;
     arr.(2).(1) <- kltile;
+    arr.(6).(7) <- exittile;
     arr);
-  rows = 5; 
-  cols = 5
+  rows = 10; 
+  cols = 10
 }
 
 (* example states*)
 let (emptystate : State.t) = {
   roommap = (let map = (Hashtbl.create 1) in Hashtbl.add map "room1" room1; map);
   pl1_loc = ("room1", 0, 0);
-  pl2_loc = ("room1", 5, 5);
+  pl2_loc = ("room1", 4, 4);
   pl1_inv = [];
   pl2_inv = [];
   chat = []
@@ -263,7 +268,7 @@ let start () =
   let gametable = Html.createTable document in 
     gametable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \
-    margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
+    margin-left:auto; margin-right:auto; background-color: yellow; tabindex= 1 ";
   
   let chatdiv = Html.createDiv document in 
 

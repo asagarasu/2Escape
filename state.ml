@@ -23,7 +23,7 @@ type storable = {id : string}
 (* type representing an immovable object *)
 type immovable = {id : string}
 
-(* type representing an exit in the room *)
+(* type representing an exit in the room, to_room is (room name, x, y) *)
 type exit = {mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key 
@@ -186,6 +186,32 @@ let direct (d:direction) : int * int = match d with
   | Up -> (0,-1)
   | Down -> (0,1)
 
+(**
+ * Helper method to convert all of a state into a log' based on the player's id
+ *
+ * requires: playerid is 1 or 2, st is a valid state
+ * returns: a log' representation of player [playerid]'s state
+ *)
+let logify (playerid : int) (st : t) : log' =
+  let room1_string = fst_third st.pl1_loc in
+  let room1 = Hashtbl.find st.roommap room1_string in
+  let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
+          Array.mapi (fun (x : int) (t : tile) ->
+            {row = y; col = x; newtile = t}
+          ) row
+        ) room1.tiles) in
+  let entryarrlist = (Array.map Array.to_list entrymap) in
+  let entrylistlist = Array.to_list entryarrlist in
+  let entrylist = List.flatten entrylistlist in
+  {
+    room_id = room1_string;
+    rows = room1.rows;
+    cols = room1.cols;
+    change = entrylist;
+    inv_change = {add = []; remove = []};
+    chat = None
+  }
+
 (** 
  * Method to do a player command based on the player's id
  * command, and the current state
@@ -202,7 +228,9 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   let curr_player_x = if playerid = 1 then snd_third st.pl1_loc else snd_third st.pl2_loc in
   let curr_player_y = if playerid = 1 then thd_third st.pl1_loc else thd_third st.pl2_loc in
   let curr_room = if playerid = 1 then room1 else room2 in
+  let other_room = if playerid = 1 then room2 else room1 in 
   let curr_room_id = curr_room.id in 
+  let other_room_id = other_room.id in 
 
   match comm with
   | Go d ->
@@ -251,7 +279,50 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
               end
           end
-        else if bool_opt newtile.ex then failwith "TODO"
+        else if bool_opt newtile.ex then 
+          begin 
+            let exit = access_opt newtile.ex in
+            if (exit).is_open then 
+              begin
+                let newroom_string = fst_third exit.to_room in
+                let newroom = Hashtbl.find st.roommap newroom_string in
+                let newroom_y = thd_third exit.to_room in
+                let newroom_x = snd_third exit.to_room in
+                let newroom_tile = newroom.tiles.(newroom_y).(newroom_x) in 
+                  if bool_opt newroom_tile.ch || bool_opt newroom_tile.mov 
+                    || bool_opt newroom_tile.immov || bool_opt newroom_tile.ex then
+                    begin
+                      oldtile.ch <- Some { id = playerid ; direction = d };
+                      let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in 
+                      (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+                    end
+                  else 
+                    begin 
+                      oldtile.ch <- None;
+                      newroom_tile.ch <- Some {id = playerid; direction = d};
+                      (if playerid = 1 then st.pl1_loc <- newroom_string, newroom_x, newroom_y else
+                        st.pl2_loc <- newroom_string, newroom_x, newroom_y);
+                      let curr_player_log = logify playerid st in 
+                      let other_player_entries = (match other_room_id with 
+                        | x when x = curr_room_id -> [{row = curr_player_y; col = curr_player_x; newtile = oldtile}]
+                        | x when x = newroom_string -> [{row = newroom_y; col = newroom_x; newtile = newroom_tile}]
+                        | _ -> []
+                        ) in 
+                      (if playerid = 1 then curr_player_log, create_log room2 other_player_entries
+                      else create_log room2 other_player_entries, curr_player_log)
+                    end
+              end
+            else 
+              begin
+                newtile.ch <- Some { id = playerid ; direction = d };
+                oldtile.ch <- None;
+                let entry_l = [{ row = next_player_y ; col = next_player_x ; newtile = newtile; };
+                              { row = curr_player_y ; col = curr_player_x ; newtile = oldtile; }] in
+                (if playerid = 1 then st.pl1_loc <- room1_string, next_player_x, next_player_y else
+                st.pl2_loc <- room2_string, next_player_x, next_player_y);
+                (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+              end
+          end 
         else
           begin
             newtile.ch <- Some { id = playerid ; direction = d };
@@ -365,34 +436,6 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
       update_chat room1 room2 playerid s
-
-(**
- * Helper method to convert all of a state into a log' based on the player's id
- *
- * requires: playerid is 1 or 2, st is a valid state
- * returns: a log' representation of player [playerid]'s state
- *)
-let logify (playerid : int) (st : t) : log' =
-  let room1_string = fst_third st.pl1_loc in
-  let room1 = Hashtbl.find st.roommap room1_string in
-  let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
-          Array.mapi (fun (x : int) (t : tile) ->
-            {row = y; col = x; newtile = t}
-          ) row
-        ) room1.tiles) in
-  let entryarrlist = (Array.map Array.to_list entrymap) in
-  let entrylistlist = Array.to_list entryarrlist in
-  let entrylist = List.flatten entrylistlist in
-  {
-    room_id = room1_string;
-    rows = room1.rows;
-    cols = room1.cols;
-    change = entrylist;
-    inv_change = {add = []; remove = []};
-    chat = None
-  }
-
-
 
 (** Save a game : Converting state to json **)
 
