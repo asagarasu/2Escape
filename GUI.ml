@@ -222,15 +222,20 @@ let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None;
 
 let (kltile : State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = None; kl = Some {id = "kl1"; key = "item1"; 
-    is_solved = false; exit_effect = [("room1", 7, 6)]; immovable_effect = []}}
+    is_solved = false; exit_effect = [("room1", 7, 6)]; immovable_effect = [
+      ("room1", 6, 6); ("room1", 8, 5); ("room1", 7, 5); ("room1", 6, 5)
+    ]}}
 
 let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = Some {is_open = false; to_room = ("room2", 0, 0)}; kl = None}
 
 let (exittile2 : State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {is_open = true; to_room = ("room1", 9, 9)}; kl = None}
+  store = None; ex = Some {is_open = true; to_room = ("room1", 9, 0)}; kl = None}
 
 let (movtile2 : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
+  store = None; ex = None; kl = None}
+
+let createwalltile () : State.tile = {ch = None; mov = None; immov = Some {id = "wall"};
   store = None; ex = None; kl = None}
 
 let (room1 : State.room) = {
@@ -247,6 +252,14 @@ let (room1 : State.room) = {
     arr.(3).(3) <- movtile;
     arr.(2).(1) <- kltile;
     arr.(6).(7) <- exittile1;
+    arr.(5).(8) <- createwalltile ();
+    arr.(5).(7) <- createwalltile ();
+    arr.(5).(6) <- createwalltile ();
+    arr.(6).(6) <- createwalltile ();
+    arr.(6).(8) <- createwalltile ();
+    arr.(7).(8) <- createwalltile ();
+    arr.(7).(7) <- createwalltile ();
+    arr.(7).(6) <- createwalltile ();
     arr);
   rows = 10; 
   cols = 10
@@ -293,6 +306,33 @@ let start () =
     gametable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \
     margin-left:auto; margin-right:auto; background-color: #F0F8FF; tabindex= 1 ";
+
+  let invdiv = Html.createDiv document in 
+    invdiv##style##cssText <- js "margin-bottom:20px;";
+  
+  let invtable = Html.createTable document in 
+    invtable##style##cssText <- js 
+    "border-collapse:collapse;line-height: 0; opacity: 1; \
+    margin-left:auto; margin-right:auto; background-color: #F0F8FF; tabindex= 1 ";
+  begin
+    for y = 1 to 1 do
+      let tr = invtable##insertRow (-1) in
+        for x = 1 to 5 do 
+          let td = tr##insertCell (-1) in
+          td##style##cssText <- td_style;
+          Dom.appendChild tr td;
+          let img = Html.createImg document in 
+            (match x with 
+             | 1 -> img##src <- js "sprites/larrow.png"
+             | 5 -> img##src <- js "sprites/rarrow.png"
+             | _ -> img##src <- js "sprites/inv.png"
+             );
+            Dom.appendChild td img;
+        done;
+        Dom.appendChild invtable tr
+      done;
+  end;
+  invtable##style##opacity <- Js.def (js "1");
   
   let chatdiv = Html.createDiv document in 
 
@@ -324,9 +364,11 @@ let start () =
   Dom.appendChild gamediv gametable;
   Dom.appendChild chatdiv chatoutputdiv;
   Dom.appendChild chatdiv chatinputdiv;
+  Dom.appendChild invdiv invtable;
   body##style##cssText <- js "font-family: 
     sans-serif; text-align: center; background-color: #e8e8e8;";
   Dom.appendChild body gamediv;
+  Dom.appendChild body invdiv;
   Dom.appendChild body chatdiv
 
 let _ = start ()
