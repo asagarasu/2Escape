@@ -278,12 +278,14 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             match tile.kl with
             | Some _ -> create_empty_logs room1 room2
             | None -> 
-              tile.store <- None;
-              (if playerid = 1 then st.pl1_inv <- item.id :: st.pl1_inv
-              else st.pl2_inv <- item.id :: st.pl2_inv);
-              let entry_l = [{ row = curr_player_y ; col = curr_player_x ; newtile = tile }]
-              in
-              add_item_logs (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l) playerid item.id
+              begin 
+                tile.store <- None;
+                (if playerid = 1 then st.pl1_inv <- item.id :: st.pl1_inv
+                else st.pl2_inv <- item.id :: st.pl2_inv);
+                let entry_l = [{ row = curr_player_y ; col = curr_player_x ; newtile = tile }]
+                in
+                add_item_logs (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l) playerid item.id
+              end
           end 
       | None -> create_empty_logs room1 room2)
   | Drop item ->
@@ -345,6 +347,8 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                     fst curr_entries, 
                     { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
                   | _ -> curr_entries) changedExitsEntries kl.immovable_effect in 
+                  (if playerid = 1 then st.pl1_inv <- List.filter (fun x -> x <> item) st.pl1_inv
+                  else st.pl2_inv <- List.filter (fun x -> x <> item) st.pl2_inv);
                 drop_item_logs (create_log room1 (fst allEntries), create_log room2 (snd allEntries)) playerid item
               end 
             else create_empty_logs room1 room2

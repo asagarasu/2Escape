@@ -219,6 +219,10 @@ let (itemtile : State.tile) = {ch = None; mov = None;
 let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
   store = None; ex = None; kl = None}
 
+let (kltile : State.tile) = {ch = None; mov = None; immov = None;
+  store = None; ex = None; kl = Some {id = "kl1"; key = "item1"; 
+    is_solved = false; exit_effect = []; immovable_effect = []}}
+
 let (room1 : State.room) = {
   id = "room1"; 
   tiles = (let arr = Array.make_matrix 5 5 emptytile in 
@@ -231,6 +235,7 @@ let (room1 : State.room) = {
     arr.(4).(4) <- player2tile;
     arr.(2).(2) <- itemtile;
     arr.(3).(3) <- movtile;
+    arr.(2).(1) <- kltile;
     arr);
   rows = 5; 
   cols = 5
@@ -240,7 +245,7 @@ let (room1 : State.room) = {
 let (emptystate : State.t) = {
   roommap = (let map = (Hashtbl.create 1) in Hashtbl.add map "room1" room1; map);
   pl1_loc = ("room1", 0, 0);
-  pl2_loc = ("room1", 4, 4);
+  pl2_loc = ("room1", 5, 5);
   pl1_inv = [];
   pl2_inv = [];
   chat = []
