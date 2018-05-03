@@ -216,6 +216,9 @@ let get_emptytile () : State.tile = {ch = None; mov = None;
 let (itemtile : State.tile) = {ch = None; mov = None; 
   store = Some {id = "item1"}; immov = None; ex = None; kl = None}
 
+let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
+  store = None; ex = None; kl = None}
+
 let (room1 : State.room) = {
   id = "room1"; 
   tiles = (let arr = Array.make_matrix 5 5 emptytile in 
@@ -227,6 +230,7 @@ let (room1 : State.room) = {
     arr.(0).(0) <- player1tile;
     arr.(4).(4) <- player2tile;
     arr.(2).(2) <- itemtile;
+    arr.(3).(3) <- movtile;
     arr);
   rows = 5; 
   cols = 5

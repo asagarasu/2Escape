@@ -213,8 +213,45 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     try
       let oldtile = curr_room.tiles.(curr_player_y).(curr_player_x) in
       let newtile = curr_room.tiles.(next_player_y).(next_player_x) in
-        if bool_opt newtile.ch then create_empty_logs room1 room2
-        else if bool_opt newtile.immov then create_empty_logs room1 room2
+        if bool_opt newtile.ch then 
+          begin
+            oldtile.ch <- Some { id = playerid ; direction = d };
+            let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in 
+            (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+          end
+        else if bool_opt newtile.immov then 
+          begin
+            oldtile.ch <- Some { id = playerid ; direction = d };
+            let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in 
+            (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+          end
+        else if bool_opt newtile.mov then 
+          begin
+            let mov_y = next_player_y + snd pair in 
+            let mov_x = next_player_x + fst pair in 
+            let mov_tile = curr_room.tiles.(mov_y).(mov_x) in 
+            if mov_tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None} then
+              begin
+                mov_tile.mov <- newtile.mov;
+                newtile.mov <- None;
+                newtile.ch <- Some { id = playerid ; direction = d };
+                oldtile.ch <- None;
+                (if playerid = 1 then st.pl1_loc <- room1_string, next_player_x, next_player_y else
+                st.pl2_loc <- room2_string, next_player_x, next_player_y);
+                let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile};
+                  {row = next_player_y; col = next_player_x; newtile = newtile};
+                  {row = mov_y; col = mov_x; newtile = mov_tile}
+                  ] in
+                (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+              end
+            else 
+              begin
+                oldtile.ch <- Some { id = playerid ; direction = d };
+                let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in 
+                (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+              end
+          end
+        else if bool_opt newtile.ex then failwith "TODO"
         else
           begin
             newtile.ch <- Some { id = playerid ; direction = d };
@@ -227,7 +264,11 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
           end
           (*TODO other things*)
     with
-       Invalid_argument _ -> create_empty_logs room1 room2
+       Invalid_argument _ -> 
+        let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in 
+          tile.ch <- Some { id = playerid ; direction = d };
+          let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = tile}] in 
+          (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
   )
   | Take -> 
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
