@@ -224,8 +224,14 @@ let (kltile : State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = None; kl = Some {id = "kl1"; key = "item1"; 
     is_solved = false; exit_effect = [("room1", 7, 6)]; immovable_effect = []}}
 
-let (exittile: State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {is_open = false; to_room = ("room1", 9, 0)}; kl = None}
+let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
+  store = None; ex = Some {is_open = false; to_room = ("room2", 0, 0)}; kl = None}
+
+let (exittile2 : State.tile) = {ch = None; mov = None; immov = None;
+  store = None; ex = Some {is_open = true; to_room = ("room1", 9, 9)}; kl = None}
+
+let (movtile2 : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
+  store = None; ex = None; kl = None}
 
 let (room1 : State.room) = {
   id = "room1"; 
@@ -240,15 +246,33 @@ let (room1 : State.room) = {
     arr.(2).(2) <- itemtile;
     arr.(3).(3) <- movtile;
     arr.(2).(1) <- kltile;
-    arr.(6).(7) <- exittile;
+    arr.(6).(7) <- exittile1;
     arr);
   rows = 10; 
   cols = 10
 }
 
+let (room2 : State.room) = {
+  id = "room2";
+  tiles = (let arr = Array.make_matrix 20 20 emptytile in 
+  for y = 0 to 19 do
+    for x = 0 to 19 do
+      arr.(y).(x) <- get_emptytile ()
+    done
+  done;
+  arr.(10).(10) <- exittile2;
+  arr.(5).(5) <- movtile2;
+  arr);
+  rows = 20;
+  cols = 20
+}
+
 (* example states*)
 let (emptystate : State.t) = {
-  roommap = (let map = (Hashtbl.create 1) in Hashtbl.add map "room1" room1; map);
+  roommap = (let map = (Hashtbl.create 1) in 
+    Hashtbl.add map "room1" room1; 
+    Hashtbl.add map "room2" room2;
+    map);
   pl1_loc = ("room1", 0, 0);
   pl2_loc = ("room1", 4, 4);
   pl1_inv = [];
@@ -268,7 +292,7 @@ let start () =
   let gametable = Html.createTable document in 
     gametable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \
-    margin-left:auto; margin-right:auto; background-color: yellow; tabindex= 1 ";
+    margin-left:auto; margin-right:auto; background-color: #F0F8FF; tabindex= 1 ";
   
   let chatdiv = Html.createDiv document in 
 
