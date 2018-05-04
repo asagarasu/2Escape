@@ -1,13 +1,16 @@
 open Unix
 
+type t = in_channel * out_channel
+
 let send_command = 
-	failwith ""
+	failwith "Not Yet Implemented"
 
 let receive_state =
-	failwith ""
+	failwith "Not Yet Implemented"
 	
-(**read the input line and send to the server
- *receive the *)
+(**
+ * Temporary function to test the client-server dynamics in ocaml
+ *)
 let client_fun ic oc =
    try
      while true do
@@ -23,10 +26,12 @@ let client_fun ic oc =
        Exit -> exit 0
      | exn -> shutdown_connection ic ; raise exn  ;;
 
-let create_client () =
-let ip = "10.131.16.128" in
-let port = 40005 in
-let addr = ADDR_INET ((inet_addr_of_string ip), port)
-in let ic,oc = open_connection addr
-   in client_fun ic oc ;
+(**
+ * Temporary implementation to test the client-server dynamics in ocaml
+ *)
+let create_client (ip : string) =
+  let port = 40005 in
+  let addr = ADDR_INET ((inet_addr_of_string ip), port)
+  in let ic,oc = open_connection addr
+    in client_fun ic oc ;
       shutdown_connection ic

@@ -1,1 +1,0 @@
-val draw_state: Dom_html.canvasRenderingContext2D Js.t -> State.t -> unit
