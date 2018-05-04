@@ -1,4 +1,7 @@
 open Unix
+open Lwt
+
+let () = Lwt_log.add_rule "*" Lwt_log.Info
 
 (**get the IP address of the local computer*)
 let get_my_addr () =
