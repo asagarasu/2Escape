@@ -3,6 +3,9 @@ open Lwt
 open Lwt_io
 
 let counter = ref 0
+let player1 = ref (ADDR_UNIX "")
+let player2 = ref (ADDR_UNIX "")
+let state = ref false
 
 let () = Lwt_log.add_rule "*" Lwt_log.Info
 
@@ -32,7 +35,9 @@ let rec handle_connection ic oc () =
         | None -> Lwt_log.info "Connection closed" >>= return)
 
 let accept_connection conn =
-    let fd, sockaddr = conn in (**sockaddr need to be used in the handle message later*)
+    let fd, sockaddr = conn in 
+	if (!state = false) then player1 := sockaddr;state:=true
+	else player2 := sockaddr in
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
     let oc = Lwt_io.of_fd Lwt_io.Output fd in
     Lwt.on_failure (handle_connection ic oc ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
