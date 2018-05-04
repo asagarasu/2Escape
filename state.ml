@@ -8,7 +8,7 @@ open Yojson.Basic.Util
 type direction = Up | Down | Left | Right
 
 (* Various commands the player can make to affect the state/chat *)
-type command = | Go of direction | Message of string | Take | Drop of string
+type command = | Go of direction | Message of string | Take | Drop of string | Enter
 
 (* State *)
 (* character type detailing the number and direction of the character *)
@@ -24,7 +24,7 @@ type storable = {id : string}
 type immovable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
-type exit = {mutable is_open : bool; to_room : string * int * int}
+type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key 
  * exit_effect are (room name, col, row)
@@ -75,8 +75,8 @@ type entry = {
 
 (* Type representing inventory changes *)
 type invchange = {
-  add : string list;
-  remove : string list
+  add : string option;
+  remove : string option
 }
 
 (* type representing a log of information to pass to client*)
@@ -96,8 +96,8 @@ type log' = {
  * returns: two emtpy logs with the room information
  *)
 let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
-  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; inv_change = {add = []; remove = []}; chat = None},
-   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; inv_change = {add = []; remove = []}; chat = None})
+  ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols; change = []; inv_change = {add = None; remove = None}; chat = None},
+   {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols; change = []; inv_change = {add = None; remove = None}; chat = None})
 
 (**
  * Helper method to create a log based on a list of changed entries in room
@@ -106,7 +106,7 @@ let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
  * returns: a [log'] with the information slotted in
  *)
 let create_log (rm : room) (entry_l : entry list) : log' =  
-    {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; inv_change = {add = []; remove = []}; chat = None}
+    {room_id = rm.id; rows = rm.rows; cols = rm.rows; change = entry_l; inv_change = {add = None; remove = None}; chat = None}
 
 (**
  * Helper method to update a room by a new room iff it is the correct room to update
@@ -118,10 +118,10 @@ let create_log (rm : room) (entry_l : entry list) : log' =
 let update_room (sendroom : room) (changedroom : room) (entries : entry list) : log' =
   if sendroom.id = changedroom.id then
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
-    change = entries; inv_change = {add = []; remove = []}; chat = None}
+    change = entries; inv_change = {add = None; remove = None}; chat = None}
   else
     {room_id = sendroom.id; rows = sendroom.rows; cols = sendroom.cols; 
-      change = []; inv_change = {add = []; remove = []}; chat = None}
+      change = []; inv_change = {add = None; remove = None}; chat = None}
 
 (**
  * Helper method to update a log based on [playerid] adding an [item]
@@ -134,13 +134,12 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
 let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' = 
   if playerid = 1 then
     {room_id = (fst logs).room_id; rows = (fst logs).rows; cols = (fst logs).cols;
-      change = (fst logs).change; inv_change = {add = item :: 
-        (fst logs).inv_change.add; remove = (fst logs).inv_change.remove};
+      change = (fst logs).change; inv_change = {add = Some item; remove = None};
           chat = (fst logs).chat}, (snd logs)
   else
     (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows;
-      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = item ::
-        (snd logs).inv_change.add; remove = (snd logs).inv_change.remove};
+      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = Some item;
+       remove = None};
           chat = (snd logs).chat}
 
 (**
@@ -154,13 +153,13 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
 let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' = 
   if playerid = 1 then
     {room_id = (fst logs).room_id; rows = (fst logs).rows; cols = (fst logs).cols;
-      change = (fst logs).change; inv_change = {add = (fst logs).inv_change.add; 
-        remove = item :: (fst logs).inv_change.remove};
+      change = (fst logs).change; inv_change = {add = None; 
+        remove = Some item};
           chat = (fst logs).chat}, (snd logs)
   else
     (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows;
-      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = (snd logs).inv_change.add; 
-        remove = item :: (snd logs).inv_change.remove}; chat = (snd logs).chat}
+      cols = (snd logs).cols; change = (snd logs).change; inv_change = {add = None; 
+        remove = Some item}; chat = (snd logs).chat}
 (**
  * Helper method to update the chat
  *
@@ -169,9 +168,9 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
  *)
 let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
   {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = []; 
-    inv_change = {add = []; remove = []}; chat = Some {id = id; message = message}},
+    inv_change = {add = None; remove = None}; chat = Some {id = id; message = message}},
   {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = []; 
-    inv_change = {add = []; remove = []}; chat = Some {id = id; message = message}}
+    inv_change = {add = None; remove = None}; chat = Some {id = id; message = message}}
 
 (**
  * Helper method to get the direction vector of each command.Arg
@@ -208,7 +207,7 @@ let logify (playerid : int) (st : t) : log' =
     rows = room1.rows;
     cols = room1.cols;
     change = entrylist;
-    inv_change = {add = []; remove = []};
+    inv_change = {add = None; remove = None};
     chat = None
   }
 
@@ -279,50 +278,6 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
               end
           end
-        else if bool_opt newtile.ex then 
-          begin 
-            let exit = access_opt newtile.ex in
-            if (exit).is_open then 
-              begin
-                let newroom_string = fst_third exit.to_room in
-                let newroom = Hashtbl.find st.roommap newroom_string in
-                let newroom_y = thd_third exit.to_room in
-                let newroom_x = snd_third exit.to_room in
-                let newroom_tile = newroom.tiles.(newroom_y).(newroom_x) in 
-                  if bool_opt newroom_tile.ch || bool_opt newroom_tile.mov 
-                    || bool_opt newroom_tile.immov || bool_opt newroom_tile.ex then
-                    begin
-                      oldtile.ch <- Some { id = playerid ; direction = d };
-                      let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in 
-                      (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
-                    end
-                  else 
-                    begin 
-                      oldtile.ch <- None;
-                      newroom_tile.ch <- Some {id = playerid; direction = d};
-                      (if playerid = 1 then st.pl1_loc <- newroom_string, newroom_x, newroom_y else
-                        st.pl2_loc <- newroom_string, newroom_x, newroom_y);
-                      let curr_player_log = logify playerid st in 
-                      let other_player_entries = (match other_room_id with 
-                        | x when x = curr_room_id -> [{row = curr_player_y; col = curr_player_x; newtile = oldtile}]
-                        | x when x = newroom_string -> [{row = newroom_y; col = newroom_x; newtile = newroom_tile}]
-                        | _ -> []
-                        ) in 
-                      (if playerid = 1 then curr_player_log, create_log room2 other_player_entries
-                      else create_log room2 other_player_entries, curr_player_log)
-                    end
-              end
-            else 
-              begin
-                newtile.ch <- Some { id = playerid ; direction = d };
-                oldtile.ch <- None;
-                let entry_l = [{ row = next_player_y ; col = next_player_x ; newtile = newtile; };
-                              { row = curr_player_y ; col = curr_player_x ; newtile = oldtile; }] in
-                (if playerid = 1 then st.pl1_loc <- room1_string, next_player_x, next_player_y else
-                st.pl2_loc <- room2_string, next_player_x, next_player_y);
-                (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
-              end
-          end 
         else
           begin
             newtile.ch <- Some { id = playerid ; direction = d };
@@ -436,6 +391,41 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
       update_chat room1 room2 playerid s
+  | Enter -> 
+    let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in 
+      if bool_opt tile.ex then 
+        begin 
+          let exit = access_opt tile.ex in
+          if (exit).is_open then 
+            begin
+              let newroom_string = fst_third exit.to_room in
+              let newroom = Hashtbl.find st.roommap newroom_string in
+              let newroom_y = thd_third exit.to_room in
+              let newroom_x = snd_third exit.to_room in
+              let newroom_tile = newroom.tiles.(newroom_y).(newroom_x) in 
+                if bool_opt newroom_tile.ch || bool_opt newroom_tile.mov 
+                  || bool_opt newroom_tile.immov || bool_opt newroom_tile.ex then
+                  create_empty_logs room1 room2
+                else 
+                  begin 
+                    tile.ch <- None;
+                    newroom_tile.ch <- Some {id = playerid; direction = Down};
+                    (if playerid = 1 then st.pl1_loc <- newroom_string, newroom_x, newroom_y else
+                      st.pl2_loc <- newroom_string, newroom_x, newroom_y);
+                    let curr_player_log = logify playerid st in 
+                    let other_player_entries = (match other_room_id with 
+                      | x when x = curr_room_id -> [{row = curr_player_y; col = curr_player_x; newtile = tile}]
+                      | x when x = newroom_string -> [{row = newroom_y; col = newroom_x; newtile = newroom_tile}]
+                      | _ -> []
+                      ) in 
+                    (if playerid = 1 then curr_player_log, create_log room2 other_player_entries
+                    else create_log room2 other_player_entries, curr_player_log)
+                  end
+            end
+          else 
+            create_empty_logs room1 room2
+        end
+  else create_empty_logs room1 room2 
 
 (** Save a game : Converting state to json **)
 
@@ -450,12 +440,13 @@ let ch_to_json (t:character) =
 
 (* Helper method to turn a [ex] into a json*)
 let ex_to_json (t:exit) =
+  let id = `String t.id in 
   let is_open = `Bool t.is_open in
   let triple = t.to_room in
   let to_room = `List [`String (fst_third triple);
                        `Int (snd_third triple);
                        `Int (thd_third triple)] in
-  `Assoc [("is_open",is_open);("to_room",to_room)]
+  `Assoc [("id", id); ("is_open",is_open);("to_room",to_room)]
 
 (* Helper method to turn a [kl] to a json *)
 let kl_to_json (t:keyloc) =
@@ -534,6 +525,7 @@ let ch_of_json j =
 let ex_of_json j =
   let trl =  j |> member "to_room" |> to_list in
   Some {
+    id = j |> member "id" |> to_string;
     is_open = j |> member "is_open" |> to_bool;
     to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
   }

@@ -2,7 +2,7 @@ open Helper
 
 type direction = Up | Down | Left | Right
 
-type command = | Go of direction | Message of string | Take | Drop of string
+type command = | Go of direction | Message of string | Take | Drop of string | Enter
 
 type character = {id : int; direction : direction}
 
@@ -12,7 +12,7 @@ type storable = {id : string}
 
 type immovable = {id : string}
 
-type exit = {mutable is_open : bool; to_room : string * int * int}
+type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
 
 type keyloc = {id : string; key : string; 
   mutable is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
@@ -54,8 +54,8 @@ type entry = {
 }
 
 type invchange = {
-  add : string list;
-  remove : string list
+  add : string option;
+  remove : string option
 }
 
 

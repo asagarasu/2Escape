@@ -31,7 +31,7 @@ let get_dominant (tile: State.tile) : string =
   if bool_opt tile.immov = true then (access_opt tile.immov).id  else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
-    (if is_open then "exitopen" else "exitclosed") else
+    (if is_open then (access_opt tile.ex).id ^ "_open" else (access_opt tile.ex).id ^ "_closed") else
   "empty"
 
 (**
@@ -42,6 +42,40 @@ let get_dominant (tile: State.tile) : string =
  *)
 let match_name (name : string) : Js.js_string Js.t = 
   js ("sprites/" ^ name ^ ".png")
+
+let inventory : string list ref = ref []
+
+let startloc = ref 0
+
+let inv1 = Html.createImg document 
+
+let inv2 = Html.createImg document 
+
+let inv3 = Html.createImg document
+
+let redraw_inv _ : unit = 
+  inv1##src <- 
+    (try
+      match_name (List.nth (!inventory) (!startloc - 1)) 
+    with Invalid_argument _ -> match_name "invempty"
+    | Failure _ -> match_name "invempty");
+  inv2##src <- 
+    (try
+    match_name (List.nth (!inventory) (!startloc)) 
+  with Invalid_argument _ -> match_name "invempty"
+  | Failure _ -> match_name "invempty");
+  inv3##src <- 
+    (try
+      match_name (List.nth (!inventory) (!startloc + 1)) 
+    with Invalid_argument _ -> match_name "invempty"
+    | Failure _ -> match_name "invempty")
+  
+let clickleft _ : unit = 
+  if !startloc = 0 then () else startloc := !startloc - 1; redraw_inv ()
+
+let clickright _ : unit = 
+  if !startloc = List.length (!inventory) - 1 then ()
+  else startloc := !startloc + 1; redraw_inv ()
 
 (**
  * Helper method to replace the child of a parent 
@@ -157,7 +191,8 @@ let key_direction ev : State.command option =
   | 39 -> Some (State.Go State.Right)
   | 40 -> Some (State.Go State.Down)
   | 90 -> Some State.Take
-  | 88 -> Some (State.Drop "item1")
+  | 88 -> Some (State.Drop "item1") (*(match List.nth_opt (!inventory) startloc)*)
+  | 32 -> Some State.Enter
   | _ -> None 
 
 (**
@@ -194,6 +229,7 @@ let send_message_temp tbl chat state input ev : unit =
           update_gui tbl chat (fst (State.do_command 1 c state))
   | _ -> Html.stopPropagation ev
 
+
 (* example log test case for GUI*)
 let (emptytile : State.tile) = {ch = None; mov = None; 
   store = None; immov = None; ex = None; kl = None}
@@ -203,7 +239,7 @@ let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2;
     {row = 1; col = 0; newtile = emptytile};
   {row = 0; col = 1; newtile = emptytile}; 
     {row = 1; col = 1; newtile = emptytile}]; 
-  inv_change = {add = []; remove = []};
+  inv_change = {add = None; remove = None};
   chat = Some {id = 1; message = "hi"}}
 
 let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; 
@@ -227,10 +263,10 @@ let (kltile : State.tile) = {ch = None; mov = None; immov = None;
     ]}}
 
 let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {is_open = false; to_room = ("room2", 0, 0)}; kl = None}
+  store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0)}; kl = None}
 
 let (exittile2 : State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {is_open = true; to_room = ("room1", 9, 0)}; kl = None}
+  store = None; ex = Some {id = "exit"; is_open = true; to_room = ("room1", 9, 0)}; kl = None}
 
 let (movtile2 : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
   store = None; ex = None; kl = None}
@@ -313,25 +349,26 @@ let start () =
   let invtable = Html.createTable document in 
     invtable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \
-    margin-left:auto; margin-right:auto; background-color: #F0F8FF; tabindex= 1 ";
-  begin
-    for y = 1 to 1 do
-      let tr = invtable##insertRow (-1) in
-        for x = 1 to 5 do 
-          let td = tr##insertCell (-1) in
-          td##style##cssText <- td_style;
-          Dom.appendChild tr td;
-          let img = Html.createImg document in 
-            (match x with 
-             | 1 -> img##src <- js "sprites/larrow.png"
-             | 5 -> img##src <- js "sprites/rarrow.png"
-             | _ -> img##src <- js "sprites/inv.png"
-             );
-            Dom.appendChild td img;
-        done;
-        Dom.appendChild invtable tr
-      done;
-  end;
+    margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
+  let larrow = Html.createImg document in larrow##src <- js "sprites/larrow.png";
+  larrow##ondblclick <- Html.handler (fun _ -> clickleft (); Js.bool true);
+  let rarrow = Html.createImg document in rarrow##src <- js "sprites/rarrow.png"; 
+  rarrow##ondblclick <- Html.handler (fun _ -> clickright (); Js.bool true); 
+  let tr = invtable##insertRow (-1) in 
+  for x = 1 to 5 do 
+    let td = tr##insertCell (-1) in
+    td##style##cssText <- td_style;
+    Dom.appendChild tr td;
+    let image = (match x with 
+     | 1 -> larrow
+     | 2 -> inv1
+     | 3 -> td##style##cssText <- js "padding: 0; width: 20px; height: 20px; background-color: white"; inv2
+     | 4 -> inv3 
+     | 5 -> rarrow) in 
+      Dom.appendChild td image;
+  done;
+  redraw_inv ();
+
   invtable##style##opacity <- Js.def (js "1");
   
   let chatdiv = Html.createDiv document in 
