@@ -1,6 +1,6 @@
 *.zip
 *.pdf
-GUITesting/_build/
 _build/
 .DS_Store
 _tags
+GUI/_build/

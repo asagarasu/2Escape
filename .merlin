@@ -1,3 +1,5 @@
 B _build
 PKG js_of_ocaml
 PKG js_of_ocaml_lwt
+PKG yojson
+PKG oUnit
