@@ -37,3 +37,17 @@ let access_opt (x : 'a option) : 'a =
   match x with 
   | Some a -> a
   | None -> failwith "Precondition broken"
+
+(**
+ * Helper to find the first index of the value in a list 
+ * that satisfies the condition
+ *
+ * raises: Not_found if nothing is found
+ *)
+let find_index (func : 'a -> bool) (l : 'a list) : int = 
+  let rec find_index_helper (func1 : 'a -> bool) (li : 'a list) (tracker : int) : int = 
+    (match li with 
+    | [] -> raise Not_found
+    | hd :: tl when func1 hd -> tracker
+    | _ :: tl -> find_index_helper func1 tl (tracker + 1)) in 
+  find_index_helper func l 0

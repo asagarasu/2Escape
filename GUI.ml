@@ -56,7 +56,7 @@ let inv3 = Html.createImg document
 let redraw_inv _ : unit = 
   inv1##src <- 
     (try
-      match_name (List.nth (!inventory) (!startloc - 1)) 
+      match_name (List.nth (!inventory) (!startloc + 1)) 
     with Invalid_argument _ -> match_name "invempty"
     | Failure _ -> match_name "invempty");
   inv2##src <- 
@@ -66,16 +66,42 @@ let redraw_inv _ : unit =
   | Failure _ -> match_name "invempty");
   inv3##src <- 
     (try
-      match_name (List.nth (!inventory) (!startloc + 1)) 
+      match_name (List.nth (!inventory) (!startloc - 1)) 
     with Invalid_argument _ -> match_name "invempty"
     | Failure _ -> match_name "invempty")
   
-let clickleft _ : unit = 
-  if !startloc = 0 then () else startloc := !startloc - 1; redraw_inv ()
-
 let clickright _ : unit = 
+  if !startloc = 0 then () 
+  else startloc := !startloc - 1; redraw_inv ()
+
+let clickleft _ : unit = 
   if !startloc = List.length (!inventory) - 1 then ()
   else startloc := !startloc + 1; redraw_inv ()
+
+let redraw_inv_log (log : State.log') : unit = 
+    if bool_opt log.inv_change.add then 
+      begin
+        (if List.length !inventory > 0 then startloc := !startloc + 1 else ());
+        inventory := (access_opt log.inv_change.add) :: !inventory;
+        redraw_inv ()
+      end
+    else if bool_opt log.inv_change.remove then 
+      begin
+        let removeditem = (access_opt log.inv_change.remove) in 
+        let index = find_index ((=) removeditem) !inventory in 
+          if index <= !startloc then
+            begin
+              (if !startloc > 0 then startloc := !startloc - 1 else ());
+              inventory := List.filter (fun a -> a <> removeditem) !inventory;
+              redraw_inv ()
+            end 
+          else 
+            begin 
+              inventory := List.filter (fun a -> a <> removeditem) !inventory;
+              redraw_inv ()
+            end
+      end
+    else ()
 
 (**
  * Helper method to replace the child of a parent 
@@ -161,7 +187,8 @@ let re_draw_whole tbl (log : State.log') : unit =
  *)
 let update_gui gametable chatArea (log : State.log') : unit = 
   re_draw_whole gametable log;
-  receive_message chatArea log
+  receive_message chatArea log;
+  redraw_inv_log log
 
 (**
  * Helper method send a message command 
@@ -191,7 +218,10 @@ let key_direction ev : State.command option =
   | 39 -> Some (State.Go State.Right)
   | 40 -> Some (State.Go State.Down)
   | 90 -> Some State.Take
-  | 88 -> Some (State.Drop "item1") (*(match List.nth_opt (!inventory) startloc)*)
+  | 88 -> (match List.nth_opt !inventory !startloc with
+            | Some x -> Some (State.Drop x)
+            | None -> None
+          )
   | 32 -> Some State.Enter
   | _ -> None 
 
@@ -253,6 +283,18 @@ let get_emptytile () : State.tile = {ch = None; mov = None;
 let (itemtile : State.tile) = {ch = None; mov = None; 
   store = Some {id = "item1"}; immov = None; ex = None; kl = None}
 
+let (itemtile2 : State.tile) = {ch = None; mov = None; 
+store = Some {id = "item2"}; immov = None; ex = None; kl = None}
+
+let (itemtile3 : State.tile) = {ch = None; mov = None; 
+store = Some {id = "item3"}; immov = None; ex = None; kl = None}
+
+let (itemtile4 : State.tile) = {ch = None; mov = None; 
+store = Some {id = "item4"}; immov = None; ex = None; kl = None}
+
+let (itemtile5 : State.tile) = {ch = None; mov = None; 
+store = Some {id = "item5"}; immov = None; ex = None; kl = None}
+
 let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
   store = None; ex = None; kl = None}
 
@@ -296,6 +338,10 @@ let (room1 : State.room) = {
     arr.(7).(8) <- createwalltile ();
     arr.(7).(7) <- createwalltile ();
     arr.(7).(6) <- createwalltile ();
+    arr.(1).(2) <- itemtile2;
+    arr.(7).(1) <- itemtile3;
+    arr.(7).(2) <- itemtile4;
+    arr.(8).(1) <- itemtile5;
     arr);
   rows = 10; 
   cols = 10
@@ -351,9 +397,9 @@ let start () =
     "border-collapse:collapse;line-height: 0; opacity: 1; \
     margin-left:auto; margin-right:auto; background-color: black; tabindex= 1 ";
   let larrow = Html.createImg document in larrow##src <- js "sprites/larrow.png";
-  larrow##ondblclick <- Html.handler (fun _ -> clickleft (); Js.bool true);
+  larrow##onclick <- Html.handler (fun _ -> clickleft (); Js.bool true);
   let rarrow = Html.createImg document in rarrow##src <- js "sprites/rarrow.png"; 
-  rarrow##ondblclick <- Html.handler (fun _ -> clickright (); Js.bool true); 
+  rarrow##onclick <- Html.handler (fun _ -> clickright (); Js.bool true); 
   let tr = invtable##insertRow (-1) in 
   for x = 1 to 5 do 
     let td = tr##insertCell (-1) in

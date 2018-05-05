@@ -344,7 +344,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                   let alteredrow = thd_third ex_effect in 
                   let alteredcol = snd_third ex_effect in
                   let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
-                  (access_opt alteredtile.ex).is_open <- true;
+                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open;
                   match room1_string, room2_string with 
                   | a, b when a = room1_string && b = room2_string -> 
                     { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries), 
