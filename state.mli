@@ -1,29 +1,79 @@
 open Helper
-open Init
 
-type direction = Init.direction
+type direction = Up | Down | Left | Right
 
-type command = Init.command
+(* Various commands the player can make to affect the state/chat *)
+type command =
+  | Go of direction
+  | Message of string
+  | Take
+  | Drop of string
+  | Enter
+  | Rotate
 
-type character = Init.character
+(* State *)
+(* character type detailing the number and direction of the character *)
+type character = {id : int; direction : direction}
 
-type movable = Init.movable
+(* type representing a movable object *)
+type movable = {id : string}
 
-type storable = Init.storable
+(* type representing a storable object *)
+type storable = {id : string}
 
-type immovable = Init.immovable
+(* type representing an immovable object *)
+type immovable = {id : string}
 
-type exit = Init.exit
+(* type representing an exit in the room, to_room is (room name, x, y) *)
+type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
 
-type keyloc = Init.keyloc
+(* type representing a location for a key
+ * exit_effect are (room name, col, row)
+ * immovable_effect are (room name, col, row)
+*)
+type keyloc = {id : string;
+               key : string;
+               mutable is_solved : bool;
+               exit_effect : (string * int * int) list;
+               immovable_effect : (string * int * int) list}
 
-type tile = Init.tile
+(* type representing a rotatable object *)
+type rotatable = {id : string}
 
-type room = Init.room
+(* type representing a tile in the room *)
+type tile = {
+  mutable ch : character option;
+  mutable mov : movable option;
+  mutable store : storable option;
+  mutable immov : immovable option;
+  mutable ex : exit option;
+  mutable kl : keyloc option;
+  mutable rt : rotatable option;
+}
 
-type message = Init.message
+(* type representing a room in the state *)
+type room = {
+  id : string;
+  mutable tiles : tile array array;
+  rows : int;
+  cols : int
+}
 
-type t = Init.t
+(* type representing a message in the state *)
+type message = {
+  id : int;
+  message : string
+}
+
+(* type representing a state *)
+type t = {
+  roommap : (string, room) Hashtbl.t;
+  mutable pl1_loc : string * int * int ;
+  mutable pl2_loc : string * int * int ;
+  mutable pl1_inv : string list;
+  mutable pl2_inv : string list;
+  mutable chat : message list
+}
 
 type entry = {
   row : int;
@@ -68,6 +118,3 @@ val save : t -> string -> unit
 
 (* [load] reading a string and returns a state *)
 val load : string -> t
-
-(* [start] is the initial state of the game *)
-val start : t
