@@ -539,7 +539,8 @@ let tile_to_json (t:tile) =
   let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
   let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
   let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
-  `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl)]
+  let rt = match t.rt with | None -> `String "" | Some a -> `String a.id in
+  `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl);("rt",rt)]
 
 (* Helper method to turn a [room] into a json *)
 let room_to_json (t:room) =
@@ -590,10 +591,10 @@ let ch_of_json j =
 
 (* Helper method to read an [ex] from a json *)
 let ex_of_json j =
-  let trl =  j |> member "to_room" |> to_list in
+  let trl =  List.nth j 3 |> to_list in
   Some {
-    id = j |> member "id" |> to_string;
-    is_open = j |> member "is_open" |> to_bool;
+    id = List.nth j 1 |> to_string;
+    is_open = List.nth j 2 |> to_bool;
     to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
   }
 
@@ -619,15 +620,17 @@ let tile_of_json j =
   let mov_s = j |> member "mov" |> to_string in
   let store_s = j |> member "store" |> to_string in
   let immov_s = j |> member "immov" |> to_string in
-  let ex_s = j |> member "ex" |> to_string in
+  let ex_s = j |> member "ex" |> to_list in
   let kl_s = j |> member "kl" |> to_string in
+  let rt_s = j |> member "rt" |> to_string in
   {
     ch = if ch_s = [] then None else ch_of_json ch_s;
     mov = if mov_s = "" then None else Some { id = mov_s };
     store = if store_s = "" then None else Some { id = store_s };
     immov = if immov_s = "" then None else Some { id = immov_s };
-    ex = if ex_s = "" then None else j |> member "ex" |> ex_of_json;
+    ex = if ex_s = [] then None else ex_of_json ex_s;
     kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
+    rt = if rt_s = "" then None else Some { id = rt_s };
   }
 
 (* Helper method to read a [tiles] list from a json *)

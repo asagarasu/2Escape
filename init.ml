@@ -1,5 +1,18 @@
 open State
 
+let test_keyloc = {
+
+  id = "string";
+
+  key = "string";
+
+  is_solved = true;
+
+  exit_effect = [];
+
+  immovable_effect = []}
+
+
 let air_keyloc : keyloc = {
   id = "air_loc";
   key = "air_key";
@@ -8,11 +21,11 @@ let air_keyloc : keyloc = {
   immovable_effect = [];
 }
 
-let air_to_gears = { id = "air_to_gears"; is_open = true; to_room = ("gears",-1,-1) }
+let air_to_gears : exit = { id = "air_to_gears"; is_open = true; to_room = ("gears",-1,-1) }
 
-let air_to_study = { id = "air_to_study"; is_open = true; to_room = ("study",1,3) }
+let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",1,3) }
 
-let air =
+let air : room =
   {id = "air";
    tiles =
      [|
@@ -53,13 +66,13 @@ let air =
      |];
    rows = 5; cols = 6}
 
-let study_to_air = { id = "study_to_air"; is_open = true; to_room = ("air",5,2) }
+let study_to_air : exit = { id = "study_to_air"; is_open = true; to_room = ("air",5,2) }
 
-let study_to_basement = { id = "study_to_basement"; is_open = true; to_room = ("basement",-1,-1) }
+let study_to_basement : exit = { id = "study_to_basement"; is_open = true; to_room = ("basement",-1,-1) }
 
-let study_to_hall = { id = "study_to_hall"; is_open = true; to_room = ("hall",-1,-1) }
+let study_to_hall : exit = { id = "study_to_hall"; is_open = true; to_room = ("hall",-1,-1) }
 
-let study =
+let study : room =
   {id = "study";
    tiles =
      [|
