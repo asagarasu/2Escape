@@ -14,7 +14,6 @@ type command =
   | Take
   | Drop of string
   | Enter
-  | Rotate
 
 (* State *)
 (* character type detailing the number and direction of the character *)
@@ -43,7 +42,7 @@ type keyloc = {id : string;
                immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string}
+type rotatable = {id : string; rotate : int}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -442,19 +441,6 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
     update_chat room1 room2 playerid s
-  | Rotate ->
-    let curr_player = curr_room.tiles.(curr_player_y).(curr_player_x).ch in
-    let curr_d =
-      (match curr_player with
-       | Some p -> direct p.direction
-       | None -> (0,0))
-    in
-    let click_tile =
-      curr_room.tiles.(curr_player_y + snd curr_d ).(curr_player_x + fst curr_d)
-    in
-    (match click_tile.rt with
-     | None -> create_empty_logs room1 room2
-     | Some rt -> failwith "Unimplemented")
   | Enter ->
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
       if bool_opt tile.ex then
@@ -613,6 +599,13 @@ let kl_of_json j =
       List.nth immtriple 0 |> to_string, List.nth immtriple 1 |> to_int, List.nth immtriple 2 |> to_int) iel;
   }
 
+(* Helper method to read a [rotatable] from a json*)
+let rt_of_json j = 
+  Some {
+    id = j |> member "id" |> to_string;
+    rotate = j |> member "rotate" |> to_int
+  }
+
 (* Helper method to read a [tile] from a json *)
 let tile_of_json j =
   let ch_s = j |> member "ch" |> to_list in
@@ -621,6 +614,7 @@ let tile_of_json j =
   let immov_s = j |> member "immov" |> to_string in
   let ex_s = j |> member "ex" |> to_string in
   let kl_s = j |> member "kl" |> to_string in
+  let rt_s = j |> member "rt" |> to_string in 
   {
     ch = if ch_s = [] then None else ch_of_json ch_s;
     mov = if mov_s = "" then None else Some { id = mov_s };
@@ -628,6 +622,7 @@ let tile_of_json j =
     immov = if immov_s = "" then None else Some { id = immov_s };
     ex = if ex_s = "" then None else j |> member "ex" |> ex_of_json;
     kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
+    rt = if rt_s = "" then None else j |> member "rt" |> rt_of_json
   }
 
 (* Helper method to read a [tiles] list from a json *)
