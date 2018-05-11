@@ -1,49 +1,84 @@
 open Helper
 open Yojson
 open Yojson.Basic.Util
-open Init
 
 (* Commands *)
 
 (* Direction character can move *)
-type direction = Init.direction
+type direction = Up | Down | Left | Right
 
 (* Various commands the player can make to affect the state/chat *)
-type command = Init.command
+type command =
+  | Go of direction
+  | Message of string
+  | Take
+  | Drop of string
+  | Enter
+  | Rotate
 
 (* State *)
 (* character type detailing the number and direction of the character *)
-type character = Init.character
+type character = {id : int; direction : direction}
 
 (* type representing a movable object *)
-type movable = Init.movable
+type movable = {id : string}
 
 (* type representing a storable object *)
-type storable = Init.storable
+type storable = {id : string}
 
 (* type representing an immovable object *)
-type immovable = Init.immovable
+type immovable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
-type exit = Init.exit
+type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
 
 (* type representing a location for a key
  * exit_effect are (room name, col, row)
  * immovable_effect are (room name, col, row)
- *)
-type keyloc = Init.keyloc
+*)
+type keyloc = {id : string;
+               key : string;
+               mutable is_solved : bool;
+               exit_effect : (string * int * int) list;
+               immovable_effect : (string * int * int) list}
+
+(* type representing a rotatable object *)
+type rotatable = {id : string}
 
 (* type representing a tile in the room *)
-type tile = Init.tile
+type tile = {
+  mutable ch : character option;
+  mutable mov : movable option;
+  mutable store : storable option;
+  mutable immov : immovable option;
+  mutable ex : exit option;
+  mutable kl : keyloc option;
+  mutable rt : rotatable option;
+}
 
 (* type representing a room in the state *)
-type room = Init.room
+type room = {
+  id : string;
+  mutable tiles : tile array array;
+  rows : int;
+  cols : int
+}
 
 (* type representing a message in the state *)
-type message = Init.message
+type message = {
+  id : int;
+  message : string
+}
 
 (* type representing a state *)
-type t = Init.t
+type t = {
+  roommap : (string, room) Hashtbl.t;
+  mutable pl1_loc : string * int * int ;
+  mutable pl2_loc : string * int * int ;
+  mutable pl1_inv : string list;
+  mutable pl2_inv : string list;
+  mutable chat : message list
+}
 
 type entry = {
   row : int;
@@ -210,6 +245,14 @@ let logify (playerid : int) (st : t) : log' =
     chat = None
   }
 
+    (*
+let update_rt (rt:rotatable) : rotatable =
+  let id_stem = String.sub rt.id 1 (String.length rt.id -1) in
+  match rt.id with
+  | id_stem ^ "1" -> *)
+
+
+
 (**
  * Method to do a player command based on the player's id
  * command, and the current state
@@ -256,7 +299,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             let mov_y = next_player_y + snd pair in
             let mov_x = next_player_x + fst pair in
             let mov_tile = curr_room.tiles.(mov_y).(mov_x) in
-            if mov_tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None} then
+            if mov_tile = {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None} then
               begin
                 mov_tile.mov <- newtile.mov;
                 newtile.mov <- None;
@@ -399,19 +442,19 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
     update_chat room1 room2 playerid s
-  | Click ->
-    let curr_player = (curr_room.tiles.(curr_player_y-1)).(curr_player_x-1).ch in
+  | Rotate ->
+    let curr_player = curr_room.tiles.(curr_player_y).(curr_player_x).ch in
     let curr_d =
       (match curr_player with
-       | Some p -> direct p.dirction
+       | Some p -> direct p.direction
        | None -> (0,0))
     in
     let click_tile =
-      curr_room.tiles.(curr_player_y - 1 + snd curr_d ).(curr_player_x - 1 + fst curr_d)
+      curr_room.tiles.(curr_player_y + snd curr_d ).(curr_player_x + fst curr_d)
     in
-    if click_tile.rt == None
-    then create_empty_logs room1 room2
-    else failwith "unimplemented"
+    (match click_tile.rt with
+     | None -> create_empty_logs room1 room2
+     | Some rt -> failwith "Unimplemented")
   | Enter ->
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
       if bool_opt tile.ex then
@@ -634,8 +677,3 @@ let state_of_json j =
 let load (file : string) : t =
   let j = Yojson.Basic.from_file file in
   state_of_json j
-
-
-
-(** Start a game : Read the default state from init.ml **)
-let start : t = Init.state
