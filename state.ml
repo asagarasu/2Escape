@@ -499,7 +499,7 @@ let ex_to_json (t:exit) =
   let to_room = `List [`String (fst_third triple);
                        `Int (snd_third triple);
                        `Int (thd_third triple)] in
-  `Assoc [("id", id); ("is_open",is_open);("to_room",to_room)]
+  `List [id;is_open;to_room]
 
 (* Helper method to turn a [kl] to a json *)
 let kl_to_json (t:keyloc) =
@@ -514,8 +514,13 @@ let kl_to_json (t:keyloc) =
                     `List [`String (fst_third immeffect);
                        `Int (snd_third immeffect);
                        `Int (thd_third immeffect)]) t.immovable_effect) in
-  `Assoc [("id",id); ("key",key); ("is_solved",is_solved);
-          ("exit_effect",exit_effect);("immovable_effect",immovable_effect)]
+  `List [id; key; is_solved;exit_effect;immovable_effect]
+
+(* Helper method to turn a [kl] to a json *)
+let rt_to_json (t:rotatable) =
+  let id = `String t.id in
+  let rotate = `Int t.rotate in
+  `List [id;rotate]
 
 (* Helper method to turn a [tile] into a json *)
 let tile_to_json (t:tile) =
@@ -523,9 +528,9 @@ let tile_to_json (t:tile) =
   let mov = match t.mov with | None -> `String "" | Some a -> `String a.id in
   let store = match t.store with | None -> `String "" | Some a -> `String a.id in
   let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
-  let ex = match t.ex with | None -> `String "" | Some a -> ex_to_json a in
-  let kl = match t.kl with | None -> `String "" | Some a -> kl_to_json a in
-  let rt = match t.rt with | None -> `String "" | Some a -> `String a.id in
+  let ex = match t.ex with | None -> `List [] | Some a -> ex_to_json a in
+  let kl = match t.kl with | None -> `List [] | Some a -> kl_to_json a in
+  let rt = match t.rt with | None -> `List [] | Some a -> rt_to_json a in
   `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl);("rt",rt)]
 
 (* Helper method to turn a [room] into a json *)
@@ -577,21 +582,21 @@ let ch_of_json j =
 
 (* Helper method to read an [ex] from a json *)
 let ex_of_json j =
-  let trl =  List.nth j 3 |> to_list in
+  let trl =  List.nth j 2 |> to_list in
   Some {
-    id = List.nth j 1 |> to_string;
-    is_open = List.nth j 2 |> to_bool;
+    id = List.nth j 0 |> to_string;
+    is_open = List.nth j 1 |> to_bool;
     to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
   }
 
 (* Helper method to read a [kl] from a json *)
 let kl_of_json j =
-  let eel = j |> member "exit_effect" |> to_list in
-  let iel = j |> member "immovable_effect" |> to_list in
+  let eel = List.nth j 3 |> to_list in
+  let iel = List.nth j 4 |> to_list in
   Some {
-    id = j |> member "id" |> to_string;
-    key = j |> member "key" |> to_string;
-    is_solved = j |> member "is_solved" |> to_bool;
+    id = List.nth j 0 |> to_string;
+    key = List.nth j 1 |> to_string;
+    is_solved = List.nth j 2 |> to_bool;
     exit_effect = List.map (fun exiteffect ->
       let exittriple = exiteffect |> to_list in
       List.nth exittriple 0 |> to_string, List.nth exittriple 1 |> to_int, List.nth exittriple 2 |> to_int) eel;
@@ -601,11 +606,10 @@ let kl_of_json j =
   }
 
 (* Helper method to read a [rotatable] from a json*)
-let rt_of_json j =
-  Some {
-    id = j |> member "id" |> to_string;
-    rotate = j |> member "rotate" |> to_int
-  }
+let rt_of_json j : rotatable option =
+  let rt_id = List.nth j 0 |> to_string in
+  let rt_rt = List.nth j 1 |> to_int in
+  Some { id = rt_id ; rotate = rt_rt }
 
 (* Helper method to read a [tile] from a json *)
 let tile_of_json j =
@@ -614,16 +618,16 @@ let tile_of_json j =
   let store_s = j |> member "store" |> to_string in
   let immov_s = j |> member "immov" |> to_string in
   let ex_s = j |> member "ex" |> to_list in
-  let kl_s = j |> member "kl" |> to_string in
-  let rt_s = j |> member "rt" |> to_string in
+  let kl_s = j |> member "kl" |> to_list in
+  let rt_s = j |> member "rt" |> to_list in
   {
     ch = if ch_s = [] then None else ch_of_json ch_s;
     mov = if mov_s = "" then None else Some { id = mov_s };
     store = if store_s = "" then None else Some { id = store_s };
     immov = if immov_s = "" then None else Some { id = immov_s };
     ex = if ex_s = [] then None else ex_of_json ex_s;
-    kl = if kl_s = "" then None else j |> member "kl" |> kl_of_json;
-    rt = if rt_s = "" then None else Some { id = rt_s };
+    kl = if kl_s = [] then None else kl_of_json kl_s;
+    rt = if rt_s = [] then None else rt_of_json rt_s;
   }
 
 (* Helper method to read a [tiles] list from a json *)
