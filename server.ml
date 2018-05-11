@@ -5,7 +5,8 @@ open Lwt_io
 let counter = ref 0
 let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
-let state = ref false
+let state1 = ref false
+let state2 = ref false
 
 let () = Lwt_log.add_rule "*" Lwt_log.Info
 
@@ -36,8 +37,9 @@ let rec handle_connection ic oc () =
 
 let accept_connection conn =
     let fd, sockaddr = conn in 
-	if (!state = false) then player1 := sockaddr;state:=true
-	else player2 := sockaddr in
+	if (!state1 = false) then player1 := sockaddr;state1:=true
+	if else (!state2 = false) player2 := sockaddr;state2:=true 
+	else () in
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
     let oc = Lwt_io.of_fd Lwt_io.Output fd in
     Lwt.on_failure (handle_connection ic oc ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
