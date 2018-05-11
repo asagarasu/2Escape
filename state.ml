@@ -42,7 +42,7 @@ type keyloc = {id : string;
                immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string; rotate : int}
+type rotatable = {id : string; rotate : direction}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -79,6 +79,7 @@ type t = {
   mutable chat : message list
 }
 
+(* Entry in a log *)
 type entry = {
   row : int;
   col : int;
