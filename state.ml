@@ -520,7 +520,10 @@ let kl_to_json (t:keyloc) =
 (* Helper method to turn a [kl] to a json *)
 let rt_to_json (t:rotatable) =
   let id = `String t.id in
-  let rotate = `Int t.rotate in
+  let rotate = `String
+      (match t.rotate with
+       | Up -> "up" | Down -> "down" | Right -> "right" | Left -> "left" )
+  in
   `List [id;rotate]
 
 (* Helper method to turn a [tile] into a json *)
@@ -609,7 +612,10 @@ let kl_of_json j =
 (* Helper method to read a [rotatable] from a json*)
 let rt_of_json j : rotatable option =
   let rt_id = List.nth j 0 |> to_string in
-  let rt_rt = List.nth j 1 |> to_int in
+  let rt_rt =
+  (match List.nth j 1 |> to_string with
+   | "up" -> Up | "down" -> Down | "right" -> Right | "left" -> Left | _ -> Up )
+  in
   Some { id = rt_id ; rotate = rt_rt }
 
 (* Helper method to read a [tile] from a json *)
