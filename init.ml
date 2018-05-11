@@ -10,6 +10,7 @@ type command =
   | Take
   | Drop of string
   | Enter
+  | Click
 
 (* State *)
 (* character type detailing the number and direction of the character *)
@@ -23,6 +24,9 @@ type storable = {id : string}
 
 (* type representing an immovable object *)
 type immovable = {id : string}
+
+(* type representing an rotatable object *)
+type rotatable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
 type exit = {
@@ -51,6 +55,7 @@ type tile = {
   mutable immov : immovable option;
   mutable ex : exit option;
   mutable kl : keyloc option;
+  mutable rt : rotatable option;
 }
 
 (* type representing a room in the state *)
@@ -93,40 +98,40 @@ let air =
   {id = "air";
    tiles =
      [|
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = Some {id = "air_key"}; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "air_key"}; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "air_topleft"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "air_topright"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "air_topleft"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "air_topright"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "air_bottomleft"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "air_bottomright"}; ex = None; kl = Some air_keyloc};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = Some air_to_gears; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "air_bottomleft"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "air_bottomright"}; ex = None; kl = Some air_keyloc; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some air_to_gears; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = Some air_to_study; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some air_to_study; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
    rows = 5; cols = 6}
 
@@ -140,40 +145,40 @@ let study =
   {id = "study";
    tiles =
      [|
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_air; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_air; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = Some {id = "desk_top"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_basement; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_hall; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov = Some {id = "desk_top"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_basement; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some study_to_hall; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov =  Some {id = "desk_bottom"}; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None}|];
+       [|{ch = None; mov = None; store = None; immov =  Some {id = "desk_bottom"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
    rows = 5; cols = 6}
 

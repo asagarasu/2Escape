@@ -245,7 +245,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in
             (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
           end
-        else if bool_opt newtile.immov then
+        else if bool_opt newtile.immov || bool_opt newtile.rt then
           begin
             oldtile.ch <- Some { id = playerid ; direction = d };
             let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in
@@ -398,7 +398,20 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
       end
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
-      update_chat room1 room2 playerid s
+    update_chat room1 room2 playerid s
+  | Click ->
+    let curr_player = (curr_room.tiles.(curr_player_y-1)).(curr_player_x-1).ch in
+    let curr_d =
+      (match curr_player with
+       | Some p -> direct p.dirction
+       | None -> (0,0))
+    in
+    let click_tile =
+      curr_room.tiles.(curr_player_y - 1 + snd curr_d ).(curr_player_x - 1 + fst curr_d)
+    in
+    if click_tile.rt == None
+    then create_empty_logs room1 room2
+    else failwith "unimplemented"
   | Enter ->
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
       if bool_opt tile.ex then
