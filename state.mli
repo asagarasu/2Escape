@@ -1,51 +1,29 @@
 open Helper
+open Init
 
-type direction = Up | Down | Left | Right
+type direction = Init.direction
 
-type command = | Go of direction | Message of string | Take | Drop of string | Enter
+type command = Init.command
 
-type character = {id : int; direction : direction}
+type character = Init.character
 
-type movable = {id : string}
+type movable = Init.movable
 
-type storable = {id : string}
+type storable = Init.storable
 
-type immovable = {id : string}
+type immovable = Init.immovable
 
-type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
+type exit = Init.exit
 
-type keyloc = {id : string; key : string; 
-  mutable is_solved : bool; exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
+type keyloc = Init.keyloc
 
-type tile = {
-  mutable ch : character option;
-  mutable mov : movable option;
-  mutable store : storable option;
-  mutable immov : immovable option;
-  mutable ex : exit option;
-  mutable kl : keyloc option;
-}
+type tile = Init.tile
 
-type room = {
-  id : string;
-  mutable tiles : tile array array;
-  rows : int;
-  cols : int
-}
+type room = Init.room
 
-type message = {
-  id : int;
-  message : string
-}
+type message = Init.message
 
-type t = {
-  roommap : (string, room) Hashtbl.t;
-  mutable pl1_loc : string * int * int;
-  mutable pl2_loc : string * int * int;
-  mutable pl1_inv : string list;
-  mutable pl2_inv : string list;
-  mutable chat : message list
-}
+type t = Init.t
 
 type entry = {
   row : int;
@@ -68,7 +46,7 @@ type log' = {
   chat : message option
 }
 
-(** 
+(**
  * do_command takes a command generates the logs to send out to players one and two
  *
  * returns: the logs [log1, log2], where log1 is a short summary of player 1's changes
@@ -78,7 +56,7 @@ type log' = {
 val do_command : int -> command -> t -> log' * log'
 
 (**
- * logify intial state creates a [log] of the initial state for initialization purposes 
+ * logify intial state creates a [log] of the initial state for initialization purposes
  * with player id [playerid]
  *
  * returns: the [log] of the state [st]
@@ -88,5 +66,8 @@ val logify : int -> t -> log'
 (* [save] takes in the current state and save to a json string at file loc [file] *)
 val save : t -> string -> unit
 
-(* [read] reading a string and returns a state *)
-val read : string -> t
+(* [load] reading a string and returns a state *)
+val load : string -> t
+
+(* [start] is the initial state of the game *)
+val start : t
