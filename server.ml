@@ -38,7 +38,7 @@ let rec handle_connection ic oc () =
 let accept_connection conn =
     let fd, sockaddr = conn in 
 	if (!state1 = false) then player1 := sockaddr;state1:=true
-	if else (!state2 = false) player2 := sockaddr;state2:=true 
+	else if (!state2 = false) player2 := sockaddr;state2:=true 
 	else () in
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
     let oc = Lwt_io.of_fd Lwt_io.Output fd in
