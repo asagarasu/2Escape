@@ -9,7 +9,6 @@ type command =
   | Take
   | Drop of string
   | Enter
-  | Rotate
 
 (* State *)
 (* character type detailing the number and direction of the character *)
@@ -38,7 +37,7 @@ type keyloc = {id : string;
                immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string}
+type rotatable = {id : string; rotate : int}
 
 (* type representing a tile in the room *)
 type tile = {

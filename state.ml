@@ -14,7 +14,6 @@ type command =
   | Take
   | Drop of string
   | Enter
-  | Rotate
 
 (* State *)
 (* character type detailing the number and direction of the character *)
@@ -43,7 +42,7 @@ type keyloc = {id : string;
                immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string}
+type rotatable = {id : string; rotate : int}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -442,19 +441,6 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
     else create_empty_logs room1 room2
   | Message s -> st.chat <- { id = playerid ; message = s }::st.chat ;
     update_chat room1 room2 playerid s
-  | Rotate ->
-    let curr_player = curr_room.tiles.(curr_player_y).(curr_player_x).ch in
-    let curr_d =
-      (match curr_player with
-       | Some p -> direct p.direction
-       | None -> (0,0))
-    in
-    let click_tile =
-      curr_room.tiles.(curr_player_y + snd curr_d ).(curr_player_x + fst curr_d)
-    in
-    (match click_tile.rt with
-     | None -> create_empty_logs room1 room2
-     | Some rt -> failwith "Unimplemented")
   | Enter ->
     let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
       if bool_opt tile.ex then
@@ -612,6 +598,13 @@ let kl_of_json j =
     immovable_effect = List.map (fun immeffect ->
       let immtriple = immeffect |> to_list in
       List.nth immtriple 0 |> to_string, List.nth immtriple 1 |> to_int, List.nth immtriple 2 |> to_int) iel;
+  }
+
+(* Helper method to read a [rotatable] from a json*)
+let rt_of_json j =
+  Some {
+    id = j |> member "id" |> to_string;
+    rotate = j |> member "rotate" |> to_int
   }
 
 (* Helper method to read a [tile] from a json *)
