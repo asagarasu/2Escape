@@ -29,9 +29,9 @@ type storable = {id : string}
 type immovable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
-type exit = {id : string; 
-  mutable is_open : bool; 
-  to_room : string * int * int; 
+type exit = {id : string;
+  mutable is_open : bool;
+  to_room : string * int * int;
   cscene : Cutscene.t option}
 
 (* type representing a location for a key
@@ -42,16 +42,16 @@ type keyloc = {id : string; key : string; mutable is_solved : bool;
   exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string; mutable rotate : direction; correct : direction; 
+type rotatable = {id : string; mutable rotate : direction; correct : direction;
     exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
-let next_dir (d : direction) : direction = 
-  match d with 
+let next_dir (d : direction) : direction =
+  match d with
   | Up -> Left
   | Down -> Right
   | Left -> Down
   | Right -> Up
- 
+
 (* type representing a tile in the room *)
 type tile = {
   mutable ch : character option;
@@ -150,7 +150,7 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
      cols = sendroom.cols;
      change = entries;
      inv_change = {add = None; remove = None};
-     chat = None; 
+     chat = None;
      cutscene = None}
   else
     {
@@ -183,13 +183,13 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
       cutscene = None
     }, (snd logs)
   else
-    (fst logs), 
+    (fst logs),
     {
-      room_id = (snd logs).room_id; 
-      rows = (snd logs).rows; 
+      room_id = (snd logs).room_id;
+      rows = (snd logs).rows;
       cols = (snd logs).cols;
-      change = (snd logs).change; 
-      inv_change = {add = Some item; remove = None}; 
+      change = (snd logs).change;
+      inv_change = {add = Some item; remove = None};
       chat = (snd logs).chat;
       cutscene = None
     }
@@ -214,7 +214,7 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
       cutscene = None
     }, (snd logs)
   else
-    (fst logs), 
+    (fst logs),
     {
         room_id = (snd logs).room_id;
         rows = (snd logs).rows;
@@ -229,7 +229,7 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
  * Helper method to add a cutscene to a log
  *
  *)
-let add_cutscene (log : log') (cutscene : Cutscene.t) : log' = 
+let add_cutscene (log : log') (cutscene : Cutscene.t) : log' =
   {
     room_id = log.room_id;
     rows = log.rows;
@@ -248,20 +248,20 @@ let add_cutscene (log : log') (cutscene : Cutscene.t) : log' =
  *)
 let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
   {
-    room_id = room1.id; 
-    rows = room1.rows; 
-    cols = room1.cols; 
+    room_id = room1.id;
+    rows = room1.rows;
+    cols = room1.cols;
     change = [];
-    inv_change = {add = None; remove = None}; 
+    inv_change = {add = None; remove = None};
     chat = Some {id = id; message = message};
     cutscene = None
   },
   {
-    room_id = room2.id; 
-    rows = room2.rows; 
-    cols = room2.cols; 
+    room_id = room2.id;
+    rows = room2.rows;
+    cols = room2.cols;
     change = [];
-    inv_change = {add = None; remove = None}; 
+    inv_change = {add = None; remove = None};
     chat = Some {id = id; message = message};
     cutscene = None
   }
@@ -378,17 +378,17 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
               end
           end
-        else if bool_opt newtile.rt then 
-          
+        else if bool_opt newtile.rt then
+
           begin
             let rot = access_opt newtile.rt in
-            if rot.rotate = rot.correct then create_empty_logs room1 room2 
-            else 
-              begin 
+            if rot.rotate = rot.correct then create_empty_logs room1 room2
+            else
+              begin
                rot.rotate <- next_dir rot.rotate;
-               if rot.rotate = rot.correct then 
-                begin 
-                  let startEntries = 
+               if rot.rotate = rot.correct then
+                begin
+                  let startEntries =
                     match room1_string, room2_string with
                   | a, b when a = curr_room_id && b = curr_room_id ->
                     [{ row = next_player_y; col = next_player_x; newtile = newtile}],
@@ -397,7 +397,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                     [{ row = next_player_y; col = next_player_x; newtile = newtile}], []
                   | _, a when a = curr_room_id ->
                     [], [{ row = next_player_y; col = next_player_x; newtile = newtile}]
-                  | _ -> [], [] in 
+                  | _ -> [], [] in
                   let changedExitsEntries = List.fold_left (fun curr_entries ex_effect ->
                   let alteredroom = Hashtbl.find st.roommap (fst_third ex_effect) in
                   let alteredrow = thd_third ex_effect in
@@ -431,12 +431,12 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                   | _, a when a = room2_string ->
                     fst curr_entries,
                     { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | _ -> curr_entries) changedExitsEntries rot.immovable_effect in 
+                  | _ -> curr_entries) changedExitsEntries rot.immovable_effect in
                   create_log room1 (fst allEntries), create_log room2 (snd allEntries)
-                end 
+                end
                else
                 begin
-                  let entry_l = [{row = next_player_y; col = next_player_x; newtile = newtile}] in 
+                  let entry_l = [{row = next_player_y; col = next_player_x; newtile = newtile}] in
                   (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
                 end
               end
@@ -588,11 +588,11 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                        | _ -> []
                       ) in
                     let curr_player_log' =
-                      if bool_opt exit.cscene then 
+                      if bool_opt exit.cscene then
                         add_cutscene curr_player_log (access_opt exit.cscene)
-                      else 
+                      else
                         curr_player_log
-                        in 
+                        in
                     (if playerid = 1 then curr_player_log', create_log room2 other_player_entries
                     else create_log room2 other_player_entries, curr_player_log')
                   end
@@ -806,3 +806,26 @@ let load (file : string) : t =
   let j = Yojson.Basic.from_file file in
   state_of_json j
 *)
+
+let parse_command (cmd:string):command =
+  match cmd with
+  | "take" -> Take
+  | "enter" -> Enter
+  | a ->
+    if String.contains a ' '
+    then let slice = String.index a ' ' in
+      let head = String.sub a 0 slice in
+      let tail = String.sub a (slice + 1) (String.length a - slice - 1) in
+      (match head with
+       | "drop" -> Drop tail
+       | "message" -> Message tail
+       | "go" ->
+         let d = (match tail with
+             | "left" -> Left
+             | "right" -> Right
+             | "up" -> Up
+             | "down" -> Down
+             | b -> Up ) in
+         Go d
+       | c -> Take)
+    else Take
