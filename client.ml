@@ -46,9 +46,9 @@ let create_client client_parent_fun client_child_fun (ip : string) =
                 shutdown_connection ic ;
                 ignore (Unix.waitpid [] id)
 
-let go_client () = 
+let go_client (ip : string) = 
 	let in_file = open_in "in.txt" 
     and out_file = open_out "out.txt"
-    in main_client (parent_fun out_file) (child_fun in_file) ;
+    in create_client (parent_fun out_file) (child_fun in_file) (ip : string) ;
     close_in in_file ;
     close_out out_file ;;
