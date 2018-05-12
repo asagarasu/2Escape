@@ -1,12 +1,6 @@
 open Unix
 
 type t = in_channel * out_channel
-
-let send_command = 
-	failwith "Not Yet Implemented"
-
-let receive_state =
-	failwith "Not Yet Implemented"
 	
 (**
  * Temporary function to test the client-server dynamics in ocaml
@@ -26,12 +20,35 @@ let client_fun ic oc =
        Exit -> exit 0
      | exn -> shutdown_connection ic ; raise exn  ;;
 
-(**
- * Temporary implementation to test the client-server dynamics in ocaml
- *)
-let create_client (ip : string) =
+let copy_channels ic oc = 
+   try while true do 
+         let s = input_line ic 
+         in if s = "END" then raise End_of_file
+            else (output_string oc (s^"\n"); flush oc)
+       done 
+   with End_of_file -> () ;;
+ 
+let child_fun in_file out_sock = 
+   copy_channels in_file out_sock ;
+   output_string out_sock ("FIN\n") ;
+   flush out_sock ;;
+
+let parent_fun out_file in_sock = copy_channels in_sock out_file ;;
+
+let create_client client_parent_fun client_child_fun (ip : string) =
   let port = 40005 in
   let addr = ADDR_INET ((inet_addr_of_string ip), port)
   in let ic,oc = open_connection addr
-    in client_fun ic oc ;
-      shutdown_connection ic
+     in match Unix.fork () with
+        |0 -> if Unix.fork() = 0 then client_child_fun oc ; 
+              exit 0
+        | id -> client_parent_fun ic ;
+                shutdown_connection ic ;
+                ignore (Unix.waitpid [] id)
+
+let go_client (ip : string) = 
+	let in_file = open_in "in.txt" 
+    and out_file = open_out "out.txt"
+    in create_client (parent_fun out_file) (child_fun in_file) (ip : string) ;
+    close_in in_file ;
+    close_out out_file ;;
