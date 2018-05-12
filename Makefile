@@ -8,6 +8,7 @@ interfacezip:
 prototype:
 	zip prototype.zip *.ml* Gui.d.js index.html test.json sprites/*
 state:
-	ocamlbuild -use-ocamlfind state.byte &&./state.byte
+	ocamlbuild -use-ocamlfind state.cmo -r
+	ocamlbuild -use-ocamlfind init.cmo -r
 gui:
 	ocamlbuild -use-ocamlfind -plugin-tag "package(js_of_ocaml.ocamlbuild)" -no-links GUI.d.js
