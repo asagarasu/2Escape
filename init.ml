@@ -304,3 +304,7 @@ let state =
    pl1_loc = ("test", 0, 0); pl2_loc = ("test", 1, 1);
    pl1_inv = []; pl2_inv = ["good"];
    chat = [{id = 2; message = "no"}; {id = 1; message = "yes"}]}
+
+let do' (playerid:int) (st:t) (cmd:string) : log' * log' =
+  let cmd' = parse_command cmd in
+  do_command playerid cmd' st

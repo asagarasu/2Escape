@@ -807,18 +807,25 @@ let load (file : string) : t =
   state_of_json j
 *)
 
-let parse_command (cmd:string)  =
+let parse_command (cmd:string):command =
   match cmd with
-  | "go " ^ d -> let direct =
-    (match d with
-     | "left" ->  Left
-     | "right" ->  Right
-     | "up" ->  Up
-     | "down" ->  Down
-     | "" ->  Up)
-    in (Go direct)
-  | "message " ^ s -> (Message s)
   | "take" -> Take
-  | "drop " ^ i -> (Drop i)
   | "enter" -> Enter
-  | "" -> Go Up
+  | a ->
+    if String.contains a ' '
+    then let slice = String.index a ' ' in
+      let head = String.sub a 0 slice in
+      let tail = String.sub a (slice + 1) (String.length a - slice - 1) in
+      (match head with
+       | "drop" -> Drop tail
+       | "message" -> Message tail
+       | "go" ->
+         let d = (match tail with
+             | "left" -> Left
+             | "right" -> Right
+             | "up" -> Up
+             | "down" -> Down
+             | b -> Up ) in
+         Go d
+       | c -> Take)
+    else Take
