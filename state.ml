@@ -29,7 +29,10 @@ type storable = {id : string}
 type immovable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
-type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
+type exit = {id : string; 
+  mutable is_open : bool; 
+  to_room : string * int * int; 
+  cscene : Cutscene.t option}
 
 (* type representing a location for a key
  * exit_effect are (room name, col, row)
@@ -104,7 +107,8 @@ type log' = {
   cols : int;
   change : entry list;
   inv_change : invchange;
-  chat : message option
+  chat : message option;
+  cutscene : Cutscene.t option
 }
 
 (**
@@ -115,9 +119,11 @@ type log' = {
  *)
 let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
   ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols;
-    change = []; inv_change = {add = None; remove = None}; chat = None},
+    change = []; inv_change = {add = None; remove = None}; chat = None;
+    cutscene = None},
    {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols;
-    change = []; inv_change = {add = None; remove = None}; chat = None})
+    change = []; inv_change = {add = None; remove = None}; chat = None;
+    cutscene = None})
 
 (**
  * Helper method to create a log based on a list of changed entries in room
@@ -127,7 +133,8 @@ let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
  *)
 let create_log (rm : room) (entry_l : entry list) : log' =
   {room_id = rm.id; rows = rm.rows; cols = rm.rows;
-   change = entry_l; inv_change = {add = None; remove = None}; chat = None}
+   change = entry_l; inv_change = {add = None; remove = None}; chat = None;
+   cutscene = None}
 
 (**
  * Helper method to update a room by a new room iff it is the correct room to update
@@ -143,14 +150,18 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
      cols = sendroom.cols;
      change = entries;
      inv_change = {add = None; remove = None};
-     chat = None}
+     chat = None; 
+     cutscene = None}
   else
-    {room_id = sendroom.id;
-     rows = sendroom.rows;
-     cols = sendroom.cols;
-     change = [];
-     inv_change = {add = None; remove = None};
-     chat = None}
+    {
+      room_id = sendroom.id;
+      rows = sendroom.rows;
+      cols = sendroom.cols;
+      change = [];
+      inv_change = {add = None; remove = None};
+      chat = None;
+      cutscene = None
+    }
 
 (**
  * Helper method to update a log based on [playerid] adding an [item]
@@ -162,15 +173,26 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
  *)
 let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' =
   if playerid = 1 then
-    {room_id = (fst logs).room_id;
-     rows = (fst logs).rows;
-     cols = (fst logs).cols;
-     change = (fst logs).change;
-     inv_change = {add = Some item; remove = None};
-     chat = (fst logs).chat}, (snd logs)
+    {
+      room_id = (fst logs).room_id;
+      rows = (fst logs).rows;
+      cols = (fst logs).cols;
+      change = (fst logs).change;
+      inv_change = {add = Some item; remove = None};
+      chat = (fst logs).chat;
+      cutscene = None
+    }, (snd logs)
   else
-    (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows; cols = (snd logs).cols;
-                 change = (snd logs).change; inv_change = {add = Some item;remove = None}; chat = (snd logs).chat}
+    (fst logs), 
+    {
+      room_id = (snd logs).room_id; 
+      rows = (snd logs).rows; 
+      cols = (snd logs).cols;
+      change = (snd logs).change; 
+      inv_change = {add = Some item; remove = None}; 
+      chat = (snd logs).chat;
+      cutscene = None
+    }
 
 (**
  * Helper method to update a log based on [playerid] dropping an [item]
@@ -182,19 +204,42 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
  *)
 let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' =
   if playerid = 1 then
-    {room_id = (fst logs).room_id;
-     rows = (fst logs).rows;
-     cols = (fst logs).cols;
-     change = (fst logs).change;
-     inv_change = {add = None;remove = Some item};
-     chat = (fst logs).chat}, (snd logs)
+    {
+      room_id = (fst logs).room_id;
+      rows = (fst logs).rows;
+      cols = (fst logs).cols;
+      change = (fst logs).change;
+      inv_change = {add = None;remove = Some item};
+      chat = (fst logs).chat;
+      cutscene = None
+    }, (snd logs)
   else
-    (fst logs), {room_id = (snd logs).room_id;
-                 rows = (snd logs).rows;
-                 cols = (snd logs).cols;
-                 change = (snd logs).change;
-                 inv_change = {add = None;remove = Some item};
-                 chat = (snd logs).chat}
+    (fst logs), 
+    {
+        room_id = (snd logs).room_id;
+        rows = (snd logs).rows;
+        cols = (snd logs).cols;
+        change = (snd logs).change;
+        inv_change = {add = None;remove = Some item};
+        chat = (snd logs).chat;
+        cutscene = None
+    }
+
+(**
+ * Helper method to add a cutscene to a log
+ *
+ *)
+let add_cutscene (log : log') (cutscene : Cutscene.t) : log' = 
+  {
+    room_id = log.room_id;
+    rows = log.rows;
+    cols = log.cols;
+    change = log.change;
+    inv_change = log.inv_change;
+    chat = log.chat;
+    cutscene = Some cutscene
+  }
+
 (**
  * Helper method to update the chat
  *
@@ -202,10 +247,24 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
  * returns: a [log' * log'] of the updated chat
  *)
 let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : log' * log' =
-  {room_id = room1.id; rows = room1.rows; cols = room1.cols; change = [];
-    inv_change = {add = None; remove = None}; chat = Some {id = id; message = message}},
-  {room_id = room2.id; rows = room2.rows; cols = room2.cols; change = [];
-    inv_change = {add = None; remove = None}; chat = Some {id = id; message = message}}
+  {
+    room_id = room1.id; 
+    rows = room1.rows; 
+    cols = room1.cols; 
+    change = [];
+    inv_change = {add = None; remove = None}; 
+    chat = Some {id = id; message = message};
+    cutscene = None
+  },
+  {
+    room_id = room2.id; 
+    rows = room2.rows; 
+    cols = room2.cols; 
+    change = [];
+    inv_change = {add = None; remove = None}; 
+    chat = Some {id = id; message = message};
+    cutscene = None
+  }
 
 (**
  * Helper method to get the direction vector of each command.Arg
@@ -243,7 +302,8 @@ let logify (playerid : int) (st : t) : log' =
     cols = room1.cols;
     change = entrylist;
     inv_change = {add = None; remove = None};
-    chat = None
+    chat = None;
+    cutscene = None
   }
 
 (**
@@ -527,8 +587,14 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                          [{row = newroom_y; col = newroom_x; newtile = newroom_tile}]
                        | _ -> []
                       ) in
-                    (if playerid = 1 then curr_player_log, create_log room2 other_player_entries
-                    else create_log room2 other_player_entries, curr_player_log)
+                    let curr_player_log' =
+                      if bool_opt exit.cscene then 
+                        add_cutscene curr_player_log (access_opt exit.cscene)
+                      else 
+                        curr_player_log
+                        in 
+                    (if playerid = 1 then curr_player_log', create_log room2 other_player_entries
+                    else create_log room2 other_player_entries, curr_player_log')
                   end
             end
           else

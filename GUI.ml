@@ -173,6 +173,23 @@ let re_draw_whole tbl (log : State.log') : unit =
     end;
     tbl##style##opacity <- Js.def (js "1")
 
+let (cutscene : Cutscene.t ref) = ref Cutscene.empty
+
+let gametbl = ref (Html.createTable document)
+
+let isCutscreen = ref false
+
+let cutscene_canvas = Html.createCanvas document
+
+let cutscene_context = cutscene_canvas##getContext(Html._2d_)
+
+let toCutscene divNode : unit = 
+  replace_child divNode cutscene_canvas
+
+let fromCutscene divNode tbl : unit = 
+  replace_child divNode tbl
+
+              
 (**
  * Helper method to update chat based on log 
  * 
@@ -187,17 +204,6 @@ let re_draw_whole tbl (log : State.log') : unit =
           ^ " : " ^ message.message));
         chatArea##scrollTop <- chatArea##scrollHeight; ()
     | None -> ()
-
-(**
- * Helper method to update the GUI based on log 
- *
- * requires: gametable is a valid table and chatArea is a valid chatArea
- * effects: redraws the GUI based on [log]
- *)
-let update_gui gametable chatArea (log : State.log') : unit = 
-  re_draw_whole gametable log;
-  receive_message chatArea log;
-  redraw_inv_log log
 
 (**
  * Helper method send a message command 
@@ -253,19 +259,57 @@ let send_movement ev : unit =
   in 
     ignore "send message to client TODO"
 
+(**
+ * Helper method to update the GUI based on log 
+ *
+ * requires: gametable is a valid table and chatArea is a valid chatArea
+ * effects: redraws the GUI based on [log]
+ *)
+let rec update_gui gametable chatArea divNode (log : State.log') : unit = 
+  re_draw_whole gametable log;
+  receive_message chatArea log;
+  redraw_inv_log log;
+  if bool_opt log.cutscene then 
+    begin 
+      isCutscreen := true;
+      gametbl := gametable;
+      toCutscene divNode;
+      cutscene := access_opt log.cutscene;
+      nextScene divNode;
+      document##onkeydown <- Html.handler (fun ev -> nextSceneHandler divNode ev; Js.bool true)
+    end
+  else 
+    ()
+
+and nextScene divNode : unit = 
+  let values = Cutscene.read !cutscene in 
+  cutscene := (fst values);
+  match (snd values) with 
+    | None -> isCutscreen := false; fromCutscene divNode !gametbl; document##onkeydown <- Html.handler (fun ev -> 
+              send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true)
+    | Some (x, y) -> 
+      let img = Html.createImg document in 
+        img##onload <- Html.handler (fun _ -> cutscene_context##drawImage(img, 0.0, 0.0); Js.bool true);
+        img##src <- js (x ^ ".png")
+
+and nextSceneHandler divNode ev : unit = 
+    match ev##keyCode with 
+    | 32 -> nextScene divNode
+    | _ -> Html.stopPropagation ev
+
 (* Start temporary stuff for prototype working without client/server *)
 (* Temporary method to send a movement command and have something happen no client/server *)
-let send_movement_temp tbl chat state ev : unit = 
+and send_movement_temp tbl chat state  divNode ev : unit = 
   match key_direction ev with 
-  | Some c -> update_gui tbl chat (fst (State.do_command 1 c state))
+  | Some c -> update_gui tbl chat divNode (fst (State.do_command 1 c state))
   | None -> ()
 
 (* Temporary method to send a text command and have something happen no client/server *)
-let send_message_temp tbl chat state input ev : unit = 
+and send_message_temp tbl chat state input divNode ev : unit = 
   match ev##keyCode with 
   | 13 -> let c = State.Message (Js.to_string input##value) in 
           input##value <- js "";
-          update_gui tbl chat (fst (State.do_command 1 c state))
+          update_gui tbl chat divNode (fst (State.do_command 1 c state))
   | _ -> Html.stopPropagation ev
 
 
@@ -279,7 +323,8 @@ let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2;
   {row = 0; col = 1; newtile = emptytile}; 
     {row = 1; col = 1; newtile = emptytile}]; 
   inv_change = {add = None; remove = None};
-  chat = Some {id = 1; message = "hi"}}
+  chat = Some {id = 1; message = "hi"};
+  cutscene = None}
 
 let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; 
   mov = None; store = None; immov = None; ex = None; kl = None; rt = None}
@@ -313,12 +358,14 @@ let (kltile : State.tile) = {ch = None; mov = None; immov = None;
       ("room1", 6, 6); ("room1", 8, 5); ("room1", 7, 5); ("room1", 6, 5)
     ]}; rt = None}
 
+let samplecutscene = Cutscene.create ["sprites/test"] ["hi"]
+
 let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0)}; kl = None;
+  store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0); cscene = Some samplecutscene}; kl = None;
   rt = None}
 
 let (exittile2 : State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {id = "exit"; is_open = true; to_room = ("room1", 9, 0)}; kl = None;
+  store = None; ex = Some {id = "exit"; is_open = true; to_room = ("room1", 9, 0); cscene = None}; kl = None;
   rt = None}
 
 let (movtile2 : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
@@ -393,10 +440,13 @@ let (emptystate : State.t) = {
   chat = []
 }
 
-(* end temporary stuff *)
+(* end temporary stuff *) 
 
 (* Main method to start the javascript *)
 let start () = 
+  cutscene_canvas##width <- 1000;
+  cutscene_canvas##height <- 500;
+
   let body = Js.Opt.get (document##getElementById (js "body")) fail in
   
   let gamediv = Html.createDiv document in 
@@ -445,13 +495,13 @@ let start () =
     chatscreen##readOnly <- Js.bool true;
     chatscreen##style##cssText <- js "resize: none";
 
-  update_gui gametable chatscreen (State.logify 1 emptystate);
+  update_gui gametable chatscreen gamediv (State.logify 1 emptystate);
 
   let chatinput = Html.createInput document in
     chatinput##defaultValue <- js "";
     chatinput##size <- 50;
     chatinput##onkeydown <- Html.handler (fun ev -> 
-      send_message_temp gametable chatscreen emptystate chatinput ev; Js.bool true);
+      send_message_temp gametable chatscreen emptystate chatinput gamediv ev; Js.bool true);
 
   let chatinputdiv = Html.createDiv document in 
     Dom.appendChild chatinputdiv chatinput;
@@ -460,7 +510,7 @@ let start () =
     Dom.appendChild chatoutputdiv chatscreen;
 
   document##onkeydown <- Html.handler (fun ev -> 
-    send_movement_temp gametable chatscreen emptystate ev; Js.bool true);
+    send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true);
 
   Dom.appendChild gamediv gametable;
   Dom.appendChild chatdiv chatoutputdiv;

@@ -1,14 +1,13 @@
-type t = (string * string) Queue.t
+type t = (string * string) list
 
-let empty = Queue.create ()
+let empty = []
 
-let read csc = try Some (Queue.take csc) with Queue.Empty -> None
+let read csc = match csc with 
+  [] -> [], None
+  | hd :: tl -> tl, Some hd
 
 let add img text csc = 
-  Queue.add (img, text) csc
+  csc @ [(img, text)]
 
 let create images texts = 
-  let combined = List.combine images texts in 
-  let q = empty in 
-  List.iter (fun x -> Queue.add x q) combined;
-  q
+  List.combine images texts

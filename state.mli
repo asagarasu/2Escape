@@ -24,7 +24,7 @@ type storable = {id : string}
 type immovable = {id : string}
 
 (* type representing an exit in the room, to_room is (room name, x, y) *)
-type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
+type exit = {id : string; mutable is_open : bool; to_room : string * int * int; cscene : Cutscene.t option}
 
 (* type representing a location for a key
  * exit_effect are (room name, col, row)
@@ -93,7 +93,8 @@ type log' = {
   cols : int;
   change : entry list;
   inv_change : invchange;
-  chat : message option
+  chat : message option;
+  cutscene : Cutscene.t option
 }
 
 (**
