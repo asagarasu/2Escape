@@ -5,7 +5,8 @@ open Lwt_io
 let counter = ref 0
 let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
-let fake_def = descr_of_out_channel (Pervasives.open_out "fake.txt")
+let fake_def' = descr_of_out_channel (Pervasives.open_out "fake.txt")
+let descr = Lwt_unix.of_unix_file_descr fake_def'
 let oc1 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
 let oc2 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
 let state1 = ref false
@@ -41,6 +42,11 @@ let rec handle_connection ic oc1 oc2 () =
 			>>= handle_connection ic oc1 oc2
         | None -> Lwt_log.info "Connection closed" >>= return)
 
+let start oc1 oc2=
+	Lwt_io.write_line oc1 "start";
+	Lwt_io.write_line oc2 "start";
+	tell := true
+	
 let accept_connection conn =
     let fd, sockaddr = conn in 
 	if (!state1 = false) then player1 := sockaddr; 
@@ -48,7 +54,9 @@ let accept_connection conn =
 	if !player1 <> sockaddr then player2 := sockaddr;
 	oc2 := Lwt_io.of_fd Lwt_io.Output fd;state2:=true;	
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
-    Lwt.on_failure (handle_connection ic oc1 oc2 ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
+	let oc1'= oc1 in let oc2'=oc2 in
+	if (tell = false && state1 = true && state2 = true) start oc1' oc2';
+    Lwt.on_failure (handle_connection ic oc1' oc2' ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
     Lwt_log.info "New connection" >>= return
 
 (**create the socket*)

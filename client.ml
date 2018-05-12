@@ -1,12 +1,6 @@
 open Unix
 
 type t = in_channel * out_channel
-
-let send_command = 
-	failwith "Not Yet Implemented"
-
-let receive_state =
-	failwith "Not Yet Implemented"
 	
 (**
  * Temporary function to test the client-server dynamics in ocaml
