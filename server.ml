@@ -7,8 +7,8 @@ let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
 let fake_def' = descr_of_out_channel (Pervasives.open_out "fake.txt")
 let descr = Lwt_unix.of_unix_file_descr fake_def'
-let oc1 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
-let oc2 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
+let oc1 = ref (Lwt_io.of_fd Lwt_io.Output descr)
+let oc2 = ref (Lwt_io.of_fd Lwt_io.Output descr)
 let state1 = ref false
 let state2 = ref false
 let tell = ref false 
@@ -54,8 +54,8 @@ let accept_connection conn =
 	if !player1 <> sockaddr then player2 := sockaddr;
 	oc2 := Lwt_io.of_fd Lwt_io.Output fd;state2:=true;	
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
-	let oc1'= oc1 in let oc2'=oc2 in
-	if (tell = false && state1 = true && state2 = true) start oc1' oc2';
+	let oc1'= !oc1 in let oc2'= !oc2 in
+	if (!tell = false && !state1 = true && !state2 = true) then start oc1' oc2';
     Lwt.on_failure (handle_connection ic oc1' oc2' ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
     Lwt_log.info "New connection" >>= return
 
