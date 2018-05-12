@@ -35,15 +35,20 @@ type exit = {id : string; mutable is_open : bool; to_room : string * int * int}
  * exit_effect are (room name, col, row)
  * immovable_effect are (room name, col, row)
 *)
-type keyloc = {id : string;
-               key : string;
-               mutable is_solved : bool;
-               exit_effect : (string * int * int) list;
-               immovable_effect : (string * int * int) list}
+type keyloc = {id : string; key : string; mutable is_solved : bool;
+  exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string; rotate : direction}
+type rotatable = {id : string; mutable rotate : direction; correct : direction; 
+    exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
+let next_dir (d : direction) : direction = 
+  match d with 
+  | Up -> Left
+  | Down -> Right
+  | Left -> Down
+  | Right -> Up
+ 
 (* type representing a tile in the room *)
 type tile = {
   mutable ch : character option;
@@ -164,12 +169,8 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
      inv_change = {add = Some item; remove = None};
      chat = (fst logs).chat}, (snd logs)
   else
-    (fst logs), {room_id = (snd logs).room_id;
-                 rows = (snd logs).rows;
-                 cols = (snd logs).cols;
-                 change = (snd logs).change;
-                 inv_change = {add = Some item;remove = None};
-                 chat = (snd logs).chat}
+    (fst logs), {room_id = (snd logs).room_id; rows = (snd logs).rows; cols = (snd logs).cols;
+                 change = (snd logs).change; inv_change = {add = Some item;remove = None}; chat = (snd logs).chat}
 
 (**
  * Helper method to update a log based on [playerid] dropping an [item]
@@ -245,14 +246,6 @@ let logify (playerid : int) (st : t) : log' =
     chat = None
   }
 
-    (*
-let update_rt (rt:rotatable) : rotatable =
-  let id_stem = String.sub rt.id 1 (String.length rt.id -1) in
-  match rt.id with
-  | id_stem ^ "1" -> *)
-
-
-
 (**
  * Method to do a player command based on the player's id
  * command, and the current state
@@ -288,7 +281,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in
             (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
           end
-        else if bool_opt newtile.immov || bool_opt newtile.rt then
+        else if bool_opt newtile.immov then
           begin
             oldtile.ch <- Some { id = playerid ; direction = d };
             let entry_l = [{row = curr_player_y; col = curr_player_x; newtile = oldtile}] in
@@ -325,6 +318,69 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                 (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
               end
           end
+        else if bool_opt newtile.rt then 
+          
+          begin
+            let rot = access_opt newtile.rt in
+            if rot.rotate = rot.correct then create_empty_logs room1 room2 
+            else 
+              begin 
+               rot.rotate <- next_dir rot.rotate;
+               if rot.rotate = rot.correct then 
+                begin 
+                  let startEntries = 
+                    match room1_string, room2_string with
+                  | a, b when a = curr_room_id && b = curr_room_id ->
+                    [{ row = next_player_y; col = next_player_x; newtile = newtile}],
+                    [{ row = next_player_y; col = next_player_x; newtile = newtile}]
+                  | a, _ when a = curr_room_id ->
+                    [{ row = next_player_y; col = next_player_x; newtile = newtile}], []
+                  | _, a when a = curr_room_id ->
+                    [], [{ row = next_player_y; col = next_player_x; newtile = newtile}]
+                  | _ -> [], [] in 
+                  let changedExitsEntries = List.fold_left (fun curr_entries ex_effect ->
+                  let alteredroom = Hashtbl.find st.roommap (fst_third ex_effect) in
+                  let alteredrow = thd_third ex_effect in
+                  let alteredcol = snd_third ex_effect in
+                  let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
+                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open;
+                  match room1_string, room2_string with
+                  | a, b when a = room1_string && b = room2_string ->
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | a, _ when a = room1_string ->
+                  { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    (snd curr_entries)
+                  | _, a when a = room2_string ->
+                    (fst curr_entries),
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | _ -> curr_entries) startEntries rot.exit_effect in
+                let allEntries = List.fold_left (fun curr_entries imm_effect ->
+                  let alteredroom = Hashtbl.find st.roommap (fst_third imm_effect) in
+                  let alteredrow = thd_third imm_effect in
+                  let alteredcol = snd_third imm_effect in
+                  let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
+                  alteredtile.immov <- None;
+                  match room1_string, room2_string with
+                  | a, b when a = room1_string && b = room2_string ->
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | a, _ when a = room1_string ->
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
+                    snd curr_entries
+                  | _, a when a = room2_string ->
+                    fst curr_entries,
+                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
+                  | _ -> curr_entries) changedExitsEntries rot.immovable_effect in 
+                  create_log room1 (fst allEntries), create_log room2 (snd allEntries)
+                end 
+               else
+                begin
+                  let entry_l = [{row = next_player_y; col = next_player_x; newtile = newtile}] in 
+                  (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
+                end
+              end
+          end
         else
           begin
             newtile.ch <- Some { id = playerid ; direction = d };
@@ -337,7 +393,6 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
              else st.pl2_loc <- room2_string, next_player_x, next_player_y);
             (update_room room1 curr_room entry_l, update_room room2 curr_room entry_l)
           end
-          (*TODO other things*)
     with
        Invalid_argument _ ->
         let tile = curr_room.tiles.(curr_player_y).(curr_player_x) in
@@ -482,7 +537,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   else create_empty_logs room1 room2
 
 (** Save a game : Converting state to json **)
-
+(**
 (* Helper method to turn a [ch] to a json*)
 let ch_to_json (t:character) =
   let id = `Int t.id in
@@ -604,7 +659,7 @@ let kl_of_json j =
 let rt_of_json j = 
   Some {
     id = j |> member "id" |> to_string;
-    rotate = j |> member "rotate" |> to_int
+    rotate = Up;
   }
 
 (* Helper method to read a [tile] from a json *)
@@ -673,3 +728,4 @@ let state_of_json j =
 let load (file : string) : t =
   let j = Yojson.Basic.from_file file in
   state_of_json j
+*)

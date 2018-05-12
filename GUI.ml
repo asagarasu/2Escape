@@ -11,6 +11,13 @@ let fail = fun _ -> assert false
 
 let td_style = js"padding: 0; width: 20px; height: 20px;"
 
+let string_of_direction (dir : State.direction) : string = 
+  match dir with 
+  | Up -> "up"
+  | Down -> "down"
+  | Left -> "left"
+  | Right -> "right"
+
 (** 
  * Gets the string of the item to display. 
  * The precedence for display is as follows:
@@ -28,6 +35,8 @@ let get_dominant (tile: State.tile) : string =
     ^ "_" ^ string_of_bool (access_opt tile.kl).is_solved else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else
   if bool_opt tile.store = true then (access_opt tile.store).id else
+  if bool_opt tile.rt = true then (access_opt tile.rt).id ^  "_" 
+    ^ string_of_direction (access_opt tile.rt).rotate else 
   if bool_opt tile.immov = true then (access_opt tile.immov).id  else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
@@ -262,7 +271,7 @@ let send_message_temp tbl chat state input ev : unit =
 
 (* example log test case for GUI*)
 let (emptytile : State.tile) = {ch = None; mov = None; 
-  store = None; immov = None; ex = None; kl = None}
+  store = None; immov = None; ex = None; kl = None; rt = None}
 
 let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2; 
   change = [{row = 0; col = 0; newtile = emptytile}; 
@@ -273,48 +282,56 @@ let (log1 : State.log') = {room_id = "example"; rows = 2; cols = 2;
   chat = Some {id = 1; message = "hi"}}
 
 let (player1tile : State.tile) = {ch = Some {id = 1; direction = State.Up}; 
-  mov = None; store = None; immov = None; ex = None; kl = None}
+  mov = None; store = None; immov = None; ex = None; kl = None; rt = None}
 let (player2tile : State.tile) = {ch = Some {id = 2; direction = State.Up}; 
-  mov = None; store = None; immov = None; ex = None; kl = None}
+  mov = None; store = None; immov = None; ex = None; kl = None; rt = None}
 
 let get_emptytile () : State.tile = {ch = None; mov = None; 
-  store = None; immov = None; ex = None; kl = None}
+  store = None; immov = None; ex = None; kl = None; rt = None}
 
 let (itemtile : State.tile) = {ch = None; mov = None; 
-  store = Some {id = "item1"}; immov = None; ex = None; kl = None}
+  store = Some {id = "item1"}; immov = None; ex = None; kl = None; rt = None}
 
 let (itemtile2 : State.tile) = {ch = None; mov = None; 
-store = Some {id = "item2"}; immov = None; ex = None; kl = None}
+store = Some {id = "item2"}; immov = None; ex = None; kl = None; rt = None}
 
 let (itemtile3 : State.tile) = {ch = None; mov = None; 
-store = Some {id = "item3"}; immov = None; ex = None; kl = None}
+store = Some {id = "item3"}; immov = None; ex = None; kl = None; rt = None}
 
 let (itemtile4 : State.tile) = {ch = None; mov = None; 
-store = Some {id = "item4"}; immov = None; ex = None; kl = None}
+store = Some {id = "item4"}; immov = None; ex = None; kl = None; rt = None}
 
 let (itemtile5 : State.tile) = {ch = None; mov = None; 
-store = Some {id = "item5"}; immov = None; ex = None; kl = None}
+store = Some {id = "item5"}; immov = None; ex = None; kl = None; rt = None}
 
 let (movtile : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
-  store = None; ex = None; kl = None}
+  store = None; ex = None; kl = None; rt = None}
 
 let (kltile : State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = None; kl = Some {id = "kl1"; key = "item1"; 
     is_solved = false; exit_effect = [("room1", 7, 6)]; immovable_effect = [
       ("room1", 6, 6); ("room1", 8, 5); ("room1", 7, 5); ("room1", 6, 5)
-    ]}}
+    ]}; rt = None}
 
 let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0)}; kl = None}
+  store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0)}; kl = None;
+  rt = None}
 
 let (exittile2 : State.tile) = {ch = None; mov = None; immov = None;
-  store = None; ex = Some {id = "exit"; is_open = true; to_room = ("room1", 9, 0)}; kl = None}
+  store = None; ex = Some {id = "exit"; is_open = true; to_room = ("room1", 9, 0)}; kl = None;
+  rt = None}
 
 let (movtile2 : State.tile) = {ch = None; mov = Some {id = "mov1"}; immov = None; 
-  store = None; ex = None; kl = None}
+  store = None; ex = None; kl = None; rt = None}
 
 let createwalltile () : State.tile = {ch = None; mov = None; immov = Some {id = "wall"};
-  store = None; ex = None; kl = None}
+  store = None; ex = None; kl = None; rt = None}
+
+let (rotatetile : State.tile) = {ch = None; mov = None; immov = None; store = None;
+  ex = None; kl = None; rt = Some {id = "rotate"; rotate = State.Right; correct = State.Down; 
+  exit_effect = [("room1", 7, 6)]; immovable_effect = [
+    ("room1", 6, 6); ("room1", 8, 5); ("room1", 7, 5); ("room1", 6, 5)
+  ]}}
 
 let (room1 : State.room) = {
   id = "room1"; 
@@ -342,6 +359,7 @@ let (room1 : State.room) = {
     arr.(7).(1) <- itemtile3;
     arr.(7).(2) <- itemtile4;
     arr.(8).(1) <- itemtile5;
+    arr.(5).(5) <- rotatetile;
     arr);
   rows = 10; 
   cols = 10

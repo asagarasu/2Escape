@@ -37,7 +37,8 @@ type keyloc = {id : string;
                immovable_effect : (string * int * int) list}
 
 (* type representing a rotatable object *)
-type rotatable = {id : string; rotate : direction}
+type rotatable = {id : string; mutable rotate : direction; correct : direction; 
+    exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
 
 (* type representing a tile in the room *)
 type tile = {
@@ -111,9 +112,9 @@ val do_command : int -> command -> t -> log' * log'
  * returns: the [log] of the state [st]
  *)
 val logify : int -> t -> log'
-
+(*)
 (* [save] takes in the current state and save to a json string at file loc [file] *)
 val save : t -> string -> unit
 
 (* [load] reading a string and returns a state *)
-val load : string -> t
+val load : string -> t*)
