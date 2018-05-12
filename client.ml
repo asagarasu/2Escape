@@ -45,12 +45,10 @@ let create_client client_parent_fun client_child_fun (ip : string) =
         | id -> client_parent_fun ic ;
                 shutdown_connection ic ;
                 ignore (Unix.waitpid [] id)
-        with
-           Failure("int_of_string") -> Printf.eprintf "bad port number" ;
-                                       exit 2 ;;
+
 let go_client () = 
-	let in_file = open_in Sys.argv.(3) 
-    and out_file = open_out Sys.argv.(4) 
+	let in_file = open_in "in.txt" 
+    and out_file = open_out "out.txt"
     in main_client (parent_fun out_file) (child_fun in_file) ;
     close_in in_file ;
     close_out out_file ;;

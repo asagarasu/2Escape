@@ -49,10 +49,11 @@ let start oc1 oc2=
 	
 let accept_connection conn =
     let fd, sockaddr = conn in 
-	if (!state1 = false) then player1 := sockaddr; 
-	oc1 := Lwt_io.of_fd Lwt_io.Output fd; state1:=true;
-	if !player1 <> sockaddr then player2 := sockaddr;
-	oc2 := Lwt_io.of_fd Lwt_io.Output fd;state2:=true;	
+	if (!state1 = false) then (player1 := sockaddr; 
+	oc1 := Lwt_io.of_fd Lwt_io.Output fd; state1:=true);
+	if (!player1 <> sockaddr && !state1 = true && !state2 = false)
+	then (player2 := sockaddr;
+	oc2 := Lwt_io.of_fd Lwt_io.Output fd;state2:=true);	
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
 	let oc1'= !oc1 in let oc2'= !oc2 in
 	if (!tell = false && !state1 = true && !state2 = true) then start oc1' oc2';
