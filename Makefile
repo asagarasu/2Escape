@@ -12,3 +12,7 @@ state:
 	ocamlbuild -use-ocamlfind init.cmo -r
 gui:
 	ocamlbuild -use-ocamlfind -plugin-tag "package(js_of_ocaml.ocamlbuild)" -no-links GUI.d.js
+client:
+	ocamlbuild -use-ocamlfind clienttest.byte && ./clienttest.byte
+server:
+	ocamlbuild -use-ocamlfind server.byte && ./server.byte

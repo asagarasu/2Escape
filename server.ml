@@ -64,7 +64,7 @@ let accept_connection conn =
 let create_socket (port : int) =
     let open Lwt_unix in
     let sock = socket PF_INET SOCK_STREAM 0 in
-    bind sock @@ ADDR_INET (get_my_addr (), port);
+    ignore(bind sock @@ ADDR_INET (inet_addr_of_string "127.0.0.1", port));
     listen sock 10;
     sock
 
@@ -78,3 +78,5 @@ let create_server (port : int) : unit =
     let sock = create_socket port in
     let serve = create_server_help sock in
     Lwt_main.run @@ serve ()
+
+let () = create_server 8080

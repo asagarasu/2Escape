@@ -1,9 +1,14 @@
 open Js_of_ocaml
 open Js_of_ocaml_lwt
 open Helper 
+open Unix
 
 module Html = Dom_html
+module Sock = WebSockets
+
 let js = Js.string
+
+
 let document = Html.document
 
 (* Helper function to offer alternative if element isn't found *)
@@ -259,6 +264,10 @@ let send_movement ev : unit =
   in 
     ignore "send message to client TODO"
 
+let ip = js "ws+unix:http://localhost:8080"
+
+let websocket = jsnew Sock.webSocket (ip)
+
 (**
  * Helper method to update the GUI based on log 
  *
@@ -285,10 +294,11 @@ and nextScene divNode : unit =
   let values = Cutscene.read !cutscene in 
   cutscene := (fst values);
   match (snd values) with 
-    | None -> isCutscreen := false; fromCutscene divNode !gametbl; document##onkeydown <- Html.handler (fun ev -> 
-              send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true)
+    | None -> isCutscreen := false; fromCutscene divNode !gametbl; (*document##onkeydown <- Html.handler (fun ev -> 
+              send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true)*)
     | Some (x, y) -> 
       let img = Html.createImg document in 
+        cutscene_context##clearRect(0.0, 0.0, float_of_int cutscene_canvas##width, float_of_int cutscene_canvas##height);
         img##onload <- Html.handler (fun _ -> cutscene_context##drawImage(img, 0.0, 0.0); Js.bool true);
         img##src <- js (x ^ ".png")
 
@@ -309,7 +319,8 @@ and send_message_temp tbl chat state input divNode ev : unit =
   match ev##keyCode with 
   | 13 -> let c = State.Message (Js.to_string input##value) in 
           input##value <- js "";
-          update_gui tbl chat divNode (fst (State.do_command 1 c state))
+          websocket##send (js "hi")
+          (*update_gui tbl chat divNode (fst (State.do_command 1 c state))*)
   | _ -> Html.stopPropagation ev
 
 
@@ -358,7 +369,7 @@ let (kltile : State.tile) = {ch = None; mov = None; immov = None;
       ("room1", 6, 6); ("room1", 8, 5); ("room1", 7, 5); ("room1", 6, 5)
     ]}; rt = None}
 
-let samplecutscene = Cutscene.create ["sprites/test"] ["hi"]
+let samplecutscene = Cutscene.create ["sprites/test"; "sprites/CHARACTER1"] ["hi"; "hi2"]
 
 let (exittile1: State.tile) = {ch = None; mov = None; immov = None;
   store = None; ex = Some {id = "exit"; is_open = false; to_room = ("room2", 0, 0); cscene = Some samplecutscene}; kl = None;
