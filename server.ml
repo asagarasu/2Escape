@@ -5,7 +5,7 @@ open Lwt_io
 let counter = ref 0
 let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
-let fake_def = descr_of_out_channel ("fake.txt")
+let fake_def = descr_of_out_channel (Pervasives.open_out "fake.txt")
 let oc1 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
 let oc2 = ref (Lwt_io.of_fd Lwt_io.Output fake_def)
 let state1 = ref false
