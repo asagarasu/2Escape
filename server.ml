@@ -5,8 +5,8 @@ open Lwt_io
 let counter = ref 0
 let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
-let oc1 = Pervasives.open_out "fake.txt"
-let oc2 = Pervasives.open_out "fake.txt"
+let oc1 = ref (Pervasives.open_out "fake.txt")
+let oc2 = ref (Pervasives.open_out "fake.txt")
 let state1 = ref false
 let state2 = ref false
 let tell = ref false 
@@ -43,9 +43,9 @@ let rec handle_connection ic oc1 oc2 () =
 let accept_connection conn =
     let fd, sockaddr = conn in 
 	if (!state1 = false) then player1 := sockaddr; 
-	let oc1 = Lwt_io.of_fd Lwt_io.Output fd; state1:=true;
+	oc1 := Lwt_io.of_fd Lwt_io.Output fd; state1:=true;
 	if !player1 <> sockaddr then player2 := sockaddr;
-	let oc2 = Lwt_io.of_fd Lwt_io.Output fd;state2:=true;	
+	oc2 := Lwt_io.of_fd Lwt_io.Output fd;state2:=true;	
     let ic = Lwt_io.of_fd Lwt_io.Input fd in
     Lwt.on_failure (handle_connection ic oc1 oc2 ()) (fun e -> Lwt_log.ign_error (Printexc.to_string e));
     Lwt_log.info "New connection" >>= return
