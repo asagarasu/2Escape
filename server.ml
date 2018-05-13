@@ -8,8 +8,8 @@ let player1 = ref (ADDR_UNIX "")
 let player2 = ref (ADDR_UNIX "")
 let fake_def' = descr_of_out_channel (Pervasives.open_out "fake.txt")
 let descr = Lwt_unix.of_unix_file_descr fake_def'
-let player1_file = descr
-let player2_file = descr
+let player1_file = ref descr
+let player2_file = ref descr
 let oc1 = ref (Lwt_io.of_fd Lwt_io.Output descr)
 let oc2 = ref (Lwt_io.of_fd Lwt_io.Output descr)
 let state1 = ref false
@@ -39,7 +39,7 @@ let reinit () =
 	player2 := (ADDR_UNIX "");
 	state1 := false;
 	state2 := false;
-	tell := false 
+	tell := false; 
 	play := true 
 	
 (**process input and output*)	
