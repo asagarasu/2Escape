@@ -301,10 +301,10 @@ let roommap =
 
 let state =
   {roommap = roommap;
-   pl1_loc = ("test", 0, 0); pl2_loc = ("test", 1, 1);
+   pl1_loc = ("air", 0, 0); pl2_loc = ("air", 0, 1);
    pl1_inv = []; pl2_inv = ["good"];
    chat = [{id = 2; message = "no"}; {id = 1; message = "yes"}]}
 
 let do' (playerid:int) (cmd:string) : string * string =
   let cmd' = parse_command cmd in
-  empty (do_command playerid cmd' state)
+  make_log (do_command playerid cmd' state)
