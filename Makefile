@@ -8,6 +8,7 @@ interfacezip:
 prototype:
 	zip prototype.zip *.ml* Gui.d.js index.html test.json sprites/*
 state:
+	ocamlbuild -use-ocamlfind cutscene.cmo -r
 	ocamlbuild -use-ocamlfind state.cmo -r
 	ocamlbuild -use-ocamlfind init.cmo -r
 gui:

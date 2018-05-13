@@ -807,6 +807,58 @@ let load (file : string) : t =
   state_of_json j
 *)
 
+      (*
+
+type rotatable = {id : string; mutable rotate : direction; correct : direction;
+                  exit_effect : (string * int * int) list; immovable_effect : (string * int * int) list}
+
+let make_log log_pair : string =
+  let f = fst log_pair in
+  let s = snd log_pair in
+  let direct d = (match d with | Left -> "left" | Right -> "right" | Up -> "up" | Down -> "down" ) in
+  let effect e = List.fold_left
+      (fun acc a -> acc ^ "[" ^ (fst_third a) ^ ", " ^ (string_of_int (snd_third a)) ^
+                    ", " ^ (string_of_int (thd_third a)) ^ "]," ) "" e
+  in
+  let rotate r = "[" ^ r.id ^ ", " ^ direct r.rotate ^ ", " ^ direct r.correct ^
+                 "[" ^ effect r.exit_effect ^ "], " ^ effect r.immovable_effect ^ "]]"
+  in
+  let loc k = "[" ^ k.id ^ k.key ^ string_of_bool k.is_solved ^ "[" ^
+            effect k.exit_effect ^ "],[" ^ effect k.immovable_effect ^ "]]"
+
+  in
+  let scene c = List.fold_left (fun acc a -> acc ^ "[" ^ (fst a) ^ ", " ^ (snd a) ^ "]," ) "" c in
+  let tile t =
+"{\"ch\":[" ^ string_of_int t.ch.id ^ ", " ^ direct t.ch.direction ^ "],
+\"mov\":" ^ t.mov.id ^ ",
+\"store\":" ^ t.store.id ^ ",
+\"immov\":" ^ t.immov.id ^ ",
+\"ex\":[" ^ t.ex.id ^ ", " ^ string_of_bool t.ex.is_open ^ ", ["
+    ^ fst_third t.ex.to_room ^ ", "
+    ^ string_of_int (snd_third t.ex.to_room) ^ ", "
+    ^ string_of_int (thd_third t.ex.to_room) ^ "], ["
+    ^ scene t.ex.cutscene ^ "]],
+\"kl\":[" ^ loc t.keyloc ^ "],
+\"rt\":" ^ rotate t.rt ^ "}"
+  in
+  let change ch = List.fold_left
+      (fun acc a -> acc ^ "{\"row\": " ^ string_of_int a.row ^ ",\"col\": " ^
+                    string_of_int a.col ^ ",\"newtile\": " ^ tile a.newtile ^ "},") "" ch
+  in
+  let f_str = "
+  \"log_1\": {
+    \"room_id\": \"" ^ f.room_id ^ "\",
+    \"rows\": " ^ string_of_int f.rows ^ ",
+    \"cols\": " ^ string_of_int f.cols ^ ",
+    \"change\": [" ^ change f.change ^ "],
+    \"inv_change\": [" ^ fst f.inv_change.add ^ ", "",""],
+    "chat": "",
+    "cutscene": [["",""]]
+  },
+"
+*)
+
+
 let parse_command (cmd:string):command =
   match cmd with
   | "take" -> Take
@@ -829,3 +881,8 @@ let parse_command (cmd:string):command =
          Go d
        | c -> Take)
     else Take
+
+let empty log_pair =
+  let f = fst log_pair in
+  let s = snd log_pair in
+  (f.room_id , s.room_id)
