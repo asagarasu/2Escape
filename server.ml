@@ -36,11 +36,11 @@ let reinit () =
 	(if (!play = true) then let temp = player2_file in Lwt_unix.close temp
 	else let temp = player1_file in Lwt_unix.close temp);
 	player1 := (ADDR_UNIX "");
-    player2 := (ADDR_UNIX "");
+	player2 := (ADDR_UNIX "");
 	state1 := false;
-    state2 := false;
-    tell := false 
-    play := true 
+	state2 := false;
+	tell := false 
+	play := true 
 	
 (**process input and output*)	
 let rec handle_connection ic oc1 oc2 () =
