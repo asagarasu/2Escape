@@ -1,0 +1,21 @@
+{
+  "log_1": {
+    "room_id": "air",
+    "rows": 5,
+    "cols": 6,
+    "change": [{"row": 3,"col": 3,"newtile": {"ch":[2, "up"],"mov":"","store":"good","immov":"","ex":[],"kl":[],"rt":[]}},{"row": 4,"col": 3,"newtile": {"ch":[],"mov":"","store":"","immov":"","ex":[],"kl":[],"rt":[]}}],
+    "inv_change": ["", ""],
+    "chat": [],
+    "cutscene": []}}
+
+
+
+{
+  "log_2": {
+    "room_id": "air",
+    "rows": 5,
+    "cols": 6,
+    "change": [{"row": 3,"col": 3,"newtile": {"ch":[2, "up"],"mov":"","store":"good","immov":"","ex":[],"kl":[],"rt":[]}},{"row": 4,"col": 3,"newtile": {"ch":[],"mov":"","store":"","immov":"","ex":[],"kl":[],"rt":[]}}],
+    "inv_change": ["", ""],
+    "chat": [],
+    "cutscene": []}}

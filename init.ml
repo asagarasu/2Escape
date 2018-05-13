@@ -1,4 +1,5 @@
 open State
+open Printf
 
 let air_to_gears : exit = { id = "air_to_gears"; is_open = true; to_room = ("gears",-1,-1); cscene = None }
 
@@ -297,14 +298,27 @@ let roommap =
   let table = Hashtbl.create 10 in
   Hashtbl.add table "air" air;
   Hashtbl.add table "study" study;
+  Hashtbl.add table "basement" basement;
+  Hashtbl.add table "workshop" workshop;
+  Hashtbl.add table "handler" handler;
   table
 
 let state =
   {roommap = roommap;
-   pl1_loc = ("air", 0, 0); pl2_loc = ("air", 0, 1);
+   pl1_loc = ("air", 0, 0); pl2_loc = ("air", 3, 3);
    pl1_inv = []; pl2_inv = ["good"];
    chat = [{id = 2; message = "no"}; {id = 1; message = "yes"}]}
 
 let do' (playerid:int) (cmd:string) : string * string =
   let cmd' = parse_command cmd in
   make_log (do_command playerid cmd' state)
+
+let save_pair l =
+  let file = "some.json" in
+  let message = fst l ^"
+
+" ^ snd l
+  in
+  let oc = open_out file in
+  fprintf oc "%s\n" message;
+  close_out oc;
