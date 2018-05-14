@@ -1,5 +1,5 @@
 open State
-open Json
+open Json_parser
 
 let player1 = ref ""
 
