@@ -1,0 +1,4 @@
+0
+Counter has been incremented
+1
+Counter has been incremented

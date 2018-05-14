@@ -1,4 +1,5 @@
 var net = require('net');
+var ws = require('websocket');
 
 var client = net.createConnection({ port: 8080 }, () => {
     // 'connect' listener
@@ -7,7 +8,10 @@ var client = net.createConnection({ port: 8080 }, () => {
   client.on('data', function(data){
       console.log(data.toString('utf8'));
   })
-  client.write('read');
-  client.write('inc');
-  client.write('read');
-  client.write('inc');
+  client.write('read\n');
+  client.write('inc\n');
+  client.write('read\n');
+  client.write('inc\n');
+
+var server = ws.server;
+
