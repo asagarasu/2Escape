@@ -5,29 +5,16 @@ open Init
 
 let () = Lwt_log.add_rule "*" Lwt_log.Info
 
+let start = ref false
+
 (**get the ip address of the local computer*)
 let get_my_addr () =
   (Unix.gethostbyname(Unix.gethostname())).Unix.h_addr_list.(0) ;;
 
 (**temporary function try to read the msg and use handle_connection
  *to do some simple calculation*)
-<<<<<<< HEAD
-let handle_message msg =
-  let playerid = if (!play = true) then 1 else 2 in
-  do' playerid msg
-
-let reinit () =
-  (if (!play = true) then let temp = player2_file in Lwt_unix.close !temp
-   else let temp = player1_file in Lwt_unix.close !temp);
-  player1 := (ADDR_UNIX "");
-  player2 := (ADDR_UNIX "");
-  state1 := false;
-  state2 := false;
-  tell := false;
-  play := true
-=======
 let handle_message msg = do' msg
->>>>>>> a46408ba5e2bfd0c9c4111900490de329d231970
+
 
 (**process input and output*)
 let rec handle_connection ic oc () =
@@ -38,7 +25,8 @@ let rec handle_connection ic oc () =
        let reply = handle_message msg in
           Lwt_io.write_line oc reply;
           >>= handle_connection ic oc
-     | None -> Lwt_log.info "Connection closed" >>= return)
+     | None -> reinit () ;Lwt_log.info "Connection closed" >>= return)
+
 
 let accept_connection conn =
   let fd, sockaddr = conn in

@@ -384,3 +384,9 @@ let do' (cmd:string) : string =
   let c = String.sub cmd (i+1) (l-i-1) in
   let cmd' = parse_command c in
   make_log (do_command id cmd' state)
+
+let reinit () =
+  player1 := "";
+  player2 := "";
+  save1 := false;
+  save2 := false
