@@ -1,3 +1,3 @@
 open State
 
-val do' : int -> string -> string * string 
+val do' : string -> string

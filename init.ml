@@ -1,5 +1,13 @@
 open State
-open Printf
+open Json
+
+let player1 = ref ""
+
+let player2 = ref ""
+
+let save1 = ref false
+
+let save2 = ref false
 
 let air_to_gears : exit = { id = "air_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None }
 
@@ -366,16 +374,13 @@ let state =
    pl1_inv = ["book"]; pl2_inv = [];
    chat = []}
 
-let do' (playerid:int) (cmd:string) : string * string =
-  let cmd' = parse_command cmd in
-  make_log (do_command playerid cmd' state)
-
-let save_pair l =
-  let file = "some.json" in
-  let message = fst l ^"
-
-" ^ snd l
-  in
-  let oc = open_out file in
-  fprintf oc "%s\n" message;
-  close_out oc;
+let do' (cmd:string) : string =
+  let i = String.index cmd ' ' in
+  let playerid = String.sub cmd 0 i in
+  (if !save1 = false then player1 := playerid;save1 := true);
+  (if !save1 = true && !save2 = false then player2 := playerid;save2:=true);
+  let id = if (playerid = !player1) then 1 else 2 in
+  let l = String.length cmd in
+  let c = String.sub cmd (i+1) (l-i-1) in
+  let cmd' = parse_command c in
+  make_log (do_command id cmd' state)
