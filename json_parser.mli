@@ -8,7 +8,7 @@ val parselog : Yojson.Basic.json -> log'
 
 val tojsonlog : log' -> json
 
-val parsepairlog : json -> pairlog'
+val parsepairlog : Yojson.Basic.json -> pairlog'
 
 val tojsonpairlog : pairlog' -> json
 

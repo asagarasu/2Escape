@@ -300,9 +300,15 @@ let tojsonlog (l:log') : json =
           ("inv_change", inven l.inv_change); ("chat", chat_line l.chat);
           ("cutscene", `List (scene l.cutscene))]
 
-let parsepairlog = failwith "TODO"
+let parsepairlog p_j =
+  let f = p_j |> member "first" |> parselog in
+  let s = p_j |> member "second" |> parselog in
+  {first = f ; second = s}
 
-let tojsonpairlog = failwith "TODO"
+let tojsonpairlog p_l =
+  let f = tojsonlog p_l.first in
+  let s = tojsonlog p_l.second in
+  `Assoc [("first", f); ("second",s)]
 
 let parsecommand (j:json):command =
   match j with
