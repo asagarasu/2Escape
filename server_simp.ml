@@ -10,7 +10,7 @@ let handle_connection ic oc=
    try while true do
        let s = input_line ic in
        let reply = handle_message s in
-       output_string oc reply ;flush oc
+       output_string oc (reply^"\n") ;flush oc
        done
    with _ -> reinit ();
              Printf.printf "Connection closed" ;
