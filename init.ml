@@ -1,11 +1,11 @@
 open State
 open Printf
 
-let air_to_gears : exit = { id = "air_to_gears"; is_open = true; to_room = ("gears",-1,-1); cscene = None }
+let air_to_gears : exit = { id = "air_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None }
 
-let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",1,3); cscene = None}
+let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",0,2); cscene = None}
 
-let turbine_loc = {id = "turbine_loc"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",-1,-1)]}
+let turbine_loc = {id = "turbine_loc"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",2,1)]}
 
 let air =
   {id = "air";
@@ -48,11 +48,11 @@ let air =
      |];
    rows = 5; cols = 6}
 
-let study_to_air = { id = "study_to_air"; is_open = true; to_room = ("air",5,2); cscene = None }
+let study_to_air = { id = "study_to_air"; is_open = true; to_room = ("air",2,4); cscene = None }
 
-let study_to_basement = { id = "study_to_basement"; is_open = true; to_room = ("basement",-1,-1); cscene = None }
+let study_to_basement = { id = "study_to_basement"; is_open = true; to_room = ("basement",2,2); cscene = None }
 
-let study_to_hall = { id = "study_to_hall"; is_open = true; to_room = ("hall",-1,-1); cscene = None }
+let study_to_hall = { id = "study_to_hall"; is_open = true; to_room = ("hall",0,8); cscene = None }
 
 let study =
   {id = "study";
@@ -203,11 +203,21 @@ let workshop =
 
 let handler_to_gears = {id = "handler_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None}
 
+let handler_to_workshop = {id = "handler_to_workshop"; is_open = true; to_room = ("workshop",0,3); cscene = None}
+
 let handler_loc = {
   id = "handler_loc";
   key = "handler_key";
   is_solved = false;
   exit_effect = [("workshop",1,4)];
+  immovable_effect = []
+}
+
+let hall_handler_loc = {
+  id = "hall_handler_loc";
+  key = "hall_handler_key";
+  is_solved = false;
+  exit_effect = [("air",5,3)];
   immovable_effect = []
 }
 
@@ -236,50 +246,82 @@ let handler =
          {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
-       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = Some hall_handler_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
+         {ch = None; mov = None; store = Some {id = "handler_key"}; immov = None; ex = None; kl = None; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some handler_to_workshop; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
    rows = 5; cols = 6}
 
+let hall_to_study = {id = "hall_to_study"; is_open = false; to_room = ("study",-1,-1); cscene = None}
 
-let handler =
-  {id = "handler";
+let hall_to_workshop = {id = "hall_to_workshop"; is_open = true; to_room = ("workshop",-1,-1); cscene = None}
+
+let book_loc = {
+  id = "book_loc";
+  key = "book";
+  is_solved = false;
+  exit_effect = [("hall",0,8)];
+  immovable_effect = []
+}
+
+let hall =
+  {id = "hall";
    tiles =
      [|
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
+
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "hall_handler_key"}; immov = None; ex = None; kl = None; rt = None}|];
+
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
+
+       [|{ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
+         {ch = None; mov = Some {id = "book"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some book_loc; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -287,12 +329,26 @@ let handler =
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = Some {id = 2; direction = Left}; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
+
+       [|{ch = None; mov = None; store = None; immov = None; ex = Some hall_to_study; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = Some {id = 1; direction = Right}; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = Some hall_to_workshop; kl = None; rt = None};|];
+
+       [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
-   rows = 5; cols = 6}
+   rows = 10; cols = 6}
 
 let roommap =
   let table = Hashtbl.create 10 in
@@ -301,13 +357,14 @@ let roommap =
   Hashtbl.add table "basement" basement;
   Hashtbl.add table "workshop" workshop;
   Hashtbl.add table "handler" handler;
+  Hashtbl.add table "hall" hall;
   table
 
 let state =
   {roommap = roommap;
-   pl1_loc = ("air", 0, 0); pl2_loc = ("air", 3, 3);
-   pl1_inv = []; pl2_inv = ["good"];
-   chat = [{id = 2; message = "no"}; {id = 1; message = "yes"}]}
+   pl1_loc = ("hall", 1, 8); pl2_loc = ("hall", 4, 7);
+   pl1_inv = ["book"]; pl2_inv = [];
+   chat = []}
 
 let do' (playerid:int) (cmd:string) : string * string =
   let cmd' = parse_command cmd in
