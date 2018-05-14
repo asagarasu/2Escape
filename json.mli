@@ -1,4 +1,3 @@
-open Printf
 open Helper
 open State
 open Yojson
