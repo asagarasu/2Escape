@@ -116,8 +116,6 @@ val logify : int -> t -> log'
 
 val parse_command : string -> command
 
-val make_log : log' * log' -> string * string
-
 (*
 (* [save] takes in the current state and save to a json string at file loc [file] *)
 val save : t -> string -> unit
