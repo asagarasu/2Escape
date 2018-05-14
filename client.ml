@@ -36,7 +36,7 @@ let child_fun in_file out_sock =
 let parent_fun out_file in_sock = copy_channels in_sock out_file ;;
 
 let create_client client_parent_fun client_child_fun (ip : string) =
-  let port = 40001 in
+  let port = 40003 in
   let addr = ADDR_INET ((inet_addr_of_string ip), port)
   in let ic,oc = open_connection addr
      in match Unix.fork () with
