@@ -10,7 +10,7 @@ prototype:
 state:
 	ocamlbuild -use-ocamlfind cutscene.cmo -r
 	ocamlbuild -use-ocamlfind state.cmo -r
-	ocamlbuild -use-ocamlfind json.cmo -r
+	ocamlbuild -use-ocamlfind json_parser.cmo -r
 	ocamlbuild -use-ocamlfind init.cmo -r
 gui:
 	ocamlbuild -use-ocamlfind -plugin-tag "package(js_of_ocaml.ocamlbuild)" -no-links GUI.d.js
