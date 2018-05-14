@@ -1,5 +1,5 @@
 (*nonmutable design for cutscenes*)
-type t
+type t = (string * string) list
 
 val empty : t
 

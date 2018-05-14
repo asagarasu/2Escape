@@ -8,6 +8,7 @@ interfacezip:
 prototype:
 	zip prototype.zip *.ml* Gui.d.js index.html test.json sprites/*
 state:
+	ocamlbuild -use-ocamlfind cutscene.cmo -r
 	ocamlbuild -use-ocamlfind state.cmo -r
 	ocamlbuild -use-ocamlfind init.cmo -r
 gui:
@@ -15,4 +16,4 @@ gui:
 client:
 	ocamlbuild -use-ocamlfind clienttest.byte && ./clienttest.byte
 server:
-	ocamlbuild -use-ocamlfind server.byte && ./server.byte
+	ocamlbuild -use-ocamlfind servertest.byte && ./servertest.byte
