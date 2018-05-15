@@ -394,73 +394,73 @@ let e = {
   immovable_effect = [("gears",9,2)]
 }
 
-let gear_a_1 = {id = "gear_a_1_left"; rotate = Left; correct = Up;
+let gear_a_1 = {id = "gear_a"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,4)]}
-let gear_a_2 = {id = "gear_a_2_up"; rotate = Up; correct = Right;
+let gear_a_2 = {id = "gear_a"; rotate = Up; correct = Right;
                 exit_effect = []; immovable_effect = [("gears",14,4)]}
-let gear_a_3 = {id = "gear_a_3_right"; rotate = Right; correct = Down;
+let gear_a_3 = {id = "gear_a"; rotate = Right; correct = Down;
                 exit_effect = []; immovable_effect = [("gears",13,5)]}
-let gear_a_4 = {id = "gear_a_4_down"; rotate = Down; correct = Left;
+let gear_a_4 = {id = "gear_a"; rotate = Down; correct = Left;
                 exit_effect = []; immovable_effect = [("gears",8,2)]}
 
-let gear_b_1 = {id = "gear_1_left"; rotate = Left; correct = Up;
+let gear_b_1 = {id = "gear_1"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,1)]}
-let gear_b_2 = {id = "gear_2_right"; rotate = Right; correct = Up;
+let gear_b_2 = {id = "gear_2"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",16,1)]}
-let gear_b_3 = {id = "gear_3_down"; rotate = Down; correct = Up;
+let gear_b_3 = {id = "gear_3"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",16,2)]}
-let gear_b_4 = {id = "gear_4_down"; rotate = Down; correct = Up;
+let gear_b_4 = {id = "gear_4"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",16,3)]}
-let gear_b_5 = {id = "gear_5_right"; rotate = Right; correct = Up;
+let gear_b_5 = {id = "gear_5"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,3)]}
-let gear_b_6 = {id = "gear_6_left"; rotate = Left; correct = Up;
+let gear_b_6 = {id = "gear_6"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,3)]}
-let gear_b_7 = {id = "gear_7_right"; rotate = Right; correct = Up;
+let gear_b_7 = {id = "gear_7"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,2)]}
-let gear_b_8 = {id = "gear_8_down"; rotate = Down; correct = Up;
+let gear_b_8 = {id = "gear_8"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,2)]}
 
-let gear_c_1 = {id = "gear_1_right"; rotate = Right; correct = Up;
+let gear_c_1 = {id = "gear_1"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",3,3)]}
-let gear_c_2 = {id = "gear_2_left"; rotate = Left; correct = Up;
+let gear_c_2 = {id = "gear_2"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",4,3)]}
-let gear_c_3 = {id = "gear_3_down"; rotate = Down; correct = Up;
+let gear_c_3 = {id = "gear_3"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",4,4)]}
-let gear_c_4 = {id = "gear_4_right"; rotate = Right; correct = Up;
+let gear_c_4 = {id = "gear_4"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",4,5)]}
-let gear_c_5 = {id = "gear_5_down"; rotate = Down; correct = Up;
+let gear_c_5 = {id = "gear_5"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",3,5)]}
-let gear_c_6 = {id = "gear_6_down"; rotate = Down; correct = Up;
+let gear_c_6 = {id = "gear_6"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",2,5)]}
-let gear_c_7 = {id = "gear_7_right"; rotate = Right; correct = Up;
+let gear_c_7 = {id = "gear_7"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",2,4)]}
-let gear_c_8 = {id = "gear_8_right"; rotate = Right; correct = Up;
+let gear_c_8 = {id = "gear_8"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",3,4)]}
 
-let gear_d_1 = {id = "gear_d_1_right"; rotate = Right; correct = Up;
+let gear_d_1 = {id = "gear_d"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",2,1)]}
-let gear_d_2 = {id = "gear_d_2_down"; rotate = Down; correct = Right;
+let gear_d_2 = {id = "gear_d"; rotate = Down; correct = Right;
                 exit_effect = []; immovable_effect = [("gears",2,2)]}
-let gear_d_3 = {id = "gear_d_3_left"; rotate = Left; correct = Down;
+let gear_d_3 = {id = "gear_d"; rotate = Left; correct = Down;
                 exit_effect = []; immovable_effect = [("gears",1,2)]}
-let gear_d_4 = {id = "gear_d_4_up"; rotate = Up; correct = Left;
+let gear_d_4 = {id = "gear_d"; rotate = Up; correct = Left;
                 exit_effect = []; immovable_effect = [("gears",8,2)]}
 
-let gear_e_1 = {id = "gear_1_left"; rotate = Left; correct = Up;
+let gear_e_1 = {id = "gear_1"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,7)]}
-let gear_e_2 = {id = "gear_2_right"; rotate = Right; correct = Up;
+let gear_e_2 = {id = "gear_2"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,8)]}
-let gear_e_3 = {id = "gear_3_right"; rotate = Right; correct = Up;
+let gear_e_3 = {id = "gear_3"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,8)]}
-let gear_e_4 = {id = "gear_4_left"; rotate = Left; correct = Up;
+let gear_e_4 = {id = "gear_4"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,9)]}
-let gear_e_5 = {id = "gear_5_down"; rotate = Down; correct = Up;
+let gear_e_5 = {id = "gear_5"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,9)]}
-let gear_e_6 = {id = "gear_6_down"; rotate = Down; correct = Up;
+let gear_e_6 = {id = "gear_6"; rotate = Down; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,9)]}
-let gear_e_7 = {id = "gear_7_left"; rotate = Left; correct = Up;
+let gear_e_7 = {id = "gear_7"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,8)]}
-let gear_e_8 = {id = "gear_8_right"; rotate = Right; correct = Up;
+let gear_e_8 = {id = "gear_8"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,7)]}
 
 let gears =
