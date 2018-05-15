@@ -1,6 +1,6 @@
 open Helper
 open State
-open Yojson
+open Yojson.Basic
 
 type pairlog' = {first : log'; second : log'}
 

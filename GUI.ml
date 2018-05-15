@@ -51,11 +51,18 @@ let inventory : string list ref = ref []
 
 let startloc = ref 0
 
-let ip = js "ws://10.132.4.248:1337"
+let websocket = ref (jsnew Sock.webSocket (js "ws:someshit"))
 
-let websocket = jsnew Sock.webSocket (ip)
+let inputIP = access_opt (Html.getElementById_coerce "inputIP" Html.CoerceTo.input)
 
-(*End creating all GUI parts*)
+let inputPlayerID = access_opt (Html.getElementById_coerce "inputPlayerID" Html.CoerceTo.input)
+
+let enterButton = Js.Opt.get (document##getElementById (js "enterButton")) fail 
+
+let startDiv = Js.Opt.get (document##getElementById (js "startDiv")) fail
+
+
+(*End creating all GUI/HTML  parts*)
 
 (*Various helper functions at a high level *)
 let td_style = js"padding: 0; width: 20px; height: 20px;"
@@ -253,8 +260,7 @@ let send_message ev : unit =
    match ev##keyCode with 
     | 13 -> let command = State.Message (Js.to_string chatinput##value) in 
             chatinput##value <- js "";
-            websocket##send (js )
-            ()
+            !websocket##send (js (Yojson.Basic.to_string (Json_parser.tojsoncommand command) ^ "\n"))
     | _ -> Html.stopPropagation ev
 
 (** 
@@ -282,19 +288,14 @@ let key_direction ev : State.command option =
  *
  * requires: [ev] is a valid keyEvent
  * effects: a command associated with [ev] is sent to the client
- * Notes: TODO
  *)
 let send_movement ev : unit = 
-  let keydirection = match ev##keyCode with 
-    | 37 -> State.Go State.Left
-    | 38 -> State.Go State.Up
-    | 39 -> State.Go State.Right
-    | 40 -> State.Go State.Down
-    | 90 -> State.Take
-    | 88 -> State.Drop "item1"
-    | _ -> failwith "Unimplemented"
+  let keydirection = key_direction ev
   in 
-    ignore "send message to client TODO"
+    match keydirection with 
+    | None -> ()
+    | Some command -> !websocket##send 
+      (js (Yojson.Basic.to_string (Json_parser.tojsoncommand command) ^ "\n"))
 
 (**
  * Helper method to update the GUI based on log 
@@ -302,44 +303,85 @@ let send_movement ev : unit =
  * requires: gametable is a valid table and chatArea is a valid chatArea
  * effects: redraws the GUI based on [log]
  *)
-let rec update_gui gametable chatArea divNode (log : State.log') : unit = 
-  re_draw_whole gametable log;
-  receive_message chatArea log;
-  redraw_inv_log log;
-  if bool_opt log.cutscene then 
-    begin 
-      isCutscreen := true;
-      gametbl := gametable;
-      toCutscene divNode;
-      cutscene := access_opt log.cutscene;
-      nextScene divNode;
-      document##onkeydown <- Html.handler (fun ev -> nextSceneHandler divNode ev; Js.bool true)
-    end
-  else 
-    ()
+let update_gui (log : State.log') : unit = 
+  re_draw_whole log;
+  receive_message log;
+  redraw_inv_log log
 
-and nextScene divNode : unit = 
+let nextScene : unit = 
   let values = Cutscene.read !cutscene in 
   cutscene := (fst values);
   match (snd values) with 
-    | None -> isCutscreen := false; fromCutscene divNode !gametbl; (*document##onkeydown <- Html.handler (fun ev -> 
-              send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true)*)
+    | None -> isCutscreen := false;
+              fromCutscene; 
+              document##onkeydown <- Html.handler (fun ev -> send_movement ev; Js.bool true)
     | Some (x, y) -> 
-      let img = Html.createImg document in 
+      let img = Html.createImg document in  
         cutscene_context##clearRect(0.0, 0.0, float_of_int cutscene_canvas##width, float_of_int cutscene_canvas##height);
         img##onload <- Html.handler (fun _ -> cutscene_context##drawImage(img, 0.0, 0.0); Js.bool true);
         img##src <- js (x ^ ".png")
 
-and nextSceneHandler divNode ev : unit = 
+let nextSceneHandler ev : unit = 
     match ev##keyCode with 
-    | 32 -> nextScene divNode
+    | 32 -> nextScene
     | _ -> Html.stopPropagation ev
 
+let recieve_log (log : State.log') : unit = 
+  update_gui log;
+  if bool_opt log.cutscene then 
+    begin 
+      isCutscreen := true;
+      toCutscene;
+      cutscene := access_opt log.cutscene;
+      nextScene;
+      document##onkeydown <- Html.handler (fun ev -> nextSceneHandler ev; Js.bool true)
+    end
+  else 
+    ()
+
+let instantiate_game () : unit = 
+  Dom.appendChild chatinputdiv chatinput;
+
+  Dom.appendChild chatoutputdiv chatscreen;
+
+  document##onkeydown <- Html.handler (fun ev -> 
+    send_movement ev; Js.bool true);
+
+  Dom.appendChild gamediv gametable;
+  Dom.appendChild chatdiv chatoutputdiv;
+  Dom.appendChild chatdiv chatinputdiv;
+  Dom.appendChild invdiv invtable;
+  Dom.removeChild body startDiv;
+  Dom.appendChild body gamediv;
+  Dom.appendChild body invdiv;
+  Dom.appendChild body chatdiv
 
 (* Main method to start the javascript *)
 let start () = 
-  cutscene_canvas##width <- 1000;
+  cutscene_canvas##width <- 900;
   cutscene_canvas##height <- 500;
+
+  enterButton##onclick <- Html.handler (
+    fun ev ->  
+    if Js.to_string inputPlayerID##value <> "1" && Js.to_string inputPlayerID##value <> "2" then 
+      begin
+        Js.bool true
+      end
+    else 
+      begin
+        instantiate_game ();
+        websocket := jsnew Sock.webSocket (inputIP##value);
+        !websocket##onmessage <- Dom.handler (fun message -> 
+          let parsedlog = Json_parser.parselog (Yojson.Basic.from_string (Js.to_string message##data)) in 
+          recieve_log parsedlog; 
+          Js.bool true
+          );
+        Js.bool true
+      end
+  );
+
+  body##style##cssText <- js "font-family: 
+    sans-serif; text-align: center; background-color: #e8e8e8;";
   gamediv##style##cssText <- js "margin-bottom:20px;";
   gametable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \
@@ -378,30 +420,15 @@ let start () =
   chatscreen##readOnly <- Js.bool true;
   chatscreen##style##cssText <- js "resize: none";
 
-  websocket##onmessage <- Dom.handler (fun message -> chatscreen##value <- js "hi"; Js.bool true);
-
-  update_gui gametable chatscreen gamediv (State.logify 1 emptystate);
-
   chatinput##defaultValue <- js "";
   chatinput##size <- 50;
   chatinput##onkeydown <- Html.handler (fun ev -> 
-    send_message_temp gametable chatscreen emptystate chatinput gamediv ev; Js.bool true);
- 
-  Dom.appendChild chatinputdiv chatinput;
+    send_message ev; Js.bool true);
+  
+  startDiv##style##backgroundImage <- js ("url(sprites/opening.png)");
+  startDiv##style##backgroundRepeat <- js "no-repeat";
+  startDiv##style##backgroundPosition <- js "center top";
+  startDiv##style##height <- js "100%"
 
-  Dom.appendChild chatoutputdiv chatscreen;
-
-  document##onkeydown <- Html.handler (fun ev -> 
-    send_movement_temp gametable chatscreen emptystate gamediv ev; Js.bool true);
-
-  Dom.appendChild gamediv gametable;
-  Dom.appendChild chatdiv chatoutputdiv;
-  Dom.appendChild chatdiv chatinputdiv;
-  Dom.appendChild invdiv invtable;
-  body##style##cssText <- js "font-family: 
-    sans-serif; text-align: center; background-color: #e8e8e8;";
-  Dom.appendChild body gamediv;
-  Dom.appendChild body invdiv;
-  Dom.appendChild body chatdiv
 
 let _ = start ()

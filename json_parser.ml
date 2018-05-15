@@ -1,17 +1,17 @@
 open Helper
 open State
-open Yojson
+open Yojson.Basic
 
 type pairlog' = {first : log'; second : log'}
 
-let parsepairlog = failwith "TODO"
+let parsepairlog j = failwith "TODO"
 
-let tojsonpairlog = failwith "TODO"
+let tojsonpairlog pl = `String "hi"
 
-let parselog = failwith "TODO"
+let parselog j = failwith "TODO"
 
-let tojsonlog = failwith "TODO"
+let tojsonlog l = `String "hi"
 
-let parsecommand = failwith "TODO"
+let parsecommand j = failwith "TODO"
 
-let tojsoncommand = failwith "TODO"
+let tojsoncommand c = `String "hi"

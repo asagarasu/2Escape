@@ -11,23 +11,7 @@ let get_my_addr () =
 
 (**temporary function try to read the msg and use handle_connection
  *to do some simple calculation*)
-<<<<<<< HEAD
-let handle_message msg =
-  let playerid = if (!play = true) then 1 else 2 in
-  do' playerid msg
-
-let reinit () =
-  (if (!play = true) then let temp = player2_file in Lwt_unix.close !temp
-   else let temp = player1_file in Lwt_unix.close !temp);
-  player1 := (ADDR_UNIX "");
-  player2 := (ADDR_UNIX "");
-  state1 := false;
-  state2 := false;
-  tell := false;
-  play := true
-=======
 let handle_message msg = do' msg
->>>>>>> a46408ba5e2bfd0c9c4111900490de329d231970
 
 (**process input and output*)
 let rec handle_connection ic oc () =
