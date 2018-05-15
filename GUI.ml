@@ -57,10 +57,13 @@ let inputIP = access_opt (Html.getElementById_coerce "inputIP" Html.CoerceTo.inp
 
 let inputPlayerID = access_opt (Html.getElementById_coerce "inputPlayerID" Html.CoerceTo.input)
 
-let enterButton = Js.Opt.get (document##getElementById (js "enterButton")) fail 
+let enterButton = access_opt (Html.getElementById_coerce "enterButton" Html.CoerceTo.button)
+
+let startButton = access_opt (Html.getElementById_coerce "startButton" Html.CoerceTo.button)
 
 let startDiv = Js.Opt.get (document##getElementById (js "startDiv")) fail
 
+let id = ref 0
 
 (*End creating all GUI/HTML  parts*)
 
@@ -154,15 +157,15 @@ let clickleft _ : unit =
 
 (* Function to redraw the inventory based on a log *)
 let redraw_inv_log (log : State.log') : unit = 
-    if bool_opt log.inv_change.add then 
+    if List.length log.inv_change.add > 0 then 
       begin
-        (if List.length !inventory > 0 then startloc := !startloc + 1 else ());
-        inventory := (access_opt log.inv_change.add) :: !inventory;
+        (if List.length !inventory > 0 then startloc := !startloc + List.length log.inv_change.add else ());
+        inventory := log.inv_change.add @ !inventory;
         redraw_inv ()
       end
-    else if bool_opt log.inv_change.remove then 
+    else if List.length log.inv_change.remove > 0 then 
       begin
-        let removeditem = (access_opt log.inv_change.remove) in 
+        let removeditem = (List.nth log.inv_change.remove 0) in 
         let index = find_index ((=) removeditem) !inventory in 
           if index <= !startloc then
             begin
@@ -260,7 +263,8 @@ let send_message ev : unit =
    match ev##keyCode with 
     | 13 -> let command = State.Message (Js.to_string chatinput##value) in 
             chatinput##value <- js "";
-            !websocket##send (js (Yojson.Basic.to_string (Json_parser.tojsoncommand command) ^ "\n"))
+            !websocket##send (js (Yojson.Basic.to_string 
+              (Json_parser.tojsonsentcommand {id = !id; command = command})))
     | _ -> Html.stopPropagation ev
 
 (** 
@@ -295,7 +299,7 @@ let send_movement ev : unit =
     match keydirection with 
     | None -> ()
     | Some command -> !websocket##send 
-      (js (Yojson.Basic.to_string (Json_parser.tojsoncommand command) ^ "\n"))
+      (js (Yojson.Basic.to_string (Json_parser.tojsonsentcommand {id = !id; command = command})))
 
 (**
  * Helper method to update the GUI based on log 
@@ -356,8 +360,12 @@ let instantiate_game () : unit =
   Dom.appendChild body invdiv;
   Dom.appendChild body chatdiv
 
+let send_init () : unit = 
+  !websocket##send (js "init")
+
 (* Main method to start the javascript *)
 let start () = 
+  Dom.removeChild startDiv startButton;
   cutscene_canvas##width <- 900;
   cutscene_canvas##height <- 500;
 
@@ -369,13 +377,26 @@ let start () =
       end
     else 
       begin
-        instantiate_game ();
+        id := int_of_string (Js.to_string inputPlayerID##value);
         websocket := jsnew Sock.webSocket (inputIP##value);
         !websocket##onmessage <- Dom.handler (fun message -> 
           let parsedlog = Json_parser.parselog (Yojson.Basic.from_string (Js.to_string message##data)) in 
           recieve_log parsedlog; 
           Js.bool true
           );
+        inputPlayerID##readOnly <- Js.bool true;
+        inputPlayerID##placeholder <- inputPlayerID##value;
+        inputPlayerID##value <- js "";
+        inputIP##readOnly <- Js.bool true;
+        inputIP##placeholder <- inputIP##value;
+        inputIP##value <- js "";
+        startButton##onclick <- Html.handler (
+          fun ev -> instantiate_game ();
+          send_init ();
+          Js.bool true
+        );
+        Dom.removeChild startDiv enterButton;
+        Dom.appendChild startDiv startButton;
         Js.bool true
       end
   );

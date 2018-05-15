@@ -82,8 +82,8 @@ type entry = {
 }
 
 type invchange = {
-  add : string option;
-  remove : string option
+  add : string list;
+  remove : string list
 }
 
 
