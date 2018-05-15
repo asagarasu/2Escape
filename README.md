@@ -24,8 +24,7 @@ Play:
 
 # Sample Screenshots
 
-
-![alt text](https://raw.githubusercontent.com/2Escape/screen.png)
+![alt text](https://raw.githubusercontent.com/betsyfu/2Escape/screen.png)
 
 # Acknowledgement
 Course professor: Professor Nate Poster. 
