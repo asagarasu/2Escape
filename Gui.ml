@@ -443,7 +443,7 @@ let start () =
   invtable##style##opacity <- Js.def (js "1"); 
  
   chatscreen##defaultValue <- js ("This is your chat box, use it to talk with the other person!\n" ^
-    "Controls: z for picking up items, x for dropping them, space for entering exits and cutscenes!");
+    "\nControls: z for picking up items, x for dropping them, space for entering exits and cutscenes!\n");
   chatscreen##cols <- 49;
   chatscreen##rows <- 10;
   chatscreen##readOnly <- Js.bool true;
