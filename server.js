@@ -4,10 +4,16 @@ var WebSocketServer = ws.server;
 const http = require('http');
 require('events').EventEmitter.prototype._maxListeners = 100;
 
-  var server = http.createServer(function(request, response) {});
-  server.listen(1337, function() {
+var ocamlport = parseInt(process.argv.slice(2)[0]);
+var jsport = parseInt(process.argv.slice(2)[1]);
+require('dns').lookup(require('os').hostname(), function (err, add, fam) {
+    console.log('Your websocket server is created at: ws://'+ add + ":" + jsport);
+  })
+
+var server = http.createServer(function(request, response) {});
+  server.listen(jsport, function() {
       console.log((new Date()) + " Server is listening on port "
-        + 1337);
+        + jsport);
    });
   
   wsServer = new WebSocketServer({
@@ -19,7 +25,7 @@ require('events').EventEmitter.prototype._maxListeners = 100;
   
   var clients = []
 
-  var client = net.createConnection({ port: 8080 }, () => {
+  var client = net.createConnection({ port: ocamlport }, () => {
     // 'connect' listener
     console.log('connected to server!');
   });
