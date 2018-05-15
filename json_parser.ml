@@ -130,11 +130,9 @@ let parselog (j:Yojson.Basic.json) : log' =
       ) c
   in
 
-  let parse_string a = if a = "" then None else Some a in
-
   let parse_inv_change i :invchange =
-           let add = i |> member "add" |> to_string |> parse_string in
-           let remove = i |> member "remove" |> to_string |> parse_string in
+           let add = i |> member "add" |> to_list |> List.map (to_string) in
+           let remove = i |> member "remove" |> to_list |> List.map (to_string) in
            { add = add ; remove = remove }
   in
 
@@ -276,12 +274,8 @@ let tojsonlog (l:log') : json =
   in
 
   let inven i  =
-    (match i.add, i.remove with
-     | Some b, Some c -> `List [ `String b ; `String c ]
-     | Some d, None -> `List [ `String d ; `String "" ]
-     | None, Some e -> `List [ `String "" ; `String e ]
-     | None, None -> `List [ `String "" ; `String "" ]
-    )
+    `Assoc [("add", `List (List.map (fun str -> `String str) i.add)); 
+      ("remove", `List (List.map (fun str -> `String str) i.remove))]
   in
 
   let chat_line cha =

@@ -14,10 +14,6 @@ let get_my_addr () =
 (**temporary function try to read the msg and use handle_connection
  *to do some simple calculation*)
 let handle_message msg = do' msg
-<<<<<<< HEAD
-=======
-
->>>>>>> d2d5edb58237c5d533c899d40aaf13c73ecb339f
 
 (**process input and output*)
 let rec handle_connection ic oc () =

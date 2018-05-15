@@ -24,7 +24,6 @@ const http = require('http');
   });
   client.on('data', function(data){
       console.log(data.toString('utf8'));
-      clients[0].sendUTF("hi");
   });
   
   wsServer.on('request', function(request) {
@@ -34,8 +33,6 @@ const http = require('http');
         var connection = request.accept(null, request.origin);
         clients.push(connection);
         connection.on('message', function(message) {
-            console.log("Read message from client");
-            client.write('omg\n');
-            console.log("Finished sending message");
+            client.write(message.utf8Data.concat('\n'));
       });
   });

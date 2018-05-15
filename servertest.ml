@@ -20,7 +20,7 @@ let print_out ic oc =
    try 
     while true do
       let s = input_line ic in
-        output_string oc (s ^ "\n"); flush oc; output_string Pervasives.stderr "something wong"
+        output_string oc (s); flush oc; output_string Pervasives.stderr "something wong"
       done
    with _ -> Printf.printf "End of text\n" ;
               flush Pervasives.stdout;

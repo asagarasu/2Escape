@@ -96,8 +96,8 @@ type entry = {
 
 (* Type representing inventory changes *)
 type invchange = {
-  add : string option;
-  remove : string option
+  add : string list;
+  remove : string list
 }
 
 (* type representing a log of information to pass to client*)
@@ -119,10 +119,10 @@ type log' = {
  *)
 let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
   ({room_id = rm1.id; rows = rm1.rows; cols = rm1.cols;
-    change = []; inv_change = {add = None; remove = None}; chat = None;
+    change = []; inv_change = {add = []; remove = []}; chat = None;
     cutscene = None},
    {room_id = rm2.id; rows = rm2.rows; cols = rm2.cols;
-    change = []; inv_change = {add = None; remove = None}; chat = None;
+    change = []; inv_change = {add = []; remove = []}; chat = None;
     cutscene = None})
 
 (**
@@ -133,7 +133,7 @@ let create_empty_logs (rm1 : room) (rm2 : room) : log' * log' =
  *)
 let create_log (rm : room) (entry_l : entry list) : log' =
   {room_id = rm.id; rows = rm.rows; cols = rm.rows;
-   change = entry_l; inv_change = {add = None; remove = None}; chat = None;
+   change = entry_l; inv_change = {add = []; remove = []}; chat = None;
    cutscene = None}
 
 (**
@@ -149,7 +149,7 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
      rows = sendroom.rows;
      cols = sendroom.cols;
      change = entries;
-     inv_change = {add = None; remove = None};
+     inv_change = {add = []; remove = []};
      chat = None;
      cutscene = None}
   else
@@ -158,7 +158,7 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
       rows = sendroom.rows;
       cols = sendroom.cols;
       change = [];
-      inv_change = {add = None; remove = None};
+      inv_change = {add = []; remove = []};
       chat = None;
       cutscene = None
     }
@@ -178,7 +178,7 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
       rows = (fst logs).rows;
       cols = (fst logs).cols;
       change = (fst logs).change;
-      inv_change = {add = Some item; remove = None};
+      inv_change = {add = [item]; remove = []};
       chat = (fst logs).chat;
       cutscene = None
     }, (snd logs)
@@ -189,7 +189,7 @@ let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * 
       rows = (snd logs).rows;
       cols = (snd logs).cols;
       change = (snd logs).change;
-      inv_change = {add = Some item; remove = None};
+      inv_change = {add = [item]; remove = []};
       chat = (snd logs).chat;
       cutscene = None
     }
@@ -209,7 +209,7 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
       rows = (fst logs).rows;
       cols = (fst logs).cols;
       change = (fst logs).change;
-      inv_change = {add = None;remove = Some item};
+      inv_change = {add = [];remove = [item]};
       chat = (fst logs).chat;
       cutscene = None
     }, (snd logs)
@@ -220,7 +220,7 @@ let drop_item_logs (logs: log' * log') (playerid : int) (item : string) : log' *
         rows = (snd logs).rows;
         cols = (snd logs).cols;
         change = (snd logs).change;
-        inv_change = {add = None;remove = Some item};
+        inv_change = {add = [];remove = [item]};
         chat = (snd logs).chat;
         cutscene = None
     }
@@ -252,7 +252,7 @@ let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : lo
     rows = room1.rows;
     cols = room1.cols;
     change = [];
-    inv_change = {add = None; remove = None};
+    inv_change = {add = []; remove = []};
     chat = Some {id = id; message = message};
     cutscene = None
   },
@@ -261,7 +261,7 @@ let update_chat (room1 : room) (room2 : room) (id : int) (message : string) : lo
     rows = room2.rows;
     cols = room2.cols;
     change = [];
-    inv_change = {add = None; remove = None};
+    inv_change = {add = []; remove = []};
     chat = Some {id = id; message = message};
     cutscene = None
   }
@@ -296,12 +296,13 @@ let logify (playerid : int) (st : t) : log' =
   let entryarrlist = (Array.map Array.to_list entrymap) in
   let entrylistlist = Array.to_list entryarrlist in
   let entrylist = List.flatten entrylistlist in
+  let invchange = if playerid = 1 then st.pl1_inv else st.pl2_inv in 
   {
     room_id = room1_string;
     rows = room1.rows;
     cols = room1.cols;
     change = entrylist;
-    inv_change = {add = None; remove = None};
+    inv_change = {add = invchange; remove = []};
     chat = None;
     cutscene = None
   }
