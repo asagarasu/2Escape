@@ -20,7 +20,7 @@ let handle_connection ic oc=
 let main_server serv_fun port=
    try
    let port = port in
-   let addr = ADDR_INET (get_my_addr (), port)
+   let addr = ADDR_INET ((inet_addr_of_string "127.0.0.1"), port)
    in establish_server handle_connection addr
        with
          Failure _ ->
