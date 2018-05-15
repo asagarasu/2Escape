@@ -1,14 +1,6 @@
 open State
 open Json_parser
 
-let player1 = ref ""
-
-let player2 = ref ""
-
-let save1 = ref false
-
-let save2 = ref false
-
 let air_to_gears : exit = { id = "air_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None }
 
 let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",0,2); cscene = None}
@@ -585,9 +577,7 @@ let state =
 let do' (cmd:string) : string =
   let i = String.index cmd ' ' in
   let playerid = String.sub cmd 0 i in
-  (if !save1 = false then player1 := playerid;save1 := true);
-  (if !save1 = true && !save2 = false then player2 := playerid;save2:=true);
-  let id = if (playerid = !player1) then 1 else 2 in
+  let id = int_of_string playerid in
   let l = String.length cmd in
   let c = String.sub cmd (i+1) (l-i-1) in
   let cmd' = parse_command c in
@@ -595,9 +585,3 @@ let do' (cmd:string) : string =
   |a,b -> let pair = {first = a; second=b} in
   let js = tojsonpairlog pair in
     Yojson.Basic.Util.to_string js)
-
-let reinit () =
-  player1 := "";
-  player2 := "";
-  save1 := false;
-  save2 := false
