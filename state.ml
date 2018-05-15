@@ -173,26 +173,30 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
  *)
 let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' =
   if playerid = 1 then
-    {
-      room_id = (fst logs).room_id;
-      rows = (fst logs).rows;
-      cols = (fst logs).cols;
-      change = (fst logs).change;
-      inv_change = {add = [item]; remove = []};
-      chat = (fst logs).chat;
-      cutscene = None
-    }, (snd logs)
+    begin
+      {
+        room_id = (fst logs).room_id;
+        rows = (fst logs).rows;
+        cols = (fst logs).cols;
+        change = (fst logs).change;
+        inv_change = {add = [item]; remove = []};
+        chat = (fst logs).chat;
+        cutscene = None
+      }, (snd logs)
+    end
   else
-    (fst logs),
-    {
-      room_id = (snd logs).room_id;
-      rows = (snd logs).rows;
-      cols = (snd logs).cols;
-      change = (snd logs).change;
-      inv_change = {add = [item]; remove = []};
-      chat = (snd logs).chat;
-      cutscene = None
-    }
+    begin 
+      (fst logs),
+      {
+        room_id = (snd logs).room_id;
+        rows = (snd logs).rows;
+        cols = (snd logs).cols;
+        change = (snd logs).change;
+        inv_change = {add = [item]; remove = []};
+        chat = (snd logs).chat;
+        cutscene = None
+      }
+    end
 
 (**
  * Helper method to update a log based on [playerid] dropping an [item]
@@ -286,21 +290,22 @@ let direct (d:direction) : int * int = match d with
  * returns: a log' representation of player [playerid]'s state
  *)
 let logify (playerid : int) (st : t) : log' =
-  let room1_string = fst_third st.pl1_loc in
-  let room1 = Hashtbl.find st.roommap room1_string in
+  let room_string = if playerid = 1 then fst_third st.pl1_loc 
+    else fst_third st.pl2_loc in
+  let room = Hashtbl.find st.roommap room_string in
   let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
           Array.mapi (fun (x : int) (t : tile) ->
             {row = y; col = x; newtile = t}
           ) row
-        ) room1.tiles) in
+        ) room.tiles) in
   let entryarrlist = (Array.map Array.to_list entrymap) in
   let entrylistlist = Array.to_list entryarrlist in
   let entrylist = List.flatten entrylistlist in
   let invchange = [] in 
   {
-    room_id = room1_string;
-    rows = room1.rows;
-    cols = room1.cols;
+    room_id = room_string;
+    rows = room.rows;
+    cols = room.cols;
     change = entrylist;
     inv_change = {add = invchange; remove = []};
     chat = None;
@@ -314,8 +319,9 @@ let logify (playerid : int) (st : t) : log' =
  * returns: a log' representation of player [playerid]'s state with inventory
  *)
 let logifyfull (playerid : int) (st : t) : log' =
-  let room1_string = fst_third st.pl1_loc in
-  let room1 = Hashtbl.find st.roommap room1_string in
+  let room_string = if playerid = 1 then fst_third st.pl1_loc 
+    else fst_third st.pl2_loc in
+  let room1 = Hashtbl.find st.roommap room_string in
   let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
           Array.mapi (fun (x : int) (t : tile) ->
             {row = y; col = x; newtile = t}
@@ -326,7 +332,7 @@ let logifyfull (playerid : int) (st : t) : log' =
   let entrylist = List.flatten entrylistlist in
   let invchange = if playerid = 1 then st.pl1_inv else st.pl2_inv in 
   {
-    room_id = room1_string;
+    room_id = room_string;
     rows = room1.rows;
     cols = room1.cols;
     change = entrylist;
@@ -345,7 +351,7 @@ let logifyfull (playerid : int) (st : t) : log' =
  *)
 let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
   let room1_string = fst_third st.pl1_loc in
-  let room2_string = fst_third st.pl1_loc in
+  let room2_string = fst_third st.pl2_loc in
   let room1 = Hashtbl.find st.roommap room1_string in
   let room2 = Hashtbl.find st.roommap room2_string in
   let curr_player_x = if playerid = 1 then snd_third st.pl1_loc else snd_third st.pl2_loc in
@@ -599,13 +605,15 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
               let newroom_x = snd_third exit.to_room in
               let newroom_tile = newroom.tiles.(newroom_y).(newroom_x) in
                 if bool_opt newroom_tile.ch || bool_opt newroom_tile.mov
-                  || bool_opt newroom_tile.immov || bool_opt newroom_tile.ex then
+                  || bool_opt newroom_tile.immov then
                   create_empty_logs room1 room2
                 else
                   begin
                     tile.ch <- None;
                     newroom_tile.ch <- Some {id = playerid; direction = Down};
-                    (if playerid = 1 then st.pl1_loc <- newroom_string, newroom_x, newroom_y else
+                    (if playerid = 1 then 
+                      st.pl1_loc <- newroom_string, newroom_x, newroom_y 
+                      else
                       st.pl2_loc <- newroom_string, newroom_x, newroom_y);
                     let curr_player_log = logify playerid st in
                     let other_player_entries =
@@ -623,7 +631,7 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                         curr_player_log
                         in
                     (if playerid = 1 then curr_player_log', create_log room2 other_player_entries
-                    else create_log room2 other_player_entries, curr_player_log')
+                    else create_log room1 other_player_entries, curr_player_log')
                   end
             end
           else

@@ -6,7 +6,7 @@ let start_logs () = Json_parser.tojsonpairlog {first = State.logifyfull 1 gamest
 
 (*Changes (log', log') into a pairlog*)
 let to_pairlog ((a, b) : State.log' * State.log') : Json_parser.pairlog' = 
-  {first = a; second = a}
+  {first = a; second = b}
 
 (**
  * Handles a message s
