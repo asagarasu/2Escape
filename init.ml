@@ -303,9 +303,9 @@ let handler =
      |];
    rows = 5; cols = 6}
 
-let hall_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); cscene = start_script_player1}
+let hall_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); cscene = Some start_script_player1}
 
-let hall_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = start_script_player2}
+let hall_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = Some start_script_player2}
 
 let book_loc = {
   id = "book_loc";

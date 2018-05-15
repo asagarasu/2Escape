@@ -109,15 +109,15 @@ let get_dominant (tile: State.tile) : string =
     ^ "/" ^ string_of_direction (access_opt tile.ch).direction
     else
   if bool_opt tile.kl = true then (access_opt tile.kl).id 
-    ^ "_" ^ string_of_bool (access_opt tile.kl).is_solved else
+    ^ "/" ^ string_of_bool (access_opt tile.kl).is_solved else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else
   if bool_opt tile.store = true then (access_opt tile.store).id else
-  if bool_opt tile.rt = true then (access_opt tile.rt).id ^  "_" 
+  if bool_opt tile.rt = true then (access_opt tile.rt).id ^  "/" 
     ^ string_of_direction (access_opt tile.rt).rotate else 
   if bool_opt tile.immov = true then (access_opt tile.immov).id  else
   if bool_opt tile.ex = true then 
     let is_open = (access_opt tile.ex).is_open in 
-    (if is_open then (access_opt tile.ex).id ^ "_open" else (access_opt tile.ex).id ^ "_closed") else
+    (if is_open then (access_opt tile.ex).id ^ "/open" else (access_opt tile.ex).id ^ "/closed") else
   "empty"
 
 (**
