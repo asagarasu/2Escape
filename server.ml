@@ -5,6 +5,8 @@ open Init
 
 let () = Lwt_log.add_rule "*" Lwt_log.Info
 
+let start = ref false
+
 (**get the ip address of the local computer*)
 let get_my_addr () =
   (Unix.gethostbyname(Unix.gethostname())).Unix.h_addr_list.(0) ;;
@@ -12,6 +14,10 @@ let get_my_addr () =
 (**temporary function try to read the msg and use handle_connection
  *to do some simple calculation*)
 let handle_message msg = do' msg
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2d5edb58237c5d533c899d40aaf13c73ecb339f
 
 (**process input and output*)
 let rec handle_connection ic oc () =
@@ -22,7 +28,8 @@ let rec handle_connection ic oc () =
        let reply = handle_message msg in
           Lwt_io.write_line oc reply;
           >>= handle_connection ic oc
-     | None -> Lwt_log.info "Connection closed" >>= return)
+     | None -> reinit () ;Lwt_log.info "Connection closed" >>= return)
+
 
 let accept_connection conn =
   let fd, sockaddr = conn in

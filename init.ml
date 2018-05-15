@@ -1,5 +1,5 @@
 open State
-open Json
+open Json_parser
 
 let player1 = ref ""
 
@@ -383,4 +383,13 @@ let do' (cmd:string) : string =
   let l = String.length cmd in
   let c = String.sub cmd (i+1) (l-i-1) in
   let cmd' = parse_command c in
-  make_log (do_command id cmd' state)
+  (match (do_command id cmd' state) with
+  |a,b -> let pair = {first = a; second=b} in
+  let js = tojsonpairlog pair in
+    Yojson.Basic.Util.to_string js)
+
+let reinit () =
+  player1 := "";
+  player2 := "";
+  save1 := false;
+  save2 := false
