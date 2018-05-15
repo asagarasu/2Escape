@@ -1,9 +1,9 @@
 open State
 open Json_parser
 
-let start_script_player1 : Cutscene.t = 
-	[("start_1","Your uncle Tom died a few days ago. 
-	 From his left letters, you know that he has built a secret house at the far away countryside to memorize his dead wife. 
+let start_script_player1 : Cutscene.t =
+	[("start_1","Your uncle Tom died a few days ago.
+	 From his left letters, you know that he has built a secret house at the far away countryside to memorize his dead wife.
 	 He asked you to help him taking care of the house and if possible fixing some broken parts of the house.");
 	 ("start_1","You invited your friends Dave to go with you together.");
 	 ("start_2","You and Dave arrive at the house");
@@ -11,30 +11,30 @@ let start_script_player1 : Cutscene.t =
 	 ("start_2","\"It’s the most classical house I’ve ever seen,\" said Dave.");
 	 ("start_2","You and Dave step into the house");
      ("start_3","In a sudden, the door closed.");
-	 ("start_4","A huge metal bar fell down, 
+	 ("start_4","A huge metal bar fell down,
 	 together brought down a few pieces of furniture from the upper floors and divided the hall into two parts.");
 	 ("start_4","\"Where are you,\" you yelled");
 	 ("start_4","Dave’s voice came from another room,\"I am blocked in a different area. Guess we have to find the way out separately.\"");
-	 ("start_4","Please find the way to get out of the room and fix the broken part of the house")	
+	 ("start_4","Please find the way to get out of the room and fix the broken part of the house")
 	]
-	
-let start_script_player2 : Cutscene.t = 
-	[("start_1","Anne’s uncle Tom died a few days ago. 
-	 Anne knew her uncle has built a secret house at the far away countryside to memorize his dead wife. 
+
+let start_script_player2 : Cutscene.t =
+	[("start_1","Anne’s uncle Tom died a few days ago.
+	 Anne knew her uncle has built a secret house at the far away countryside to memorize his dead wife.
 	 Tom asked Anne to take care of the house and fix some broken parts of the house. Anne invited you to go with her together.");
 	 ("start_2","You and Anne arrive at the house.");
 	 ("start_2","From outside, the color of the house is a combination of black and white");
 	 ("start_2","\"It’s the most classical house I’ve ever seen,\" You commented");
 	 ("start_2","You and Anne step into the house");
      ("start_3","In a sudden, the door closed.");
-	 ("start_4","A huge metal bar fell down, 
+	 ("start_4","A huge metal bar fell down,
 	 together brought down a few pieces of furniture from the upper floors and divided the hall into two parts.");
 	 ("start_4", "\"Where are you\" You heard the voice from Anne");
 	 ("start_4", "\"I am blocked in a different area. Guess we have to find the way out separately,\" you responded.");
-	 ("start_4", "Please find the way to get out of the room and fix the broken part of the house")	
+	 ("start_4", "Please find the way to get out of the room and fix the broken part of the house")
 	]
-	
-let end_script : Cutscene.t = 
+
+let end_script : Cutscene.t =
 	[("end","You and your friend successfully got out of the house and fixed the broken part of the house.");
 	 ("end","Anne’s aunt is a pianist and died from an accident.");
 	 ("end","To remember the beautiful melody aunt played, her uncle build the “music box” house.");
@@ -46,7 +46,7 @@ let air_to_gears : exit = { id = "exit"; is_open = false; to_room = ("gears",4,2
 
 let air_to_study : exit = { id = "exit"; is_open = true; to_room = ("study",0,2); cscene = None}
 
-let turbine_loc = {id = "turbine_loc"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",2,1)]}
+let turbine_loc = {id = "cross"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",2,1)]}
 
 let air =
   {id = "air";
@@ -138,7 +138,7 @@ let study =
 
 let basement_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); cscene = None}
 
-let ladder_loc = {id = "ladder_loc"; key = "ladder"; is_solved = false; exit_effect = [("basement",3,3)]; immovable_effect = []}
+let ladder_loc = {id = "cross"; key = "ladder"; is_solved = false; exit_effect = [("basement",3,3)]; immovable_effect = []}
 
 let basement =
   {id = "basement";
@@ -186,7 +186,7 @@ let workshop_to_handler = {id = "exit"; is_open = false; to_room = ("handler",3,
 let workshop_to_hall = {id = "exit"; is_open = true; to_room = ("hall",5,8); cscene = None}
 
 let workshop_key_loc = {
-  id = "workshop_key_loc";
+  id = "cross";
   key = "workshop_key";
   is_solved = false;
   exit_effect = [("workshop",1,4)];
@@ -194,7 +194,7 @@ let workshop_key_loc = {
 }
 
 let rope_loc = {
-  id = "rope_loc";
+  id = "cross";
   key = "rope";
   is_solved = false;
   exit_effect = [];
@@ -247,7 +247,7 @@ let handler_to_gears = {id = "exit"; is_open = false; to_room = ("gears",-1,-1);
 let handler_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = None}
 
 let handler_loc = {
-  id = "handler_loc";
+  id = "cross";
   key = "handler_key";
   is_solved = false;
   exit_effect = [("workshop",1,4)];
@@ -255,7 +255,7 @@ let handler_loc = {
 }
 
 let hall_handler_loc = {
-  id = "hall_handler_loc";
+  id = "cross";
   key = "hall_handler_key";
   is_solved = false;
   exit_effect = [("air",5,3)];
@@ -308,7 +308,7 @@ let hall_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); csce
 let hall_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = start_script_player2}
 
 let book_loc = {
-  id = "book_loc";
+  id = "cross";
   key = "book";
   is_solved = false;
   exit_effect = [("hall",0,8)];
@@ -396,7 +396,7 @@ let fake_exit = {id = "exit"; is_open = false; to_room = ("hall",0,0); cscene = 
 let gears_to_clock = {id = "exit"; is_open = false; to_room = ("hall",0,0); cscene = Some end_script}
 
 let stick_loc = {
-  id = "stick_loc";
+  id = "cross";
   key = "stick";
   is_solved = false;
   exit_effect = [];
@@ -404,7 +404,7 @@ let stick_loc = {
 }
 
 let clocktower_loc = {
-  id = "clocktower_loc";
+  id = "cross";
   key = "clocktower_key";
   is_solved = false;
   exit_effect = [("gears",5,7)];
