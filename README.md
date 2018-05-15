@@ -23,7 +23,9 @@ Play:
  open up index.html. You will be asked to input the server's ip address (from the last step) and player id.
 
 # Sample Screenshots
-![alt text](2Escape/screen.png)
+
+
+![alt text](https://raw.githubusercontent.com/2Escape/screen.png)
 
 # Acknowledgement
 Course professor: Professor Nate Poster. 
