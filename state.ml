@@ -173,26 +173,30 @@ let update_room (sendroom : room) (changedroom : room) (entries : entry list) : 
  *)
 let add_item_logs (logs: log' * log') (playerid : int) (item : string) : log' * log' =
   if playerid = 1 then
-    {
-      room_id = (fst logs).room_id;
-      rows = (fst logs).rows;
-      cols = (fst logs).cols;
-      change = (fst logs).change;
-      inv_change = {add = [item]; remove = []};
-      chat = (fst logs).chat;
-      cutscene = None
-    }, (snd logs)
+    begin
+      {
+        room_id = (fst logs).room_id;
+        rows = (fst logs).rows;
+        cols = (fst logs).cols;
+        change = (fst logs).change;
+        inv_change = {add = [item]; remove = []};
+        chat = (fst logs).chat;
+        cutscene = None
+      }, (snd logs)
+    end
   else
-    (fst logs),
-    {
-      room_id = (snd logs).room_id;
-      rows = (snd logs).rows;
-      cols = (snd logs).cols;
-      change = (snd logs).change;
-      inv_change = {add = [item]; remove = []};
-      chat = (snd logs).chat;
-      cutscene = None
-    }
+    begin 
+      (fst logs),
+      {
+        room_id = (snd logs).room_id;
+        rows = (snd logs).rows;
+        cols = (snd logs).cols;
+        change = (snd logs).change;
+        inv_change = {add = [item]; remove = []};
+        chat = (snd logs).chat;
+        cutscene = None
+      }
+    end
 
 (**
  * Helper method to update a log based on [playerid] dropping an [item]
