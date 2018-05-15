@@ -24,7 +24,8 @@ const http = require('http');
   });
   client.on('data', function(data){
       console.log(data.toString('utf8'));
-      clients[0].sendUTF("hi");
+      for(i = 0; i < clients.length; i++)
+        clients[i].sendUTF(data.toString('utf8'));
   });
   
   wsServer.on('request', function(request) {

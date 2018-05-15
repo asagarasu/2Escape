@@ -380,8 +380,8 @@ let start () =
         id := int_of_string (Js.to_string inputPlayerID##value);
         websocket := jsnew Sock.webSocket (inputIP##value);
         !websocket##onmessage <- Dom.handler (fun message -> 
-          let parsedlog = Json_parser.parselog (Yojson.Basic.from_string (Js.to_string message##data)) in 
-          recieve_log parsedlog; 
+          let parsedlogs = Json_parser.parsepairlog (Yojson.Basic.from_string (Js.to_string message##data)) in 
+          if !id = 1 then recieve_log parsedlogs.first else recieve_log parsedlogs.second; 
           Js.bool true
           );
         inputPlayerID##readOnly <- Js.bool true;

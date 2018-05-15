@@ -17,4 +17,5 @@ gui:
 client:
 	ocamlbuild -use-ocamlfind clienttest.byte && ./clienttest.byte
 server:
-	ocamlbuild -use-ocamlfind servertest.byte && ./servertest.byte
+	ocamlbuild -use-ocamlfind -plugin-tag "package(js_of_ocaml.ocamlbuild)" -no-links Gui.d.js
+	ocamlbuild -use-ocamlfind server.byte && ./server.byte
