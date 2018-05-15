@@ -7,293 +7,320 @@ type pairlog' = {first : log'; second : log'}
 
 type sentcommand = {id : int; command : command}
 
-let parselog (j:Yojson.Basic.json) : log' =
 
-  let room_id = j |> member "room_id" |> to_string in
-  let rows = j |> member "rows" |> to_int in
-  let cols = j |> member "cols" |> to_int in
-  let change = j |> member "change" |> to_list in
-  let inv_change = j |> member "inv_change" in
-  let chat = j |> member "chat" |> to_list in
-  let cscene = j |> member "cutscene" |> to_list in
+let option_map (x : 'a option) (func : 'a -> 'b) : 'b option = 
+  match x with 
+  | Some y -> Some (func y)
+  | None -> None
 
-  let parse_direction d =
-    (match d with
-     | "left" -> Left
-     | "right" -> Right
-     | "up" -> Up
-     | "down" -> Down
-     | b -> Up )
-  in
+let parse_string j = 
+  match j with `String s -> s
+  | _ -> failwith "not a string"
 
-  let parse_ch ch =
-    if ch = [] then None
-    else
-      let id = List.nth ch 0 |> to_int in
-      let direction = List.nth ch 0 |> to_string |> parse_direction in
-      Some { id = id ; direction = direction }
-  in
+let parsedirection j =
+  match j |> parse_string  with
+   | "left" -> Left
+   | "right" -> Right
+   | "up" -> Up
+   | "down" -> Down
+   | _ -> failwith "json is not a direction" 
 
-  let parse_mov mov : movable option =
-    if mov = "" then None
-    else
-      Some { id = mov }
-  in
+let tojsondirection d = 
+  match d with 
+  | Left -> `String "left"
+  | Right -> `String "right"
+  | Up -> `String "up"
+  | Down -> `String "down"
 
-  let parse_store store : storable option =
-    if store = "" then None
-    else
-      Some { id = store }
-  in
+let parsecommand j = 
+  match j |> to_list with
+  | `String "go" :: tl :: []-> Go (parsedirection tl)
+  | `String "message" :: tl :: [] -> Message (parse_string tl)
+  | `String "take" :: [] -> Take
+  | `String "drop" :: tl :: [] -> Drop (parse_string tl)
+  | `String "enter" :: [] -> Enter
+  | _ -> failwith "json is not a command"
 
-  let parse_immov immov : immovable option =
-    if immov = "" then None
-    else
-      Some { id = immov }
-  in
+let tojsoncommand c = 
+  match c with 
+  | Go d -> `List [`String "go"; tojsondirection d]
+  | Message s -> `List [`String "message"; `String s]
+  | Take -> `List [`String "take"]
+  | Drop s -> `List [`String "drop"; `String s]
+  | Enter -> `List [`String "enter"]
 
+let parsecharacter j : State.character = 
+  let assoc = to_assoc j in 
+  let id = List.assoc_opt "id" assoc in 
+  let direction = List.assoc_opt "direction" assoc in 
+  match id, direction with 
+    | Some a, Some b -> 
+        {id = a |> to_int; direction = b |> parsedirection}
+    | _ -> failwith "not a character"
 
-  let parse_to_room tr =
-    (List.nth tr 0|> to_string, List.nth tr 1|> to_int, List.nth tr 2|> to_int)
-  in
+let tojsoncharacter (ch : State.character) = 
+  `Assoc [("id", `Int ch.id); 
+    ("direction", tojsondirection ch.direction)]
 
-  let parse_cscene c =
-    if c = [] then None
-    else
-      Some (List.map
-              (fun a ->
-                 let l = to_list a in
-                 (List.nth l 0 |> to_string, List.nth l 1 |> to_string) ) c)
-  in
+let parsemovable j : State.movable = 
+  let assoc = to_assoc j in 
+  let id = List.assoc_opt "id" assoc in 
+  match id with 
+  | Some a -> {id = a |> parse_string}
+  | _ -> failwith "not a movable"
 
-  let parse_ex ex =
-    if ex = [] then None
-    else
-      let id = List.nth ex 0 |> to_string in
-      let is_open = List.nth ex 1 |> to_bool in
-      let to_room = List.nth ex 2 |> to_list |> parse_to_room in
-      let cscene = List.nth ex 3 |> to_list |> parse_cscene in
-      Some {id = id; is_open = is_open; to_room = to_room; cscene = cscene}
-  in
+let tojsonmovable (m : State.movable) = 
+  `Assoc [("id", `String m.id)]
 
-  let parse_effect e =
-    if e = [] then []
-    else
-      List.map
-        (fun a ->
-           let l = to_list a in
-           (List.nth l 0 |> to_string, List.nth l 1 |> to_int, List.nth l 2 |> to_int) ) e
-  in
+let parsestorable j : State.storable = 
+  let assoc = to_assoc j in 
+  let id = List.assoc_opt "id" assoc in 
+  match id with 
+  | Some a -> {id = a |> parse_string}
+  | _ -> failwith "not a storable"
 
-  let parse_kl kl =
-    if kl = [] then None
-    else
-      let id = List.nth kl 0 |> to_string in
-      let key = List.nth kl 1 |> to_string in
-      let is_solved = List.nth kl 2 |> to_bool in
-      let exit_effect = List.nth kl 3 |> to_list |> parse_effect in
-      let immovable_effect = List.nth kl 4 |> to_list |> parse_effect in
-      Some {id = id; key = key; is_solved = is_solved;
-            exit_effect = exit_effect; immovable_effect = immovable_effect}
-  in
+let tojsonstorable (st : State.storable) = 
+  `Assoc [("id", `String st.id)]
 
-  let parse_rt rt =
-    if rt = [] then None
-    else
-      let id = List.nth rt 0 |> to_string in
-      let rotate = List.nth rt 1 |> to_string |> parse_direction in
-      let correct = List.nth rt 2 |> to_string |> parse_direction in
-      let exit_effect = List.nth rt 3 |> to_list |> parse_effect in
-      let immovable_effect = List.nth rt 4 |> to_list |> parse_effect in
-      Some {id = id; rotate = rotate; correct = correct;
-            exit_effect = exit_effect; immovable_effect = immovable_effect}
-  in
+let parseimmovable j : State.immovable = 
+  let assoc = to_assoc j in 
+  let id = List.assoc_opt "id" assoc in 
+  match id with 
+  | Some a -> {id = a |> parse_string}
+  | _ -> failwith "not an immovable"
 
-  let parse_newtile t : tile =
-    let ch = t |> member "ch" |> to_list |> parse_ch in
-    let mov = t |> member "mov" |> to_string |> parse_mov in
-    let store = t |> member "store" |> to_string |> parse_store in
-    let immov = t |> member "immov" |> to_string |> parse_immov in
-    let ex = t |> member "ex" |> to_list |> parse_ex in
-    let kl = t |> member "kl" |> to_list |> parse_kl in
-    let rt = t |> member "rt" |> to_list |> parse_rt in
-    {ch = ch; mov = mov; store = store; immov = immov; ex = ex; kl = kl; rt = rt}
-  in
+let tojsonimmovable (im : State.immovable) = 
+  `Assoc [("id", `String im.id)]
 
-  let parse_change c =
-    if change = [] then []
-    else List.map (fun a ->
-        let row = a |> member "row" |> to_int in
-        let col = a |> member "col" |> to_int in
-        let newtile = a |> member "newtile" |> parse_newtile in
-        { row = row ; col = col ; newtile = newtile }
-      ) c
-  in
+let parsestringpair l = 
+  match l |> to_list with 
+    [] -> failwith "not a pair"
+    | hd :: [] -> failwith "not a pair"
+    | hd :: tl :: [] -> (parse_string hd, parse_string tl)
+    | _ -> failwith "not a pair"
 
-  let parse_inv_change i :invchange =
-           let add = i |> member "add" |> to_list |> List.map (to_string) in
-           let remove = i |> member "remove" |> to_list |> List.map (to_string) in
-           { add = add ; remove = remove }
-  in
+let tojsonstringpair (a, b) = 
+  `List [`String a; `String b]
 
-  let parse_chat c =
-    if c = [] then None
-    else
-      let id = List.nth c 0 |> to_int in
-      let message = List.nth c 1 |> to_string in
-      Some { id = id ; message = message }
-  in
+let parsecutscene j : Cutscene.t = 
+  j |> to_list |> List.map parsestringpair
 
-    {
-    room_id = room_id;
-    rows = rows;
-    cols = cols;
-    change = parse_change change;
-    inv_change = parse_inv_change inv_change;
-    chat = parse_chat chat;
-    cutscene = parse_cscene cscene;
+let tojsoncutscene (c : Cutscene.t) = 
+  `List (List.map tojsonstringpair c)
+
+let parseexit j = 
+  let assoc = to_assoc j in 
+  let id = List.assoc "id" assoc in 
+  let is_open = List.assoc "is_open" assoc in 
+  let to_room = List.assoc "to_room" assoc in 
+  let cscene = List.assoc_opt "cscene" assoc in 
+  {
+    id = id |> parse_string;
+    is_open = is_open |> to_bool;
+    to_room = 
+    (
+      List.nth (to_room |> to_list) 0 |> parse_string,
+      List.nth (to_room |> to_list) 1 |> to_int,
+      List.nth (to_room |> to_list) 2 |> to_int
+    );
+    cscene = option_map cscene parsecutscene 
   }
 
+let tojsonexit (e : exit) = 
+  if bool_opt e.cscene then 
+  `Assoc [
+    ("id", `String e.id);
+    ("is_open", `Bool e.is_open);
+    ("to_room", `List ((fun (a, b, c) -> 
+      [`String a; `Int b; `Int c]) e.to_room));
+    ("cscene", tojsoncutscene (access_opt e.cscene))
+  ] else `Assoc [
+    ("id", `String e.id);
+    ("is_open", `Bool e.is_open);
+    ("to_room", `List ((fun (a, b, c) -> 
+      [`String a; `Int b; `Int c]) e.to_room));
+  ] 
 
 
-let tojsonlog (l:log') : json =
+let parsethree j = 
+  match j |> to_list with 
+  | f :: s :: t :: [] -> 
+    (parse_string f, 
+    to_int s,
+    to_int t
+    )
+  | _ -> failwith "Not a triple"
 
-  let mkdir d = (match d with | Left -> "left" | Right -> "right" | Up -> "up" | Down -> "down" ) in
+let tojsonthree (a, b, c) = 
+  `List [`String a; `Int b; `Int c]
 
-  let effect e =
-    let raw = List.fold_left
-      (fun acc a -> (`List [`String (fst_third a);`Int (snd_third a);`Int (thd_third a)]) :: acc) [] e
-    in
-    List.rev raw
-  in
+let parselistthree j = 
+  j |> to_list |> List.map parsethree
 
-  let rotate (r:rotatable) =
-    `List [`String r.id ; `String (mkdir r.rotate) ; `String (mkdir r.correct) ;
-           `List (effect r.exit_effect) ; `List (effect r.immovable_effect) ]
-  in
+let tojsonlistthree l = 
+  `List (l |> List.map tojsonthree)
 
-  let loc (k:keyloc) =
-    `List [`String k.id; `String k.key ;  `Bool k.is_solved ;
-           `List (effect k.exit_effect); `List (effect k.immovable_effect)]
-  in
+let parsekeyloc j = 
+  let assoc = to_assoc j in 
+  let id = List.assoc "id" assoc in 
+  let key = List.assoc "key" assoc in 
+  let is_solved = List.assoc "is_solved" assoc in 
+  let exit_effect = List.assoc "exit_effect" assoc in 
+  let immovable_effect = List.assoc "immovable_effect" assoc in 
+  {
+    id = id |> parse_string;
+    key = key |> parse_string;
+    is_solved = is_solved |> to_bool;
+    exit_effect = exit_effect |> parselistthree;
+    immovable_effect = immovable_effect |> parselistthree
+  }
 
-  let scene (c:Cutscene.t option) =
-    if bool_opt c
-    then
-      let opt = (match c with | Some a -> a | None -> []) in
-      let raw = List.fold_left
-          (fun acc a -> `List [ `String (fst a) ; `String (snd a) ] :: acc ) [] opt
-      in
-      List.rev raw
-    else []
-  in
+let tojsonkeyloc (kl : State.keyloc) = 
+  `Assoc [
+    ("id", `String kl.id);
+    ("key", `String kl.key);
+    ("is_solved", `Bool kl.is_solved);
+    ("exit_effect", tojsonlistthree kl.exit_effect);
+    ("immovable_effect", tojsonlistthree kl.immovable_effect)
+  ]
 
-  let ch_line t =
-    if bool_opt t.ch
-    then
-      let opt = (match t.ch with | Some a -> a | None -> {id = 1; direction = Up}) in
-      `List [`Int opt.id ; `String (mkdir opt.direction) ]
-    else `List []
-  in
+let parserotatable j = 
+  let assoc = to_assoc j in 
+  let id = List.assoc "id" assoc in 
+  let rotate = List.assoc "rotate" assoc in 
+  let correct = List.assoc "correct" assoc in 
+  let exit_effect = List.assoc "exit_effect" assoc in 
+  let immovable_effect = List.assoc "immovable_effect" assoc in 
+  {
+    id = id |> parse_string;
+    rotate = rotate |> parsedirection;
+    correct = correct |> parsedirection;
+    exit_effect = exit_effect |> parselistthree;
+    immovable_effect = immovable_effect |> parselistthree
+  }
 
-  let mov_line t =
-    if bool_opt t.mov
-    then
-      let opt = (match t.mov with | Some a -> a | None -> {id = ""}) in
-      `String opt.id
-    else `String ""
-  in
+let tojsonrotatable (rot : rotatable) = 
+  `Assoc [
+    ("id", `String rot.id);
+    ("rotate", tojsondirection rot.rotate);
+    ("correct", tojsondirection rot.correct);
+    ("exit_effect", tojsonlistthree rot.exit_effect);
+    ("immovable_effect", tojsonlistthree rot.immovable_effect)
+  ]
 
-  let store_line t =
-    if bool_opt t.store
-    then
-      let opt = (match t.store with | Some a -> a | None -> {id = ""}) in
-      `String opt.id
-    else `String ""
-  in
+let parsetile j = 
+  let assoc = to_assoc j in 
+  let ch = List.assoc_opt "ch" assoc in 
+  let mov = List.assoc_opt "mov" assoc in 
+  let store = List.assoc_opt "store" assoc in 
+  let immov = List.assoc_opt "immov" assoc in 
+  let ex = List.assoc_opt "ex" assoc in 
+  let kl = List.assoc_opt "kl" assoc in 
+  let rt = List.assoc_opt "rt" assoc in 
+  {
+    ch = option_map ch parsecharacter;
+    mov = option_map mov parsemovable;
+    store = option_map store parsestorable;
+    immov = option_map immov parseimmovable;
+    ex = option_map ex parseexit;
+    kl = option_map kl parsekeyloc;
+    rt = option_map rt parserotatable
+  }
 
-  let immov_line t =
-    if bool_opt t.immov
-    then
-      let opt = (match t.immov with | Some a -> a | None -> {id = ""}) in
-      `String opt.id
-    else `String ""
-  in
+let tojsontile (t : State.tile) = 
+  let smallest : (string * json) list ref = ref [] in 
+  if bool_opt t.rt then smallest := ("rt",
+    tojsonrotatable (access_opt t.rt)) :: !smallest else ();
+  if bool_opt t.kl then smallest := ("kl",
+    tojsonkeyloc (access_opt t.kl)) :: !smallest else ();
+  if bool_opt t.ex then smallest := ("ex",
+    tojsonexit (access_opt t.ex)) :: !smallest else ();
+  if bool_opt t.immov then smallest := ("immov",
+    tojsonimmovable (access_opt t.immov)) :: !smallest else ();
+  if bool_opt t.store then smallest := ("store", 
+    tojsonstorable (access_opt t.store)) :: !smallest else ();
+  if bool_opt t.mov then smallest := ("mov",
+    tojsonmovable (access_opt t.mov)) :: !smallest else ();
+  if bool_opt t.ch then smallest := ("ch", 
+    tojsoncharacter (access_opt t.ch)) :: !smallest else ();
+  `Assoc !smallest
 
-  let ex_line t =
-    if bool_opt t.ex
-    then
-      let opt =
-        (match t.ex with
-         | Some a -> a
-         | None ->
-           {id = ""; is_open = false ; to_room = ("",-1,-1) ; cscene = None})
-      in
-      `List [`String opt.id ; `Bool opt.is_open ;
-               `List [ `String (fst_third opt.to_room) ; `Int (snd_third opt.to_room) ; `Int (thd_third opt.to_room) ];
-               `List (scene opt.cscene)]
-    else `List []
-  in
+let parsemessage j = 
+  let assoc = to_assoc j in 
+  let id = List.assoc "id" assoc in 
+  let message = List.assoc "message" assoc in 
+  {
+    id = id |> to_int;
+    message = message |> parse_string
+  }
 
-  let kl_line t =
-    if bool_opt t.kl
-    then
-      let opt =
-        (match t.kl with
-         | Some a -> a
-         | None ->
-           {id = "";key = "";is_solved = false;exit_effect = [];immovable_effect = []})
-      in loc opt
-    else `List []
-  in
+let tojsonmessage (m : message) = 
+  `Assoc[("id", `Int m.id); ("message", `String m.message)]
 
-  let rt_line t =
-    if bool_opt t.rt
-    then
-      let opt =
-        (match t.rt with
-         | Some a -> a
-         | None ->
-           {id = ""; rotate = Up ; correct = Up;exit_effect = []; immovable_effect = []})
-      in rotate opt
-    else `List []
-  in
+let parseentry j = 
+  let assoc = to_assoc j in 
+  let row = List.assoc "row" assoc in 
+  let col = List.assoc "col" assoc in 
+  let newtile = List.assoc "newtile" assoc in 
+  {
+    row = row |> to_int;
+    col = col |> to_int;
+    newtile = newtile |> parsetile
+  }
 
-  let tile t = `Assoc [("ch",ch_line t); ("mov",mov_line t); ("store",store_line t);
-                       ("immov",immov_line t); ("ex",ex_line t); ("kl",kl_line t); ("rt",rt_line t)]
-  in
+let tojsonentry e = 
+  `Assoc[
+    ("row", `Int e.row); ("col", `Int e.col); 
+    ("newtile", tojsontile e.newtile)
+  ]
 
-  let change ch =
-    if ch <> []
-    then
-      let raw = List.fold_left
-          (fun acc a -> `Assoc [("row",`Int a.row);("col",`Int a.col);("newtile",tile a.newtile)] :: acc ) [] ch
-      in
-      List.rev raw
-    else []
-  in
+let parseinvchange j = 
+  let assoc = to_assoc j in 
+  let add = List.assoc "add" assoc in 
+  let remove = List.assoc "remove" assoc in 
+  {
+    add = add |> to_list |> List.map parse_string;
+    remove = remove |> to_list |> List.map parse_string
+  }
 
-  let inven i  =
-    `Assoc [("add", `List (List.map (fun str -> `String str) i.add)); 
-      ("remove", `List (List.map (fun str -> `String str) i.remove))]
-  in
+let tojsoninvchange ic= 
+  `Assoc[
+    ("add", `List (List.map (fun str -> `String str) ic.add));
+    ("remove", `List (List.map (fun str -> `String str) ic.remove))
+  ]
 
-  let chat_line cha =
-    if bool_opt cha
-    then
-      let opt =
-        (match cha with
-         | Some a -> a
-         | None -> {id = 1; message = ""})
-      in
-      `List [ `Int opt.id ; `String opt.message ]
-    else `List []
-  in
+let parselog j = 
+  let assoc = to_assoc j in 
+  let room_id = List.assoc "room_id" assoc in 
+  let rows = List.assoc "rows" assoc in 
+  let cols = List.assoc "cols" assoc in 
+  let change = List.assoc "change" assoc in 
+  let inv_change = List.assoc "inv_change" assoc in 
+  let chat = List.assoc_opt "chat" assoc in 
+  let cutscene = List.assoc_opt "cutscene" assoc in 
+  {
+    room_id = room_id |> parse_string;
+    rows = rows |> to_int;
+    cols = cols |> to_int;
+    change = change |> to_list |> List.map parseentry;
+    inv_change = inv_change |> parseinvchange;
+    chat = option_map chat parsemessage;
+    cutscene = option_map cutscene parsecutscene
+  }
 
-  `Assoc [("room_id", `String l.room_id); ("rows", `Int l.rows);
-          ("cols", `Int l.cols); ("change", `List (change l.change));
-          ("inv_change", inven l.inv_change); ("chat", chat_line l.chat);
-          ("cutscene", `List (scene l.cutscene))]
+let tojsonlog l = 
+  let smallest = ref [
+    ("room_id", `String l.room_id);
+    ("rows", `Int l.rows);
+    ("cols", `Int l.cols);
+    ("change", `List (l.change |> List.map tojsonentry));
+    ("inv_change", tojsoninvchange l.inv_change);
+  ] in 
+  if bool_opt l.chat then smallest := !smallest @
+  [("chat", tojsonmessage (access_opt l.chat))] else ();
+  if bool_opt l.cutscene then smallest := !smallest @
+  [("inv_change", tojsoncutscene (access_opt l.cutscene))] else ();
+  `Assoc !smallest
 
 let parsepairlog p_j =
   let f = p_j |> member "first" |> parselog in
@@ -304,45 +331,6 @@ let tojsonpairlog p_l =
   let f = tojsonlog p_l.first in
   let s = tojsonlog p_l.second in
   `Assoc [("first", f); ("second",s)]
-
-let parsecommand (j:Yojson.Basic.json):command =
-  match j with
-  | `String "take" -> Take
-  | `String "enter" -> Enter
-  | `String a ->
-    if String.contains a ' '
-    then let slice = String.index a ' ' in
-      let head = String.sub a 0 slice in
-      let tail = String.sub a (slice + 1) (String.length a - slice - 1) in
-      (match head with
-       | "drop" -> Drop tail
-       | "message" -> Message tail
-       | "go" ->
-         let d = (match tail with
-             | "left" -> Left
-             | "right" -> Right
-             | "up" -> Up
-             | "down" -> Down
-             | b -> Up ) in
-         Go d
-       | c -> Take)
-    else Take
-  | _ -> Take
-
-let tojsoncommand (cmd:command):json =
-  match cmd with
-  | Take -> `String "take"
-  | Enter -> `String "enter"
-  | Drop a -> `String ("drop "^a)
-  | Go d ->
-    let direct = (match d with
-        | Left -> "left"
-        | Right -> "right"
-        | Up -> "up"
-        | Down -> "down")
-    in
-    `String ("go "^direct)
-  | Message m -> `String ("message "^m)
 
 let parsesentcommand (j : json) = 
   let id = j |> member "id" |> to_int in 

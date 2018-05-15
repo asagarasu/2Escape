@@ -105,7 +105,9 @@ let replace_child p n =
  *)
 let get_dominant (tile: State.tile) : string = 
   if bool_opt tile.ch = true then "player" 
-    ^ string_of_int (access_opt tile.ch).id else
+    ^ string_of_int (access_opt tile.ch).id  
+    ^ "/" ^ string_of_direction (access_opt tile.ch).direction
+    else
   if bool_opt tile.kl = true then (access_opt tile.kl).id 
     ^ "_" ^ string_of_bool (access_opt tile.kl).is_solved else
   if bool_opt tile.mov = true then (access_opt tile.mov).id else

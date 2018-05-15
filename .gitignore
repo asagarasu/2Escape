@@ -1,4 +1,5 @@
 *.zip
 *.pdf
+_build/
 .DS_Store
 GUI/_build/
