@@ -1,14 +1,6 @@
 open State
 open Json_parser
 
-let player1 = ref ""
-
-let player2 = ref ""
-
-let save1 = ref false
-
-let save2 = ref false
-
 let air_to_gears : exit = { id = "air_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None }
 
 let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",0,2); cscene = None}
