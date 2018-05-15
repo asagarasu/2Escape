@@ -5,6 +5,7 @@ open Yojson.Basic
 
 type pairlog' = {first : log'; second : log'}
 
+type sentcommand = {id : int; command : command}
 
 let parselog (j:Yojson.Basic.json) : log' =
 
@@ -348,3 +349,11 @@ let tojsoncommand (cmd:command):json =
     in
     `String ("go "^direct)
   | Message m -> `String ("message "^m)
+
+let parsesentcommand (j : json) = 
+  let id = j |> member "id" |> to_int in 
+  let command = j |> member "command" |> parsecommand in 
+  {id = id; command = command}
+
+let tojsonsentcommand (sc : sentcommand) = 
+  `Assoc [("id", `Int sc.id); ("command", tojsoncommand sc.command)]

@@ -16,7 +16,7 @@ const http = require('http');
   
   var flag = false; 
   
-  var clients = [null, null]
+  var clients = []
 
   var client = net.createConnection({ port: 8080 }, () => {
     // 'connect' listener
@@ -32,7 +32,7 @@ const http = require('http');
             + request.origin + '.');
   
         var connection = request.accept(null, request.origin);
-        clients[0] = connection;
+        clients.push(connection);
         connection.on('message', function(message) {
             console.log("Read message from client");
             client.write('omg\n');
