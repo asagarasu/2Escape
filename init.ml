@@ -358,7 +358,7 @@ let hall =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "book"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "book"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some book_loc; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
