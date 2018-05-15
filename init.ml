@@ -1,9 +1,9 @@
 open State
 open Json_parser
 
-let air_to_gears : exit = { id = "exit_closed"; is_open = false; to_room = ("gears",4,2); cscene = None }
+let air_to_gears : exit = { id = "exit"; is_open = false; to_room = ("gears",4,2); cscene = None }
 
-let air_to_study : exit = { id = "exit_open"; is_open = true; to_room = ("study",0,2); cscene = None}
+let air_to_study : exit = { id = "exit"; is_open = true; to_room = ("study",0,2); cscene = None}
 
 let turbine_loc = {id = "turbine_loc"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",2,1)]}
 
@@ -48,11 +48,11 @@ let air =
      |];
    rows = 5; cols = 6}
 
-let study_to_air = { id = "exit_open"; is_open = true; to_room = ("air",2,4); cscene = None }
+let study_to_air = { id = "exit"; is_open = true; to_room = ("air",2,4); cscene = None }
 
-let study_to_basement = { id = "exit_open"; is_open = true; to_room = ("basement",2,2); cscene = None }
+let study_to_basement = { id = "exit"; is_open = true; to_room = ("basement",2,2); cscene = None }
 
-let study_to_hall = { id = "exit_open"; is_open = true; to_room = ("hall",0,8); cscene = None }
+let study_to_hall = { id = "exit"; is_open = true; to_room = ("hall",0,8); cscene = None }
 
 let study =
   {id = "study";
@@ -95,7 +95,7 @@ let study =
      |];
    rows = 5; cols = 6}
 
-let basement_to_study = {id = "exit_closed"; is_open = false; to_room = ("study",5,3); cscene = None}
+let basement_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); cscene = None}
 
 let ladder_loc = {id = "ladder_loc"; key = "ladder"; is_solved = false; exit_effect = [("basement",3,3)]; immovable_effect = []}
 
@@ -140,9 +140,9 @@ let basement =
      |];
    rows = 5; cols = 6}
 
-let workshop_to_handler = {id = "exit_closed"; is_open = false; to_room = ("handler",3,4); cscene = None}
+let workshop_to_handler = {id = "exit"; is_open = false; to_room = ("handler",3,4); cscene = None}
 
-let workshop_to_hall = {id = "exit_open"; is_open = true; to_room = ("hall",5,8); cscene = None}
+let workshop_to_hall = {id = "exit"; is_open = true; to_room = ("hall",5,8); cscene = None}
 
 let workshop_key_loc = {
   id = "workshop_key_loc";
@@ -201,9 +201,9 @@ let workshop =
      |];
    rows = 5; cols = 6}
 
-let handler_to_gears = {id = "exit_closed"; is_open = false; to_room = ("gears",-1,-1); cscene = None}
+let handler_to_gears = {id = "exit"; is_open = false; to_room = ("gears",-1,-1); cscene = None}
 
-let handler_to_workshop = {id = "exit_open"; is_open = true; to_room = ("workshop",0,3); cscene = None}
+let handler_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = None}
 
 let handler_loc = {
   id = "handler_loc";
@@ -262,9 +262,9 @@ let handler =
      |];
    rows = 5; cols = 6}
 
-let hall_to_study = {id = "exit_closed"; is_open = false; to_room = ("study",5,3); cscene = None}
+let hall_to_study = {id = "exit"; is_open = false; to_room = ("study",5,3); cscene = None}
 
-let hall_to_workshop = {id = "exit_open"; is_open = true; to_room = ("workshop",0,3); cscene = None}
+let hall_to_workshop = {id = "exit"; is_open = true; to_room = ("workshop",0,3); cscene = None}
 
 let book_loc = {
   id = "book_loc";
@@ -350,9 +350,9 @@ let hall =
      |];
    rows = 10; cols = 6}
 
-let fake_exit = {id = "exit_closed"; is_open = false; to_room = ("hall",0,0); cscene = None}
+let fake_exit = {id = "exit"; is_open = false; to_room = ("hall",0,0); cscene = None}
 
-let gears_to_clock = {id = "exit_closed"; is_open = false; to_room = ("hall",0,0); cscene = None}
+let gears_to_clock = {id = "exit"; is_open = false; to_room = ("hall",0,0); cscene = None}
 
 let stick_loc = {
   id = "stick_loc";
