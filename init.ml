@@ -372,7 +372,7 @@ let clocktower_loc = {
 
 let b = {
   id = "b";
-  key = "b";
+  key = "b_key";
   is_solved = false;
   exit_effect = [];
   immovable_effect = [("gears",6,2)]
@@ -380,7 +380,7 @@ let b = {
 
 let c = {
   id = "c";
-  key = "c";
+  key = "c_key";
   is_solved = false;
   exit_effect = [];
   immovable_effect = [("gears",10,2)]
@@ -388,7 +388,7 @@ let c = {
 
 let e = {
   id = "e";
-  key = "e";
+  key = "e_key";
   is_solved = false;
   exit_effect = [];
   immovable_effect = [("gears",9,2)]
@@ -521,7 +521,7 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_q"}; ex = None; kl = None; rt = Some gear_c_8};
-         {ch = None; mov = None; store = Some {id = "c"}; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "c_key"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_r"}; ex = None; kl = None; rt = Some gear_c_4};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -550,7 +550,7 @@ let gears =
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_x"}; ex = None; kl = None; rt = Some gear_b_8};
-         {ch = None; mov = None; store = Some {id = "b"}; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "b_key"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_y"}; ex = None; kl = None; rt = Some gear_b_4};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_middle"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_8"}; ex = None; kl = None; rt = None};
@@ -641,7 +641,7 @@ let gears =
          {ch = None; mov = None; store = None; immov = Some {id = "black_t"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "black_u"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_h'"}; ex = None; kl = None; rt = Some gear_e_8};
-         {ch = None; mov = None; store = Some {id = "e"}; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "e_key"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "transparent_i'"}; ex = None; kl = None; rt = Some gear_e_4};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
