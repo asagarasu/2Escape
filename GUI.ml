@@ -161,9 +161,14 @@ let clickleft _ : unit =
 let redraw_inv_log (log : State.log') : unit = 
     if List.length log.inv_change.add > 0 then 
       begin
-        (if List.length !inventory > 0 then startloc := !startloc + List.length log.inv_change.add else ());
-        inventory := log.inv_change.add @ !inventory;
-        redraw_inv ()
+        if List.mem (List.nth log.inv_change.add 0) !inventory then
+          ()
+        else 
+          begin
+            (if List.length !inventory > 0 then startloc := !startloc + List.length log.inv_change.add else ());
+            inventory := log.inv_change.add @ !inventory;
+            redraw_inv ()
+          end
       end
     else if List.length log.inv_change.remove > 0 then 
       begin
@@ -193,9 +198,10 @@ let redraw_inv_log (log : State.log') : unit =
 let replace_table_elt (entry : State.entry) : unit = 
   let row = Js.Opt.get gametable##rows##item(entry.row) fail in 
   let elt = Js.Opt.get row##cells##item(entry.col) fail in 
-  let img = Html.createImg document in 
-    img##src <- match_name (get_dominant entry.newtile);
-    replace_child elt img
+    elt##style##backgroundImage <- js ("url(sprites/empty.png)");
+    let img = Html.createImg document in 
+      img##src <- match_name (get_dominant entry.newtile);
+      replace_child elt img
 
 (**
  * Reassigns pictures to the whole table [tbl] based on [log] 
@@ -427,7 +433,7 @@ let start () =
     let image = (match x with 
      | 1 -> larrow
      | 2 -> inv1
-     | 3 -> td##style##cssText <- js "padding: 0; width: 20px; height: 20px; background-color: white"; inv2
+     | 3 -> td##style##cssText <- js "padding: 0; width: 20px; height: 20px; background-color: black"; inv2
      | 4 -> inv3 
      | 5 -> rarrow) in 
       Dom.appendChild td image;
@@ -436,8 +442,8 @@ let start () =
 
   invtable##style##opacity <- Js.def (js "1"); 
  
-  chatscreen##defaultValue <- js 
-    "This is your chat box, use it to talk with the other person!\n";
+  chatscreen##defaultValue <- js ("This is your chat box, use it to talk with the other person!\n" ^
+    "Controls: z for picking up items, x for dropping them, space for entering exits and cutscenes!");
   chatscreen##cols <- 49;
   chatscreen##rows <- 10;
   chatscreen##readOnly <- Js.bool true;

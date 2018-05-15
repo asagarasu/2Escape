@@ -1,1 +1,1 @@
-state.ml: Array Cutscene Hashtbl Helper List String Yojson
+state.ml: Array Cutscene Hashtbl Helper List Yojson

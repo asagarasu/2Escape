@@ -2,6 +2,7 @@ const ws = require('websocket');
 const net = require('net');
 var WebSocketServer = ws.server;
 const http = require('http');
+require('events').EventEmitter.prototype._maxListeners = 100;
 
   var server = http.createServer(function(request, response) {});
   server.listen(1337, function() {
@@ -22,19 +23,28 @@ const http = require('http');
     // 'connect' listener
     console.log('connected to server!');
   });
+  
   client.on('data', function(data){
-      console.log(data.toString('utf8'));
       for(i = 0; i < clients.length; i++)
         clients[i].sendUTF(data.toString('utf8'));
   });
   
   wsServer.on('request', function(request) {
         console.log((new Date()) + ' Connection from origin '
-            + request.origin + '.');
+            + request.origin + '. Current number of connections: ' + (clients.length + 1));
   
         var connection = request.accept(null, request.origin);
         clients.push(connection);
         connection.on('message', function(message) {
             client.write(message.utf8Data.concat('\n'));
-      });
+        });
+
+        connection.on('close', function(connection) {
+            var index = clients.indexOf(connection);
+            if (index > -1){
+                clients.splice(index, 1);
+            }
+            console.log((new Date()) + ' Connection from origin '
+            + request.origin + ' has disconnected. Current number of connections: ' + clients.length);
+        });
   });

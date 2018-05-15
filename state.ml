@@ -296,6 +296,34 @@ let logify (playerid : int) (st : t) : log' =
   let entryarrlist = (Array.map Array.to_list entrymap) in
   let entrylistlist = Array.to_list entryarrlist in
   let entrylist = List.flatten entrylistlist in
+  let invchange = [] in 
+  {
+    room_id = room1_string;
+    rows = room1.rows;
+    cols = room1.cols;
+    change = entrylist;
+    inv_change = {add = invchange; remove = []};
+    chat = None;
+    cutscene = None
+  }
+
+(**
+ * Helper method to load a game's state from scatch based on the player's id
+ *
+ * requires: playerid is 1 or 2, st is a valid state
+ * returns: a log' representation of player [playerid]'s state with inventory
+ *)
+let logifyfull (playerid : int) (st : t) : log' =
+  let room1_string = fst_third st.pl1_loc in
+  let room1 = Hashtbl.find st.roommap room1_string in
+  let entrymap = (Array.mapi (fun (y : int) (row : tile array) ->
+          Array.mapi (fun (x : int) (t : tile) ->
+            {row = y; col = x; newtile = t}
+          ) row
+        ) room1.tiles) in
+  let entryarrlist = (Array.map Array.to_list entrymap) in
+  let entrylistlist = Array.to_list entryarrlist in
+  let entrylist = List.flatten entrylistlist in
   let invchange = if playerid = 1 then st.pl1_inv else st.pl2_inv in 
   {
     room_id = room1_string;
@@ -602,231 +630,3 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
             create_empty_logs room1 room2
         end
   else create_empty_logs room1 room2
-
-(** Save a game : Converting state to json **)
-(**
-(* Helper method to turn a [ch] to a json*)
-let ch_to_json (t:character) =
-  let id = `Int t.id in
-  let direction =
-    `String (match t.direction with | Up -> "up" | Down -> "down"
-                                    | Right -> "right" | Left -> "left" )
-  in
-  `List [id;direction]
-
-(* Helper method to turn a [ex] into a json*)
-let ex_to_json (t:exit) =
-  let id = `String t.id in
-  let is_open = `Bool t.is_open in
-  let triple = t.to_room in
-  let to_room = `List [`String (fst_third triple);
-                       `Int (snd_third triple);
-                       `Int (thd_third triple)] in
-  `List [id;is_open;to_room]
-
-(* Helper method to turn a [kl] to a json *)
-let kl_to_json (t:keyloc) =
-  let id = `String t.id in
-  let key = `String t.key in
-  let is_solved = `Bool t.is_solved in
-  let exit_effect = `List (List.map (fun exeffect ->
-                    `List [`String (fst_third exeffect);
-                       `Int (snd_third exeffect);
-                       `Int (thd_third exeffect)]) t.exit_effect) in
-  let immovable_effect = `List (List.map (fun immeffect ->
-                    `List [`String (fst_third immeffect);
-                       `Int (snd_third immeffect);
-                       `Int (thd_third immeffect)]) t.immovable_effect) in
-  `List [id; key; is_solved;exit_effect;immovable_effect]
-
-(* Helper method to turn a [kl] to a json *)
-let rt_to_json (t:rotatable) =
-  let id = `String t.id in
-  let rotate = `String
-      (match t.rotate with
-       | Up -> "up" | Down -> "down" | Right -> "right" | Left -> "left" )
-  in
-  `List [id;rotate]
-
-(* Helper method to turn a [tile] into a json *)
-let tile_to_json (t:tile) =
-  let ch = match t.ch with | None -> `List [] | Some a -> ch_to_json a in
-  let mov = match t.mov with | None -> `String "" | Some a -> `String a.id in
-  let store = match t.store with | None -> `String "" | Some a -> `String a.id in
-  let immov = match t.immov with | None -> `String "" | Some a -> `String a.id in
-  let ex = match t.ex with | None -> `List [] | Some a -> ex_to_json a in
-  let kl = match t.kl with | None -> `List [] | Some a -> kl_to_json a in
-  let rt = match t.rt with | None -> `List [] | Some a -> rt_to_json a in
-  `Assoc [("ch",ch);("mov",mov);("store",store);("immov",immov);("ex",ex);("kl",kl);("rt",rt)]
-
-(* Helper method to turn a [room] into a json *)
-let room_to_json (t:room) =
-  let id = `String t.id in
-  let rows = `Int t.rows in
-  let cols = `Int t.cols in
-  let tll = Array.to_list (Array.map Array.to_list t.tiles) in
-  let tiles = `List (List.rev (List.map (fun x -> `List (List.map tile_to_json x)) tll)) in
-  `Assoc [("id",id);("tiles",tiles);("rows",rows);("cols",cols)]
-
-(* Helper method to turn a [message] into a json *)
-let chat_to_json (t:message) =
-  let id = `Int t.id in
-  let message = `String t.message in
-  `Assoc [("id",id);("message",message)]
-
-(* Helper method to turn a [state.t] into a json *)
-let state_to_json (t:t) =
-  let roommap = `List (Hashtbl.fold (fun k v acc -> (room_to_json v)::acc) t.roommap []) in
-  let loc1_triple = t.pl1_loc in
-  let pl1_loc = `List [`String (fst_third loc1_triple);
-                       `Int (snd_third loc1_triple);
-                       `Int (thd_third loc1_triple)] in
-  let loc2_triple = t.pl2_loc in
-  let pl2_loc = `List [`String (fst_third loc2_triple);
-                       `Int (snd_third loc2_triple);
-                       `Int (thd_third loc2_triple)] in
-  let pl1_inv = `List (List.map (fun x -> `String x) t.pl1_inv) in
-  let pl2_inv = `List (List.map (fun x -> `String x) t.pl2_inv) in
-  let chat = `List (List.map chat_to_json t.chat) in
-  `Assoc [("roommap",roommap);("pl1_loc",pl1_loc);("pl2_loc",pl2_loc);
-          ("pl1_inv",pl1_inv);("pl2_inv",pl2_inv);("chat",chat);]
-
-(* Helper method to turn a state into a file *)
-let save (st : t) (file : string) = Yojson.Basic.to_file file (state_to_json st)
-
-
-
-(** Load a game : Converting json to state **)
-(* Helper method to read of [ch] from a json *)
-let ch_of_json j =
-  let ch_id = List.nth j 0 |> to_int in
-  let ch_di =
-    (match List.nth j 1 |> to_string with
-     | "up" -> Up | "down" -> Down | "right" -> Right | "left" -> Left | _ -> Up )
-  in
-  Some { id = ch_id ; direction = ch_di }
-
-(* Helper method to read an [ex] from a json *)
-let ex_of_json j =
-  let trl =  List.nth j 2 |> to_list in
-  Some {
-    id = List.nth j 0 |> to_string;
-    is_open = List.nth j 1 |> to_bool;
-    to_room = (List.nth trl 0 |> to_string , List.nth trl 1 |> to_int, List.nth trl 2 |> to_int);
-  }
-
-(* Helper method to read a [kl] from a json *)
-let kl_of_json j =
-  let eel = List.nth j 3 |> to_list in
-  let iel = List.nth j 4 |> to_list in
-  Some {
-    id = List.nth j 0 |> to_string;
-    key = List.nth j 1 |> to_string;
-    is_solved = List.nth j 2 |> to_bool;
-    exit_effect = List.map (fun exiteffect ->
-      let exittriple = exiteffect |> to_list in
-      List.nth exittriple 0 |> to_string, List.nth exittriple 1 |> to_int, List.nth exittriple 2 |> to_int) eel;
-    immovable_effect = List.map (fun immeffect ->
-      let immtriple = immeffect |> to_list in
-      List.nth immtriple 0 |> to_string, List.nth immtriple 1 |> to_int, List.nth immtriple 2 |> to_int) iel;
-  }
-
-(* Helper method to read a [rotatable] from a json*)
-let rt_of_json j : rotatable option =
-  let rt_id = List.nth j 0 |> to_string in
-  let rt_rt =
-  (match List.nth j 1 |> to_string with
-   | "up" -> Up | "down" -> Down | "right" -> Right | "left" -> Left | _ -> Up )
-  in
-  Some { id = rt_id ; rotate = rt_rt }
-
-(* Helper method to read a [tile] from a json *)
-let tile_of_json j =
-  let ch_s = j |> member "ch" |> to_list in
-  let mov_s = j |> member "mov" |> to_string in
-  let store_s = j |> member "store" |> to_string in
-  let immov_s = j |> member "immov" |> to_string in
-  let ex_s = j |> member "ex" |> to_list in
-  let kl_s = j |> member "kl" |> to_list in
-  let rt_s = j |> member "rt" |> to_list in
-  {
-    ch = if ch_s = [] then None else ch_of_json ch_s;
-    mov = if mov_s = "" then None else Some { id = mov_s };
-    store = if store_s = "" then None else Some { id = store_s };
-    immov = if immov_s = "" then None else Some { id = immov_s };
-    ex = if ex_s = [] then None else ex_of_json ex_s;
-    kl = if kl_s = [] then None else kl_of_json kl_s;
-    rt = if rt_s = [] then None else rt_of_json rt_s;
-  }
-
-(* Helper method to read a [tiles] list from a json *)
-let rec make_tiles_list (l : 'a list) (matrix : tile list list) : tile list list =
-  match l with
-  | h::t -> make_tiles_list t [(List.map tile_of_json (to_list h))]@matrix
-  | [] -> matrix
-
-(* Helper method to read a [room] from a json *)
-let room_of_json j =
-  let tl = j |> member "tiles" |> to_list in
-  let tll =  make_tiles_list tl [] in
-  {
-    id = j |> member "id" |> to_string;
-    rows = j |> member "rows" |> to_int;
-    cols = j |> member "cols" |> to_int;
-    tiles = Array.of_list (List.map Array.of_list tll);
-  }
-
-(* Helper method to create a Hashtbl from parsed rooms *)
-let rooms_of_json rooms :(string, room) Hashtbl.t =
-  let parsed_rooms = List.map room_of_json rooms in
-  let r_hashtb : (string, room) Hashtbl.t = Hashtbl.create (List.length parsed_rooms) in
-  let hash (r:room) = Hashtbl.add r_hashtb r.id r in
-  List.iter hash parsed_rooms; r_hashtb
-
-(* Helper method to get chat from a json *)
-let chat_of_json j = {
-  id = j |> member "id" |> to_int;
-  message = j |> member "message" |> to_string;
-}
-
-(* Helper method to get the state of a json *)
-let state_of_json j =
-  let loc1 = j |> member "pl1_loc" |> to_list in
-  let loc2 = j |> member "pl2_loc" |> to_list in
-  {
-    roommap = j |> member "roommap" |> to_list |> rooms_of_json;
-    pl1_loc = (List.nth loc1 0 |> to_string, List.nth loc1 1 |> to_int, List.nth loc1 2 |> to_int);
-    pl2_loc = (List.nth loc2 0 |> to_string, List.nth loc2 1 |> to_int, List.nth loc2 2 |> to_int);
-    pl1_inv = j |> member "pl1_inv" |> to_list |> List.map to_string;
-    pl2_inv = j |> member "pl2_inv" |> to_list |> List.map to_string;
-    chat = j |> member "chat" |> to_list |> List.map chat_of_json;
-  }
-
-(* Helper method to get the state of a json *)
-let load (file : string) : t =
-  let j = Yojson.Basic.from_file file in
-  state_of_json j
-*)
-
-let parse_command (cmd:string):command =
-  match cmd with
-  | "take" -> Take
-  | "enter" -> Enter
-  | a ->
-    if String.contains a ' '
-    then let slice = String.index a ' ' in
-      let head = String.sub a 0 slice in
-      let tail = String.sub a (slice + 1) (String.length a - slice - 1) in
-      (match head with
-       | "drop" -> Drop tail
-       | "message" -> Message tail
-       | "go" ->
-         let d = (match tail with
-             | "left" -> Left
-             | "right" -> Right
-             | "up" -> Up
-             | "down" -> Down
-             | b -> Up ) in
-         Go d
-       | c -> Take)
-    else Take
