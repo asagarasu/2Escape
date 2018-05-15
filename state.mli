@@ -114,11 +114,10 @@ val do_command : int -> command -> t -> log' * log'
  *)
 val logify : int -> t -> log'
 
-val parse_command : string -> command
-
-(*
-(* [save] takes in the current state and save to a json string at file loc [file] *)
-val save : t -> string -> unit
-
-(* [load] reading a string and returns a state *)
-val load : string -> t*)
+(**
+ * Helper method to load a game's state from scatch based on the player's id
+ *
+ * requires: playerid is 1 or 2, st is a valid state
+ * returns: a log' representation of player [playerid]'s state with inventory
+ *)
+val logifyfull : int -> t -> log'

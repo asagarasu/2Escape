@@ -1,7 +1,7 @@
 open Unix
 open Init
 
-let start_logs () = Json_parser.tojsonpairlog {first = State.logify 1 gamestate; second = State.logify 2 gamestate}
+let start_logs () = Json_parser.tojsonpairlog {first = State.logifyfull 1 gamestate; second = State.logifyfull 2 gamestate}
 
 let to_pairlog ((a, b) : State.log' * State.log') : Json_parser.pairlog' = 
   {first = a; second = a}
