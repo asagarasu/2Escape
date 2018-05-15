@@ -20,25 +20,25 @@ let room =
 let roommap = let h = Hashtbl.create 2 in Hashtbl.add h "test" room; h
 
 let state = { roommap = roommap; pl1_loc = ("test",0,0); pl2_loc = ("test",1,1);
-                pl1_inv = []; pl2_inv = ["good"]; chat = []; }
+              pl1_inv = []; pl2_inv = ["good"]; chat = []; }
 
 let chat_1 = do_command 1 (Message "yes") state
 
 let chat_log_1 = ({room_id = "test"; rows = 3; cols = 3; change = [];
-                 chat = Some {id = 1; message = "yes"};cutscene = None;inv_change = {add = [];remove = []}},
-                {room_id = "test"; rows = 3; cols = 3; change = [];
-                 chat = Some {id = 1; message = "yes"};cutscene = None;inv_change = {add = [];remove = []}})
+                 chat = Some {id = 1; message = "yes"}; inv_change = {add = []; remove = []}; cutscene = None},
+                 {room_id = "test"; rows = 3; cols = 3; change = [];
+                 chat = Some {id = 1; message = "yes"}; inv_change = {add = []; remove = []}; cutscene = None})
 
 let chat_2 = do_command 2 (Message "no") state
 
 let chat_log_2 = ({room_id = "test"; rows = 3; cols = 3; change = [];
-                   chat = Some {id = 2; message = "no"};cutscene = None;inv_change = {add = [];remove = []}},
+                   chat = Some {id = 2; message = "no"}; inv_change = {add = []; remove = []}; cutscene = None},
                   {room_id = "test"; rows = 3; cols = 3; change = [];
-                   chat = Some {id = 2; message = "no"};cutscene = None;inv_change = {add = [];remove = []}})
+                   chat = Some {id = 2; message = "no"}; inv_change = {add = []; remove = []}; cutscene = None})
 
 let chat_state = { roommap = roommap; pl1_loc = ("test",0,0); pl2_loc = ("test",1,1);
-                     pl1_inv = []; pl2_inv = ["good"];
-                     chat = [{ id = 2; message = "no" };{ id = 1; message = "yes" }]; }
+                   pl1_inv = []; pl2_inv = ["good"];
+                   chat = [{ id = 2; message = "no" };{ id = 1; message = "yes" }]; }
 
 let l_room =
   {id = "test";
@@ -83,37 +83,65 @@ let log_empty = ({room_id = "test"; rows = 3; cols = 3; change = []; chat = None
 let take_1_l =
 ({room_id = "test"; rows = 3; cols = 3;
   change =
-   [{row = 0; col = 0;
-     newtile =
-      {ch = Some {id = 1; direction = Up}; mov = None; store = None;
-       immov = None; ex = None; kl = None; rt = None}}];
-  inv_change = {add = ["fadf"]; remove = []}; chat = None; cutscene = None},
- {room_id = "test"; rows = 3; cols = 3;
-  change =
-   [{row = 0; col = 0;
-     newtile =
-      {ch = Some {id = 1; direction = Up}; mov = None; store = None;
-       immov = None; ex = None; kl = None; rt = None}}];
-  inv_change = {add = []; remove = []}; chat = None; cutscene = None})
+   [{row = 0; col = 0;newtile ={ch = Some {id = 1; direction = Up}; 
+		mov = None; store = None;
+		immov = None; ex = None; kl = None; rt = None}}];
+		inv_change = {add = ["fadf"]; remove = []}; chat = None; cutscene = None},
+   {room_id = "test"; rows = 3; cols = 3;
+		change =[{row = 0; col = 0;newtile ={ch = Some {id = 1; direction = Up}; mov = None; store = None;
+		immov = None; ex = None; kl = None; rt = None}}];
+	inv_change = {add = []; remove = []}; chat = None; cutscene = None})
 
 let drop_1_l =
 ({room_id = "test"; rows = 3; cols = 3;
   change =
-   [{row = 1; col = 1;
-     newtile =
-      {ch = Some {id = 2; direction = Down}; mov = None;
-       store = Some {id = "good"}; immov = None; ex = None; kl = None;
-       rt = None}}];
-  inv_change = {add = []; remove = []}; chat = None; cutscene = None},
- {room_id = "test"; rows = 3; cols = 3;
-  change =
-   [{row = 1; col = 1;
-     newtile =
-      {ch = Some {id = 2; direction = Down}; mov = None;
-       store = Some {id = "good"}; immov = None; ex = None; kl = None;
-       rt = None}}];
-  inv_change = {add = []; remove = ["good"]}; chat = None; cutscene = None})
+    [{row = 1; col = 1;
+      newtile =
+		{ch = Some {id = 2; direction = Down}; mov = None;
+		store = Some {id = "good"}; immov = None; ex = None; kl = None;
+		rt = None}}];
+	inv_change = {add = []; remove = []}; chat = None; cutscene = None},
+		{room_id = "test"; rows = 3; cols = 3;
+		change =[{row = 1; col = 1;
+		newtile ={ch = Some {id = 2; direction = Down}; mov = None;
+		store = Some {id = "good"}; immov = None; ex = None; kl = None;
+		rt = None}}];
+	inv_change = {add = []; remove = ["good"]}; chat = None; cutscene = None})
 
+let log_empty = ({room_id = "test"; rows = 3; cols = 3; change = []; chat = None; inv_change = {add = []; remove = []}; cutscene = None},
+                 {room_id = "test"; rows = 3; cols = 3; change = []; chat = None; inv_change = {add = []; remove = []}; cutscene = None})
+
+let take_1_l =
+  ({room_id = "test"; rows = 3; cols = 3;
+    change =
+      [{row = 0; col = 0;
+        newtile =
+          {ch = Some {id = 1; direction = Up}; mov = None; store = None;
+           immov = None; ex = None; kl = None; rt = None}}];
+    chat = None; inv_change = {add = ["fadf"]; remove = []}; cutscene = None},
+   {room_id = "test"; rows = 3; cols = 3;
+    change =
+      [{row = 0; col = 0;
+        newtile =
+          {ch = Some {id = 1; direction = Up}; mov = None; store = None;
+           immov = None; ex = None; kl = None; rt = None}}];
+    chat = None; inv_change = {add = []; remove = []}; cutscene = None})
+
+let drop_1_l =
+  ({room_id = "test"; rows = 3; cols = 3;
+    change =
+      [{row = 1; col = 1;
+        newtile =
+          {ch = Some {id = 2; direction = Down}; mov = None;
+           store = Some {id = "good"}; immov = None; ex = None; kl = None; rt = None}}];
+    chat = None; inv_change = {add = []; remove = []}; cutscene = None},
+   {room_id = "test"; rows = 3; cols = 3;
+    change =
+      [{row = 1; col = 1;
+        newtile =
+          {ch = Some {id = 2; direction = Down}; mov = None;
+           store = Some {id = "good"}; immov = None; ex = None; kl = None; rt = None}}];
+    chat = None; inv_change = {add = []; remove = ["good"]}; cutscene = None})
 
 let get_room st = Hashtbl.find st.roommap "test"
 
@@ -136,6 +164,14 @@ let tile_p2_ = { ch = Some {id = 2; direction = Down};
                  mov = None; store = None; immov = None; ex = None; kl = None;rt=None }
 
 let tile = { ch = None; mov = None; store = None; immov = None; ex = None; kl = None;rt=None }
+
+let tile_p2 = { ch = Some {id = 2; direction = Down};
+                mov = None; store = None; immov = None; ex = None; kl = None; rt = None }
+
+let tile_p2_ = { ch = Some {id = 2; direction = Down};
+                 mov = None; store = None; immov = None; ex = None; kl = None; rt = None }
+
+let tile = { ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None }
 
 let t_room = {
   id = "test" ;
@@ -161,10 +197,9 @@ let log1 = {
   rows = 3;
   cols = 3;
   change = [{row = 1; col = 0; newtile = {ch = Some {id = 1; direction = Down};
-            mov = None; store = None; immov = None; ex = None; kl = None;rt = None}};
+             mov = None; store = None; immov = None; ex = None; kl = None;rt=None}};
             {row = 0; col = 0; newtile = {ch = None;
-            mov = None; store = None; immov = None;ex = None; kl = None;rt=None}};
-
+             mov = None; store = None; immov = None;ex = None; kl = None;rt=None}};
            ];
   chat = None;
   cutscene = None;inv_change = {add = [];remove = []}
@@ -210,9 +245,6 @@ let log4 = {
 
 let direc_1 =
   do_command 1 (Go Down) t_state
-
-let direc_2 =
-  do_command 2 (Go Left) t_state
 
 
 let tests = [

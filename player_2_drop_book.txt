@@ -1,0 +1,80 @@
+do_command 2 (Drop "book") gamestate;;
+- : log' * log' =
+({room_id = "hall"; rows = 10; cols = 10;
+ change =
+  [{row = 8; col = 0;
+    newtile =
+     {ch = None; mov = None; store = None; immov = None;
+      ex =
+       Some
+        {State.id = "exit"; is_open = true; to_room = ("study", 5, 3);
+         cscene =
+          Some
+           [("start_1",
+             "Your uncle Tom died a few days ago.\n\t From his left letters, you know that he has built a secret house at the far away countryside to memorize his dead wife.\n\t He asked you to help him taking care of the house and if possible fixing some broken parts of the house.");
+            ("start_1",
+             "You invited your friends Dave to go with you together.");
+            ("start_2", "You and Dave arrive at the house");
+            ("start_2",
+             "From outside, the color of the house is a combination of black and white");
+            ("start_2",
+             "\"It’s the most classical house I’ve ever seen,\" said Dave.");
+            ("start_2", "You and Dave step into the house");
+            ("start_3", "In a sudden, the door closed.");
+            ("start_4",
+             "A huge metal bar fell down,\n\t together brought down a few pieces of furniture from the upper floors and divided the hall into two parts.");
+            ("start_4", "\"Where are you,\" you yelled");
+            ("start_4",
+             "Dave’s voice came from another room,\"I am blocked in a different area. Guess we have to find the way out separately.\"");
+            ("start_4",
+             "Please find the way to get out of the room and fix the broken part of the house")]};
+      kl = None; rt = None}};
+   {row = 5; col = 5;
+    newtile =
+     {ch = Some {State.id = 2; direction = Right}; mov = None;
+      store = Some {State.id = "book"}; immov = None; ex = None;
+      kl =
+       Some
+        {State.id = "cross"; key = "book"; is_solved = true;
+         exit_effect = [("hall", 0, 8)]; immovable_effect = []};
+      rt = None}}];
+ inv_change = {add = []; remove = []}; chat = None; cutscene = None},
+{room_id = "hall"; rows = 10; cols = 10;
+ change =
+  [{row = 8; col = 0;
+    newtile =
+     {ch = None; mov = None; store = None; immov = None;
+      ex =
+       Some
+        {State.id = "exit"; is_open = true; to_room = ("study", 5, 3);
+         cscene =
+          Some
+           [("start_1",
+             "Your uncle Tom died a few days ago.\n\t From his left letters, you know that he has built a secret house at the far away countryside to memorize his dead wife.\n\t He asked you to help h"... (* string length 264; truncated *));
+            ("start_1",
+             "You invited your friends Dave to go with you together.");
+            ("start_2", "You and Dave arrive at the house");
+            ("start_2",
+             "From outside, the color of the house is a combination of black and white");
+            ("start_2",
+             "\"It’s the most classical house I’ve ever seen,\" said Dave.");
+            ("start_2", "You and Dave step into the house");
+            ("start_3", "In a sudden, the door closed.");
+            ("start_4",
+             "A huge metal bar fell down,\n\t together brought down a few pieces of furniture from the upper floors and divided the hall into two parts.");
+            ("start_4", "\"Where are you,\" you yelled");
+            ("start_4",
+             "Dave’s voice came from another room,\"I am blocked in a different area. Guess we have to find the way out separately.\"");
+            ("start_4",
+             "Please find the way to get out of the room and fix the broken part of the house")]};
+      kl = None; rt = None}};
+   {row = 5; col = 5;
+    newtile =
+     {ch = Some {State.id = 2; direction = Right}; mov = None;
+      store = Some {State.id = "book"}; immov = None; ex = None;
+      kl =
+       Some
+        {State.id = "cross"; key = "book"; is_solved = true;
+         exit_effect = [("hall", 0, 8)]; immovable_effect = []};
+      rt = None}}];
+ inv_change = {add = []; remove = ["book"]}; chat = None; cutscene = None})
