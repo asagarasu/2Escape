@@ -215,14 +215,14 @@ let workshop =
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = Some workshop_key_loc; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some workshop_key_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "workshop_key"}; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = Some {id = "rope"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = Some {id = "rope"}; immov = None; ex = None; kl = Some rope_loc; rt = None};
+         {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some rope_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "workshop_desk_top"}; ex = None; kl = None; rt = None}|];
 
