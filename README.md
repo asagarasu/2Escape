@@ -1,5 +1,6 @@
 # 2Escape
 A final project for Cornell CS 3110, Spring 2018.
+
 Team Members: Aaron Lou, Betsy Fu, Yilin Lu, Siyan Zheng, 
  
 # Overview
@@ -13,8 +14,10 @@ We assume that you had some experience with Ocaml. If you don't have Ocaml insta
 # Sample Screenshots
 
 # Acknowledgement
-Course professor: Professor Nate Poster
+Course professor: Professor Nate Poster. 
+
 Project advising teaching assistant: Yuchen Shen
+
 
 If you have any question regarding the game, please feel free to email al968@cornell.edu, zf48@cornell.edu, sz488@cornell.edu, or yl668@cornell.edu.
 
