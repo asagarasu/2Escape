@@ -1,9 +1,9 @@
 open State
 open Json_parser
 
-let air_to_gears : exit = { id = "air_to_gears"; is_open = false; to_room = ("gears",4,2); cscene = None }
+let air_to_gears : exit = { id = "exit_closed"; is_open = false; to_room = ("gears",4,2); cscene = None }
 
-let air_to_study : exit = { id = "air_to_study"; is_open = true; to_room = ("study",0,2); cscene = None}
+let air_to_study : exit = { id = "exit_open"; is_open = true; to_room = ("study",0,2); cscene = None}
 
 let turbine_loc = {id = "turbine_loc"; key = "turbine"; is_solved = false; exit_effect = []; immovable_effect = [("handler",2,1)]}
 
@@ -48,42 +48,42 @@ let air =
      |];
    rows = 5; cols = 6}
 
-let study_to_air = { id = "study_to_air"; is_open = true; to_room = ("air",2,4); cscene = None }
+let study_to_air = { id = "exit_open"; is_open = true; to_room = ("air",2,4); cscene = None }
 
-let study_to_basement = { id = "study_to_basement"; is_open = true; to_room = ("basement",2,2); cscene = None }
+let study_to_basement = { id = "exit_open"; is_open = true; to_room = ("basement",2,2); cscene = None }
 
-let study_to_hall = { id = "study_to_hall"; is_open = true; to_room = ("hall",0,8); cscene = None }
+let study_to_hall = { id = "exit_open"; is_open = true; to_room = ("hall",0,8); cscene = None }
 
 let study =
   {id = "study";
    tiles =
      [|
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf_a"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some study_to_air; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf_b"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf_c"}; ex = None; kl = None; rt = None}|];
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf_d"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "blue_bookshelf_a"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "blue_bookshelf_b"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "blue_bookshelf_c"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = Some {id = "desk_top"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some study_to_basement; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "blue_bookshelf_d"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "blue_bookshelf"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some study_to_hall; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov =  Some {id = "desk_bottom"}; ex = None; kl = None; rt = None};
@@ -95,7 +95,7 @@ let study =
      |];
    rows = 5; cols = 6}
 
-let basement_to_study = {id = "basement_to_study"; is_open = false; to_room = ("study",5,3); cscene = None}
+let basement_to_study = {id = "exit_closed"; is_open = false; to_room = ("study",5,3); cscene = None}
 
 let ladder_loc = {id = "ladder_loc"; key = "ladder"; is_solved = false; exit_effect = [("basement",3,3)]; immovable_effect = []}
 
@@ -140,9 +140,9 @@ let basement =
      |];
    rows = 5; cols = 6}
 
-let workshop_to_handler = {id = "workshop_to_handler"; is_open = false; to_room = ("handler",3,4); cscene = None}
+let workshop_to_handler = {id = "exit_closed"; is_open = false; to_room = ("handler",3,4); cscene = None}
 
-let workshop_to_hall = {id = "workshop_to_hall"; is_open = true; to_room = ("hall",5,8); cscene = None}
+let workshop_to_hall = {id = "exit_open"; is_open = true; to_room = ("hall",5,8); cscene = None}
 
 let workshop_key_loc = {
   id = "workshop_key_loc";
@@ -166,7 +166,7 @@ let workshop =
      [|
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel_a"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some workshop_to_handler; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
@@ -174,13 +174,13 @@ let workshop =
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel_b"}; store = None; immov = None; ex = None; kl = Some workshop_key_loc; rt = None};
+         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = Some workshop_key_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "workshop_key"}; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel_c"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "rope"}; immov = None; ex = None; kl = Some rope_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "workshop_desk_top"}; ex = None; kl = None; rt = None}|];
@@ -188,22 +188,22 @@ let workshop =
        [|{ch = None; mov = None; store = None; immov = None; ex = Some workshop_to_hall; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel_d"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "workshop_desk_bottom"}; ex = None; kl = None; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "steel_e"}; store = None; immov = None; ex = None; kl = None; rt = None};
+         {ch = None; mov = Some {id = "steel"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
    rows = 5; cols = 6}
 
-let handler_to_gears = {id = "handler_to_gears"; is_open = false; to_room = ("gears",-1,-1); cscene = None}
+let handler_to_gears = {id = "exit_closed"; is_open = false; to_room = ("gears",-1,-1); cscene = None}
 
-let handler_to_workshop = {id = "handler_to_workshop"; is_open = true; to_room = ("workshop",0,3); cscene = None}
+let handler_to_workshop = {id = "exit_open"; is_open = true; to_room = ("workshop",0,3); cscene = None}
 
 let handler_loc = {
   id = "handler_loc";
@@ -226,24 +226,24 @@ let handler =
    tiles =
      [|
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_a"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_b"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_c"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_d"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_e"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_f"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "handler"}; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_g"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_h"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_i"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_j"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = Some hall_handler_loc; rt = None};
@@ -262,9 +262,9 @@ let handler =
      |];
    rows = 5; cols = 6}
 
-let hall_to_study = {id = "hall_to_study"; is_open = false; to_room = ("study",5,3); cscene = None}
+let hall_to_study = {id = "exit_closed"; is_open = false; to_room = ("study",5,3); cscene = None}
 
-let hall_to_workshop = {id = "hall_to_workshop"; is_open = true; to_room = ("workshop",0,3); cscene = None}
+let hall_to_workshop = {id = "exit_open"; is_open = true; to_room = ("workshop",0,3); cscene = None}
 
 let book_loc = {
   id = "book_loc";
@@ -282,46 +282,46 @@ let hall =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_a"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_b"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_c"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "hall_handler_key"}; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_d"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_e"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_f"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_g"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
 
-       [|{ch = None; mov = None; store = None; immov = Some {id = "debris_h"}; ex = None; kl = None; rt = None};
+       [|{ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_i"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf_e"}; ex = None; kl = None; rt = None};|];
+         {ch = None; mov = None; store = None; immov = Some {id = "red_bookshelf"}; ex = None; kl = None; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_j"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = Some {id = "book"}; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some book_loc; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_k"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -329,7 +329,7 @@ let hall =
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_l"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = Some {id = 2; direction = Left}; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};|];
@@ -337,22 +337,22 @@ let hall =
        [|{ch = None; mov = None; store = None; immov = None; ex = Some hall_to_study; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = Some {id = 1; direction = Right}; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_m"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some hall_to_workshop; kl = None; rt = None};|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "debris_n"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "debris"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
      |];
    rows = 10; cols = 6}
 
-let fake_exit = {id = "fake_exit"; is_open = false; to_room = ("hall",0,0); cscene = None}
+let fake_exit = {id = "exit_closed"; is_open = false; to_room = ("hall",0,0); cscene = None}
 
-let gears_to_clock = {id = "gears_to_clock"; is_open = false; to_room = ("hall",0,0); cscene = None}
+let gears_to_clock = {id = "exit_closed"; is_open = false; to_room = ("hall",0,0); cscene = None}
 
 let stick_loc = {
   id = "stick_loc";
@@ -394,13 +394,13 @@ let e = {
   immovable_effect = [("gears",9,2)]
 }
 
-let gear_a_1 = {id = "gear_a_1"; rotate = Left; correct = Up;
+let gear_a_1 = {id = "gear_a_1_left"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,4)]}
-let gear_a_2 = {id = "gear_a_2"; rotate = Up; correct = Right;
+let gear_a_2 = {id = "gear_a_2_up"; rotate = Up; correct = Right;
                 exit_effect = []; immovable_effect = [("gears",14,4)]}
-let gear_a_3 = {id = "gear_a_3"; rotate = Right; correct = Down;
+let gear_a_3 = {id = "gear_a_3_right"; rotate = Right; correct = Down;
                 exit_effect = []; immovable_effect = [("gears",13,5)]}
-let gear_a_4 = {id = "gear_a_4"; rotate = Down; correct = Left;
+let gear_a_4 = {id = "gear_a_4_down"; rotate = Down; correct = Left;
                 exit_effect = []; immovable_effect = [("gears",8,2)]}
 
 let gear_b_1 = {id = "gear_b_1"; rotate = Up; correct = Up;
@@ -437,13 +437,13 @@ let gear_c_7 = {id = "gear_c_7"; rotate = Up; correct = Up;
 let gear_c_8 = {id = "gear_c_8"; rotate = Up; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",3,4)]}
 
-let gear_d_1 = {id = "gear_d_1"; rotate = Right; correct = Up;
+let gear_d_1 = {id = "gear_d_1_right"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",2,1)]}
-let gear_d_2 = {id = "gear_d_2"; rotate = Down; correct = Right;
+let gear_d_2 = {id = "gear_d_2_down"; rotate = Down; correct = Right;
                 exit_effect = []; immovable_effect = [("gears",2,2)]}
-let gear_d_3 = {id = "gear_d_3"; rotate = Left; correct = Down;
+let gear_d_3 = {id = "gear_d_3_left"; rotate = Left; correct = Down;
                 exit_effect = []; immovable_effect = [("gears",1,2)]}
-let gear_d_4 = {id = "gear_d_4"; rotate = Up; correct = Left;
+let gear_d_4 = {id = "gear_d_4_up"; rotate = Up; correct = Left;
                 exit_effect = []; immovable_effect = [("gears",8,2)]}
 
 let gear_e_1 = {id = "gear_e_1"; rotate = Up; correct = Up;
@@ -473,13 +473,13 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_a"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_b"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_c"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_d"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_e"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_f"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "wood_g"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "wood"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some fake_exit; kl = None; rt = None};
@@ -490,26 +490,26 @@ let gears =
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = Some gear_a_1};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_k"}; ex = None; kl = None; rt = Some gear_a_2};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_a_2};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "teeth_a"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "teeth_b"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "teeth_c"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "teeth_d"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "teeth_e"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_l"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "teeth"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "teeth"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "teeth"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "teeth"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "teeth"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = Some gear_c_1};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_m"}; ex = None; kl = None; rt = Some gear_c_2};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_n"}; ex = None; kl = None; rt = Some gear_c_3};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_2};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_3};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_o"}; ex = None; kl = None; rt = Some gear_a_4};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_p"}; ex = None; kl = None; rt = Some gear_a_3};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_a_4};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_a_3};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some fake_exit; kl = Some b; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "b"}; ex = None; kl = None; rt = None};
@@ -520,9 +520,9 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some c; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_q"}; ex = None; kl = None; rt = Some gear_c_8};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_8};
          {ch = None; mov = None; store = Some {id = "c_key"}; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_r"}; ex = None; kl = None; rt = Some gear_c_4};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_4};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
@@ -530,8 +530,8 @@ let gears =
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = Some gear_b_1};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_s"}; ex = None; kl = None; rt = Some gear_b_2};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_t"}; ex = None; kl = None; rt = Some gear_b_3};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_2};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_3};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_up"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_1"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_2"}; ex = None; kl = None; rt = None};
@@ -541,17 +541,17 @@ let gears =
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_6"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_7"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_u"}; ex = None; kl = None; rt = Some gear_c_7};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_v"}; ex = None; kl = None; rt = Some gear_c_6};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_w"}; ex = None; kl = None; rt = Some gear_c_5};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_7};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_6};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_c_5};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "stick"}; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_x"}; ex = None; kl = None; rt = Some gear_b_8};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_8};
          {ch = None; mov = None; store = Some {id = "b_key"}; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_y"}; ex = None; kl = None; rt = Some gear_b_4};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_4};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_middle"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_8"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_9"}; ex = None; kl = None; rt = None};
@@ -561,7 +561,7 @@ let gears =
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_13"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_14"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = Some gear_d_1};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_z"}; ex = None; kl = None; rt = Some gear_d_2};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_d_2};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some stick_loc; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -569,9 +569,9 @@ let gears =
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_a'"}; ex = None; kl = None; rt = Some gear_b_7};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_b'"}; ex = None; kl = None; rt = Some gear_b_6};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_c'"}; ex = None; kl = None; rt = Some gear_b_5};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_7};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_6};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_b_5};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_bottom"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_15"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_16"}; ex = None; kl = None; rt = None};
@@ -580,8 +580,8 @@ let gears =
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_19"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_20"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "cylinder_21"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_d'"}; ex = None; kl = None; rt = Some gear_d_4};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_e'"}; ex = None; kl = None; rt = Some gear_d_3};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_d_4};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_d_3};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -593,13 +593,13 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_a"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_b"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_c"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_d"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_e"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_f"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_g"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_left"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_mid"}; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = Some {id = "gear_right"}; ex = None; kl = None; rt = None};
@@ -613,15 +613,15 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = Some gears_to_clock; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_h"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_i"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_j"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_k"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_l"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_m"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_n"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_f'"}; ex = None; kl = None; rt = Some gear_e_1};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_g'"}; ex = None; kl = None; rt = Some gear_e_2};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_1};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_2};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = Some gear_e_3};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
@@ -633,16 +633,16 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = Some clocktower_loc; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_o"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_p"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_q"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_r"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_s"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_t"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_u"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_h'"}; ex = None; kl = None; rt = Some gear_e_8};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_8};
          {ch = None; mov = None; store = Some {id = "e_key"}; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_i'"}; ex = None; kl = None; rt = Some gear_e_4};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_4};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = Some {id = "clocktower_key"}; immov = None; ex = None; kl = None; rt = None}|];
@@ -653,16 +653,16 @@ let gears =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_v"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_w"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_x"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_y"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_z"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_a'"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "black_b'"}; ex = None; kl = None; rt = None};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_j'"}; ex = None; kl = None; rt = Some gear_e_7};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_k'"}; ex = None; kl = None; rt = Some gear_e_6};
-         {ch = None; mov = None; store = None; immov = Some {id = "transparent_l'"}; ex = None; kl = None; rt = Some gear_e_5};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "black"}; ex = None; kl = None; rt = None};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_7};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_6};
+         {ch = None; mov = None; store = None; immov = Some {id = "transparent"}; ex = None; kl = None; rt = Some gear_e_5};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None}|];
