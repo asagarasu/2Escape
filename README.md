@@ -13,12 +13,17 @@ Install: js_of_ocaml, yojson, nodejs, websocket
 
 # How it plays
 Comile: 
+
  make build -> builds GUI.
  make server -> makes ocaml server. Will prompt you for port number.
  node server.js [ocamlport] [jsport] -> ocamlport is the port you entered earlier. You will receive a string with you server's ip. 
- Play: open up index.html. You will be asked to input the server's ip address (from the last step) and player id.
+ 
+Play: 
+ 
+ open up index.html. You will be asked to input the server's ip address (from the last step) and player id.
 
 # Sample Screenshots
+![alt text](2Escape/screen.png)
 
 # Acknowledgement
 Course professor: Professor Nate Poster. 
