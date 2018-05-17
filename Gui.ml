@@ -35,8 +35,6 @@ let chatoutputdiv = Html.createDiv document
 
 let (cutscene : Cutscene.t ref) = ref Cutscene.empty
 
-let isCutscreen = ref false
-
 let cutscene_canvas = Html.createCanvas document
 
 let cutscene_context = cutscene_canvas##getContext(Html._2d_)
@@ -238,10 +236,10 @@ let re_draw_whole (log : State.log') : unit =
     end;
     gametable##style##opacity <- Js.def (js "1")
 
-let toCutscene : unit = 
+let toCutscene () : unit = 
   replace_child gamediv cutscene_canvas
 
-let fromCutscene : unit = 
+let fromCutscene () : unit = 
   replace_child gamediv gametable
 
 (**
@@ -320,32 +318,31 @@ let update_gui (log : State.log') : unit =
   receive_message log;
   redraw_inv_log log
 
-let nextScene : unit = 
+let nextScene () : unit = 
   let values = Cutscene.read !cutscene in 
   cutscene := (fst values);
   match (snd values) with 
-    | None -> isCutscreen := false;
-              fromCutscene; 
+    | None -> fromCutscene (); 
               document##onkeydown <- Html.handler (fun ev -> send_movement ev; Js.bool true)
     | Some (x, y) -> 
       let img = Html.createImg document in  
         cutscene_context##clearRect(0.0, 0.0, float_of_int cutscene_canvas##width, float_of_int cutscene_canvas##height);
         img##onload <- Html.handler (fun _ -> cutscene_context##drawImage(img, 0.0, 0.0); Js.bool true);
-        img##src <- js (x ^ ".png")
+        img##src <- match_name x
 
 let nextSceneHandler ev : unit = 
     match ev##keyCode with 
-    | 32 -> nextScene
+    | 32 -> nextScene ()
     | _ -> Html.stopPropagation ev
 
 let recieve_log (log : State.log') : unit = 
-  update_gui log;
+  update_gui log; 
   if bool_opt log.cutscene then 
     begin 
-      isCutscreen := true;
-      toCutscene;
+      Dom.removeChild gamediv gametable;
+      toCutscene ();
       cutscene := access_opt log.cutscene;
-      nextScene;
+      nextScene ();
       document##onkeydown <- Html.handler (fun ev -> nextSceneHandler ev; Js.bool true)
     end
   else 
@@ -374,8 +371,8 @@ let send_init () : unit =
 (* Main method to start the javascript *)
 let start () = 
   Dom.removeChild startDiv startButton;
-  cutscene_canvas##width <- 900;
-  cutscene_canvas##height <- 500;
+  cutscene_canvas##width <- 1000;
+  cutscene_canvas##height <- 550;
 
   enterButton##onclick <- Html.handler (
     fun ev ->  
@@ -410,7 +407,7 @@ let start () =
   );
 
   body##style##cssText <- js "font-family: 
-    sans-serif; text-align: center; background-color: #e8e8e8;";
+    sans-serif; text-align: center; background-image: url(sprites/opening.png);";
   gamediv##style##cssText <- js "margin-bottom:20px;";
   gametable##style##cssText <- js 
     "border-collapse:collapse;line-height: 0; opacity: 1; \

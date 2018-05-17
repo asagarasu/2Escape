@@ -1,0 +1,3698 @@
+commit 63cfc9d1b0a50a9801777fdeb155a6079411f6de
+Merge: 00243b9 f4923b7
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 16:21:57 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 00243b9f5e99baaf7797a59352ad5543dc202d92
+Merge: 7863381 18d6692
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 16:21:27 2018 -0400
+
+    state_test update
+
+commit f4923b784b020e5457c893d8d47a59acbc2ebd70
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:20:58 2018 -0400
+
+    Update README.md
+
+ README.md | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+commit 78960b2cb60f4fd6518e1440622a54c6a5e9ddf9
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:18:20 2018 -0400
+
+    Update README.md
+    
+    screenshot
+
+ README.md | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit 2096e6feb6b797a571fba8e74191a631a772108a
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:16:32 2018 -0400
+
+    Update README.md
+    
+    screenshot
+
+ README.md | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit ce5d5464503ba29e003bd5e908ee786483f23200
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:15:34 2018 -0400
+
+    Update README.md
+    
+    screenshot
+
+ README.md | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 1c2a19894171052a334bceb958c51d657f20ff4b
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:13:30 2018 -0400
+
+    screenshot1
+
+ screen.png | Bin 0 -> 878941 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 246f4d817e07470f925cd075575e70d45b42f2ce
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 16:12:16 2018 -0400
+
+    Update README.md
+    
+    more
+
+ README.md | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+commit 7863381ad002720452b959d8b5a7e2245892be29
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 16:07:42 2018 -0400
+
+    state_test update
+
+ state_test.ml | 158 +++++++++++++++++++++++++++++-----------------------------
+ 1 file changed, 80 insertions(+), 78 deletions(-)
+
+commit 18d6692eecaa4a42d570084867347543796f467e
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 15:59:58 2018 -0400
+
+    Update README.md
+    
+    changes
+
+ README.md | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit b77c68cfa396ba9992a98536d2318a2671f3f8c5
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 15:59:08 2018 -0400
+
+    Update README.md
+    
+    Installation,Acknowledgement
+
+ README.md | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+commit ae41ae7f9135a12c0a2b71bb163a3d632e51251f
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:32:18 2018 -0400
+
+    a reference
+
+ player_2_drop_book.txt | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
+
+commit 052dc32f396bf693d302ef5ff0d35708b8924060
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:30:05 2018 -0400
+
+    new gears
+
+ sprites2/gear_bottom.png | Bin 0 -> 5437 bytes
+ sprites2/gear_left.png   | Bin 0 -> 5228 bytes
+ sprites2/gear_mid.png    | Bin 0 -> 5950 bytes
+ sprites2/gear_middle.png | Bin 0 -> 6219 bytes
+ sprites2/gear_right.png  | Bin 0 -> 5077 bytes
+ sprites2/gear_top.png    | Bin 0 -> 5170 bytes
+ 6 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 0cdee53f8fe59fa2eae1a3552c4be93065f136a5
+Merge: 2829722 05c956d
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 15:14:46 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 05c956dd91eef7d4bbb540b2303a2cd728f8cecd
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:14:35 2018 -0400
+
+    store
+
+ init.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 28297222400559881b2a419f01ea0242499a0e5f
+Merge: 63e2817 72f66a7
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 15:13:25 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 72f66a744ee43d3e6f96fa52063b26620ecb5a29
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:13:14 2018 -0400
+
+    remove mov
+
+ init.ml   | 6 +++---
+ test.json | 1 -
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+commit 63e2817328b90e4b599413f9b6804be1e479c1b0
+Merge: 98a409d e9eb0d6
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 15:09:29 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit e9eb0d6f7daa7123042a0c5d8d67638aa0de1bc4
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:09:10 2018 -0400
+
+    keyloc t f
+
+ sprites2/{cross.png => cross/false.png} | Bin
+ sprites2/cross/true.png                 | Bin 0 -> 3504 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 98a409d7459453a0cc4443ab9b9cd3ec064716e4
+Merge: 6ac6025 f1ef6ca
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 15:03:00 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 6ac6025cdc2b996f5cbf38fe88aa10989780b88c
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 15:02:59 2018 -0400
+
+    Stash
+
+ Gui.ml                            |   6 +-
+ Makefile                          |   2 +-
+ init.ml                           |   4 +-
+ parser_tests.byte                 |   1 +
+ parser_tests.ml                   |  45 +++++++++++++-
+ sprites/blank.png                 | Bin 0 -> 1139 bytes
+ sprites/cylinder_1.png            | Bin 0 -> 1985 bytes
+ sprites/cylinder_11.png           | Bin 0 -> 5653 bytes
+ sprites/cylinder_12.png           | Bin 0 -> 4426 bytes
+ sprites/cylinder_13.png           | Bin 0 -> 5171 bytes
+ sprites/cylinder_14.png           | Bin 0 -> 4940 bytes
+ sprites/cylinder_15.png           | Bin 0 -> 2789 bytes
+ sprites/cylinder_16.png           | Bin 0 -> 4547 bytes
+ sprites/cylinder_17.png           | Bin 0 -> 4438 bytes
+ sprites/cylinder_18.png           | Bin 0 -> 4320 bytes
+ sprites/cylinder_19.png           | Bin 0 -> 5049 bytes
+ sprites/cylinder_2.png            | Bin 0 -> 4509 bytes
+ sprites/cylinder_20.png           | Bin 0 -> 5505 bytes
+ sprites/cylinder_21.png           | Bin 0 -> 5279 bytes
+ sprites/cylinder_3.png            | Bin 0 -> 4054 bytes
+ sprites/cylinder_4.png            | Bin 0 -> 4064 bytes
+ sprites/cylinder_5.png            | Bin 0 -> 3813 bytes
+ sprites/cylinder_6.png            | Bin 0 -> 3827 bytes
+ sprites/cylinder_7.png            | Bin 0 -> 1805 bytes
+ sprites/cylinder_8.png            | Bin 0 -> 3379 bytes
+ sprites/cylinder_9.png            | Bin 0 -> 6318 bytes
+ sprites/end.png.jpg               | Bin 0 -> 326661 bytes
+ sprites/exit/closed.png           | Bin 0 -> 341 bytes
+ sprites/exit/open.png             | Bin 0 -> 642 bytes
+ sprites/gear_1/down.png           | Bin 0 -> 2603 bytes
+ sprites/gear_1/left.png           | Bin 0 -> 2549 bytes
+ sprites/gear_1/right.png          | Bin 0 -> 2600 bytes
+ sprites/gear_1/up.png             | Bin 0 -> 2264 bytes
+ sprites/gear_2/down.png           | Bin 0 -> 3255 bytes
+ sprites/gear_2/left.png           | Bin 0 -> 3482 bytes
+ sprites/gear_2/right.png          | Bin 0 -> 3542 bytes
+ sprites/gear_2/up.png             | Bin 0 -> 3081 bytes
+ sprites/gear_3/down.png           | Bin 0 -> 2514 bytes
+ sprites/gear_3/left.png           | Bin 0 -> 2621 bytes
+ sprites/gear_3/right.png          | Bin 0 -> 2670 bytes
+ sprites/gear_3/up.png             | Bin 0 -> 2591 bytes
+ sprites/gear_4/down.png           | Bin 0 -> 3524 bytes
+ sprites/gear_4/left.png           | Bin 0 -> 3343 bytes
+ sprites/gear_4/right.png          | Bin 0 -> 3339 bytes
+ sprites/gear_4/up.png             | Bin 0 -> 3593 bytes
+ sprites/gear_5/down.png           | Bin 0 -> 2501 bytes
+ sprites/gear_5/left.png           | Bin 0 -> 2652 bytes
+ sprites/gear_5/right.png          | Bin 0 -> 2590 bytes
+ sprites/gear_5/up.png             | Bin 0 -> 2498 bytes
+ sprites/gear_6/down.png           | Bin 0 -> 3461 bytes
+ sprites/gear_6/left.png           | Bin 0 -> 3698 bytes
+ sprites/gear_6/right.png          | Bin 0 -> 3634 bytes
+ sprites/gear_6/up.png             | Bin 0 -> 3266 bytes
+ sprites/gear_7/down.png           | Bin 0 -> 2591 bytes
+ sprites/gear_7/left.png           | Bin 0 -> 2670 bytes
+ sprites/gear_7/right.png          | Bin 0 -> 2621 bytes
+ sprites/gear_7/up.png             | Bin 0 -> 2364 bytes
+ sprites/gear_8/down.png           | Bin 0 -> 3593 bytes
+ sprites/gear_8/left.png           | Bin 0 -> 3339 bytes
+ sprites/gear_8/right.png          | Bin 0 -> 3343 bytes
+ sprites/gear_8/up.png             | Bin 0 -> 3374 bytes
+ sprites/gear_a/down.png           | Bin 0 -> 3564 bytes
+ sprites/gear_a/gear_a_1_down.png  | Bin 5521 -> 0 bytes
+ sprites/gear_a/gear_a_1_left.png  | Bin 5750 -> 0 bytes
+ sprites/gear_a/gear_a_1_right.png | Bin 5639 -> 0 bytes
+ sprites/gear_a/gear_a_1_up.png    | Bin 5470 -> 0 bytes
+ sprites/gear_a/gear_a_2_down.png  | Bin 5521 -> 0 bytes
+ sprites/gear_a/gear_a_2_left.png  | Bin 5750 -> 0 bytes
+ sprites/gear_a/gear_a_2_right.png | Bin 5639 -> 0 bytes
+ sprites/gear_a/gear_a_2_up.png    | Bin 5470 -> 0 bytes
+ sprites/gear_a/gear_a_3_down.png  | Bin 5521 -> 0 bytes
+ sprites/gear_a/gear_a_3_left.png  | Bin 5750 -> 0 bytes
+ sprites/gear_a/gear_a_3_right.png | Bin 5639 -> 0 bytes
+ sprites/gear_a/gear_a_3_up.png    | Bin 5470 -> 0 bytes
+ sprites/gear_a/gear_a_4_down.png  | Bin 5521 -> 0 bytes
+ sprites/gear_a/gear_a_4_left.png  | Bin 5750 -> 0 bytes
+ sprites/gear_a/gear_a_4_right.png | Bin 5639 -> 0 bytes
+ sprites/gear_a/gear_a_4_up.png    | Bin 5470 -> 0 bytes
+ sprites/gear_a/left.png           | Bin 0 -> 3729 bytes
+ sprites/gear_a/right.png          | Bin 0 -> 3804 bytes
+ sprites/gear_a/up.png             | Bin 0 -> 3458 bytes
+ sprites/gear_d/down.png           | Bin 0 -> 4146 bytes
+ sprites/gear_d/gear_d_1_down.png  | Bin 5670 -> 0 bytes
+ sprites/gear_d/gear_d_1_left.png  | Bin 5890 -> 0 bytes
+ sprites/gear_d/gear_d_1_right.png | Bin 5789 -> 0 bytes
+ sprites/gear_d/gear_d_1_up.png    | Bin 5643 -> 0 bytes
+ sprites/gear_d/gear_d_2_down.png  | Bin 5670 -> 0 bytes
+ sprites/gear_d/gear_d_2_left.png  | Bin 5890 -> 0 bytes
+ sprites/gear_d/gear_d_2_right.png | Bin 5789 -> 0 bytes
+ sprites/gear_d/gear_d_2_up.png    | Bin 5643 -> 0 bytes
+ sprites/gear_d/gear_d_3_down.png  | Bin 5670 -> 0 bytes
+ sprites/gear_d/gear_d_3_left.png  | Bin 5890 -> 0 bytes
+ sprites/gear_d/gear_d_3_right.png | Bin 5789 -> 0 bytes
+ sprites/gear_d/gear_d_3_up.png    | Bin 5643 -> 0 bytes
+ sprites/gear_d/gear_d_4_down.png  | Bin 5670 -> 0 bytes
+ sprites/gear_d/gear_d_4_left.png  | Bin 5890 -> 0 bytes
+ sprites/gear_d/gear_d_4_right.png | Bin 5789 -> 0 bytes
+ sprites/gear_d/gear_d_4_up.png    | Bin 5643 -> 0 bytes
+ sprites/gear_d/left.png           | Bin 0 -> 4224 bytes
+ sprites/gear_d/right.png          | Bin 0 -> 4056 bytes
+ sprites/gear_d/up.png             | Bin 0 -> 4038 bytes
+ sprites/start_1.png               | Bin 0 -> 1464519 bytes
+ sprites/start_2.png               | Bin 0 -> 666287 bytes
+ sprites/start_3.png               | Bin 0 -> 128537 bytes
+ sprites/start_4.png               | Bin 0 -> 765349 bytes
+ sprites1/a.png                    | Bin 0 -> 5667 bytes
+ sprites1/b.png                    | Bin 0 -> 5587 bytes
+ sprites1/b_key.png                | Bin 0 -> 2628 bytes
+ sprites1/blank.png                | Bin 0 -> 1139 bytes
+ sprites1/book.png                 | Bin 0 -> 4385 bytes
+ sprites1/c.png                    | Bin 0 -> 5294 bytes
+ sprites1/c_key.png                | Bin 0 -> 2211 bytes
+ sprites1/clocktower_key.png       | Bin 0 -> 2817 bytes
+ sprites1/cylinder_1.png           | Bin 0 -> 1985 bytes
+ sprites1/cylinder_11.png          | Bin 0 -> 5653 bytes
+ sprites1/cylinder_12.png          | Bin 0 -> 4426 bytes
+ sprites1/cylinder_13.png          | Bin 0 -> 5171 bytes
+ sprites1/cylinder_14.png          | Bin 0 -> 4940 bytes
+ sprites1/cylinder_15.png          | Bin 0 -> 2789 bytes
+ sprites1/cylinder_16.png          | Bin 0 -> 4547 bytes
+ sprites1/cylinder_17.png          | Bin 0 -> 4438 bytes
+ sprites1/cylinder_18.png          | Bin 0 -> 4320 bytes
+ sprites1/cylinder_19.png          | Bin 0 -> 5049 bytes
+ sprites1/cylinder_2.png           | Bin 0 -> 4509 bytes
+ sprites1/cylinder_20.png          | Bin 0 -> 5505 bytes
+ sprites1/cylinder_21.png          | Bin 0 -> 5279 bytes
+ sprites1/cylinder_3.png           | Bin 0 -> 4054 bytes
+ sprites1/cylinder_4.png           | Bin 0 -> 4064 bytes
+ sprites1/cylinder_5.png           | Bin 0 -> 3813 bytes
+ sprites1/cylinder_6.png           | Bin 0 -> 3827 bytes
+ sprites1/cylinder_7.png           | Bin 0 -> 1805 bytes
+ sprites1/cylinder_8.png           | Bin 0 -> 3379 bytes
+ sprites1/cylinder_9.png           | Bin 0 -> 6318 bytes
+ sprites1/d.png                    | Bin 0 -> 5504 bytes
+ sprites1/e.png                    | Bin 0 -> 5493 bytes
+ sprites1/e_key.png                | Bin 0 -> 2332 bytes
+ sprites1/end.png.jpg              | Bin 0 -> 326661 bytes
+ sprites1/exit/closed.png          | Bin 0 -> 341 bytes
+ sprites1/exit/open.png            | Bin 0 -> 642 bytes
+ sprites1/gear_1/down.png          | Bin 0 -> 2603 bytes
+ sprites1/gear_1/left.png          | Bin 0 -> 2549 bytes
+ sprites1/gear_1/right.png         | Bin 0 -> 2600 bytes
+ sprites1/gear_1/up.png            | Bin 0 -> 2264 bytes
+ sprites1/gear_2/down.png          | Bin 0 -> 3255 bytes
+ sprites1/gear_2/left.png          | Bin 0 -> 3482 bytes
+ sprites1/gear_2/right.png         | Bin 0 -> 3542 bytes
+ sprites1/gear_2/up.png            | Bin 0 -> 3081 bytes
+ sprites1/gear_3/down.png          | Bin 0 -> 2514 bytes
+ sprites1/gear_3/left.png          | Bin 0 -> 2621 bytes
+ sprites1/gear_3/right.png         | Bin 0 -> 2670 bytes
+ sprites1/gear_3/up.png            | Bin 0 -> 2591 bytes
+ sprites1/gear_4/down.png          | Bin 0 -> 3524 bytes
+ sprites1/gear_4/left.png          | Bin 0 -> 3343 bytes
+ sprites1/gear_4/right.png         | Bin 0 -> 3339 bytes
+ sprites1/gear_4/up.png            | Bin 0 -> 3593 bytes
+ sprites1/gear_5/down.png          | Bin 0 -> 2501 bytes
+ sprites1/gear_5/left.png          | Bin 0 -> 2652 bytes
+ sprites1/gear_5/right.png         | Bin 0 -> 2590 bytes
+ sprites1/gear_5/up.png            | Bin 0 -> 2498 bytes
+ sprites1/gear_6/down.png          | Bin 0 -> 3461 bytes
+ sprites1/gear_6/left.png          | Bin 0 -> 3698 bytes
+ sprites1/gear_6/right.png         | Bin 0 -> 3634 bytes
+ sprites1/gear_6/up.png            | Bin 0 -> 3266 bytes
+ sprites1/gear_7/down.png          | Bin 0 -> 2591 bytes
+ sprites1/gear_7/left.png          | Bin 0 -> 2670 bytes
+ sprites1/gear_7/right.png         | Bin 0 -> 2621 bytes
+ sprites1/gear_7/up.png            | Bin 0 -> 2364 bytes
+ sprites1/gear_8/down.png          | Bin 0 -> 3593 bytes
+ sprites1/gear_8/left.png          | Bin 0 -> 3339 bytes
+ sprites1/gear_8/right.png         | Bin 0 -> 3343 bytes
+ sprites1/gear_8/up.png            | Bin 0 -> 3374 bytes
+ sprites1/gear_a/down.png          | Bin 0 -> 3564 bytes
+ sprites1/gear_a/left.png          | Bin 0 -> 3729 bytes
+ sprites1/gear_a/right.png         | Bin 0 -> 3804 bytes
+ sprites1/gear_a/up.png            | Bin 0 -> 3458 bytes
+ sprites1/gear_d/down.png          | Bin 0 -> 4146 bytes
+ sprites1/gear_d/left.png          | Bin 0 -> 4224 bytes
+ sprites1/gear_d/right.png         | Bin 0 -> 4056 bytes
+ sprites1/gear_d/up.png            | Bin 0 -> 4038 bytes
+ sprites1/handler.png              | Bin 0 -> 3544 bytes
+ sprites1/ladder.png               | Bin 0 -> 3887 bytes
+ sprites1/rope.png                 | Bin 0 -> 3710 bytes
+ sprites1/start_1.png              | Bin 0 -> 1464519 bytes
+ sprites1/start_2.png              | Bin 0 -> 666287 bytes
+ sprites1/start_3.png              | Bin 0 -> 128537 bytes
+ sprites1/start_4.png              | Bin 0 -> 765349 bytes
+ sprites1/steel.png                | Bin 0 -> 4955 bytes
+ sprites1/stick.png                | Bin 0 -> 2723 bytes
+ sprites1/workshop_key.png         | Bin 0 -> 2420 bytes
+ state_test.byte                   |   1 +
+ state_test.ml                     | 121 ++++++++++++++++++--------------------
+ 191 files changed, 108 insertions(+), 72 deletions(-)
+
+commit f1ef6ca111fd4099d6292eb7c07b9103df5a6aff
+Merge: 14bb3c3 6a77ef0
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:02:32 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 14bb3c3aa0927fa16feb650bcd4caebc8688f351
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 15:02:24 2018 -0400
+
+    keyloc img fix
+
+ init.ml                  |  44 ++++++++++++++++++++++----------------------
+ sprites2/cross.png       | Bin 0 -> 5944 bytes
+ sprites2/exit/closed.png | Bin 341 -> 4265 bytes
+ sprites2/exit/open.png   | Bin 642 -> 2951 bytes
+ 4 files changed, 22 insertions(+), 22 deletions(-)
+
+commit 6a77ef053933b89c399e55b0692bab9b6781bcdf
+Author: betsyfu <betsyaptx4869@gmail.com>
+Date:   Tue May 15 14:59:32 2018 -0400
+
+    Update README.md
+    
+    overview
+
+ README.md | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+commit aa038f09d61b240f39eeec3ca890566e158cfbf6
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 14:53:58 2018 -0400
+
+    add cutscene picture
+
+ sprites2/end.png.jpg | Bin 0 -> 326661 bytes
+ sprites2/start_1.png | Bin 0 -> 1464519 bytes
+ sprites2/start_2.png | Bin 0 -> 666287 bytes
+ sprites2/start_3.png | Bin 0 -> 128537 bytes
+ sprites2/start_4.png | Bin 0 -> 765349 bytes
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ac0e696086b6340d0012f59d47c329d025bc6faf
+Merge: 4fe8d10 b0a583b
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 14:47:52 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 4fe8d108136f2d2b4bab7a2dd99ffff619e163df
+Merge: cb1a9e2 cb6923d
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 14:47:16 2018 -0400
+
+    add script for cutscene
+
+commit b0a583b800dd16a3448f3dfce325481003c2466b
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:46:52 2018 -0400
+
+    cylinders
+
+ sprites2/cylinder_1.png            | Bin 0 -> 1985 bytes
+ sprites2/cylinder_11.png           | Bin 0 -> 5653 bytes
+ sprites2/cylinder_12.png           | Bin 0 -> 4426 bytes
+ sprites2/cylinder_13.png           | Bin 0 -> 5171 bytes
+ sprites2/cylinder_14.png           | Bin 0 -> 4940 bytes
+ sprites2/cylinder_15.png           | Bin 0 -> 2789 bytes
+ sprites2/cylinder_16.png           | Bin 0 -> 4547 bytes
+ sprites2/cylinder_17.png           | Bin 0 -> 4438 bytes
+ sprites2/cylinder_18.png           | Bin 0 -> 4320 bytes
+ sprites2/cylinder_19.png           | Bin 0 -> 5049 bytes
+ sprites2/cylinder_2.png            | Bin 0 -> 4509 bytes
+ sprites2/cylinder_20.png           | Bin 0 -> 5505 bytes
+ sprites2/cylinder_21.png           | Bin 0 -> 5279 bytes
+ sprites2/cylinder_3.png            | Bin 0 -> 4054 bytes
+ sprites2/cylinder_4.png            | Bin 0 -> 4064 bytes
+ sprites2/cylinder_5.png            | Bin 0 -> 3813 bytes
+ sprites2/cylinder_6.png            | Bin 0 -> 3827 bytes
+ sprites2/cylinder_7.png            | Bin 0 -> 1805 bytes
+ sprites2/cylinder_8.png            | Bin 0 -> 3379 bytes
+ sprites2/cylinder_9.png            | Bin 0 -> 6318 bytes
+ sprites3/black.png                 | Bin 233 -> 0 bytes
+ sprites3/blue_bookshelf.png        | Bin 3338 -> 0 bytes
+ sprites3/book.png                  | Bin 3890 -> 0 bytes
+ sprites3/clocktower_key.png        | Bin 2435 -> 0 bytes
+ sprites3/debris.png                | Bin 1504 -> 0 bytes
+ sprites3/desk_bottom.png           | Bin 3936 -> 0 bytes
+ sprites3/desk_top.png              | Bin 3122 -> 0 bytes
+ sprites3/empty.png                 | Bin 4991 -> 0 bytes
+ sprites3/gear_a_1.png              | Bin 3458 -> 0 bytes
+ sprites3/gear_a_2.png              | Bin 3804 -> 0 bytes
+ sprites3/gear_a_3.png              | Bin 3564 -> 0 bytes
+ sprites3/gear_a_4.png              | Bin 3729 -> 0 bytes
+ sprites3/gear_d_1.png              | Bin 3458 -> 0 bytes
+ sprites3/gear_d_2.png              | Bin 3804 -> 0 bytes
+ sprites3/gear_d_3.png              | Bin 3564 -> 0 bytes
+ sprites3/gear_d_4.png              | Bin 3729 -> 0 bytes
+ sprites3/hall_handler_key copy.png | Bin 2324 -> 0 bytes
+ sprites3/handler_key.jpg           | Bin 1705 -> 0 bytes
+ sprites3/invempty.png              | Bin 575 -> 0 bytes
+ sprites3/ladder.png                | Bin 2897 -> 0 bytes
+ sprites3/larrow.png                | Bin 1596 -> 0 bytes
+ sprites3/opening.png               | Bin 1263821 -> 0 bytes
+ sprites3/player1/down.png          | Bin 1638 -> 0 bytes
+ sprites3/player1/left.png          | Bin 1651 -> 0 bytes
+ sprites3/player1/right.png         | Bin 1635 -> 0 bytes
+ sprites3/player1/up.png            | Bin 1439 -> 0 bytes
+ sprites3/player2/down.png          | Bin 1847 -> 0 bytes
+ sprites3/player2/left.png          | Bin 1874 -> 0 bytes
+ sprites3/player2/right.png         | Bin 1881 -> 0 bytes
+ sprites3/player2/up.png            | Bin 1551 -> 0 bytes
+ sprites3/rarrow.png                | Bin 1620 -> 0 bytes
+ sprites3/red_bookshelf.png         | Bin 3931 -> 0 bytes
+ sprites3/rope.png                  | Bin 1965 -> 0 bytes
+ sprites3/teeth.png                 | Bin 2032 -> 0 bytes
+ sprites3/transparent.png           | Bin 3337 -> 0 bytes
+ sprites3/turbine.png               | Bin 2911 -> 0 bytes
+ sprites3/turbine_bottomleft.png    | Bin 4333 -> 0 bytes
+ sprites3/turbine_bottomright.png   | Bin 4307 -> 0 bytes
+ sprites3/turbine_topleft.png       | Bin 4377 -> 0 bytes
+ sprites3/turbine_topright.png      | Bin 4281 -> 0 bytes
+ sprites3/wood.png                  | Bin 4477 -> 0 bytes
+ sprites3/workshop_desk_bottom.png  | Bin 3262 -> 0 bytes
+ sprites3/workshop_desk_top.png     | Bin 3953 -> 0 bytes
+ sprites3/workshop_key.png          | Bin 1512 -> 0 bytes
+ 64 files changed, 0 insertions(+), 0 deletions(-)
+
+commit cb1a9e2dce12b1a3824e7a1edf5846e081a6bb65
+Merge: d5de326 5c22bc4
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 14:44:20 2018 -0400
+
+    add script for cutscene
+
+commit cb6923d1d2781ace4bc106413ec4a265968ad558
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:39:25 2018 -0400
+
+    id changes
+
+ init.ml | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+
+commit 5c22bc43967bd9f6779687b572ddcf72c67d4b7e
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:38:38 2018 -0400
+
+    id changes
+
+ fake.txt                                           |   0
+ in.txt                                             |   1 -
+ init.ml                                            |  64 ++++++++++-----------
+ one_log.json                                       |   9 ---
+ out.txt                                            |   0
+ sprites/opening.png                                | Bin 1263821 -> 1161559 bytes
+ sprites2/{exit_closed.png => exit/closed.png}      | Bin
+ sprites2/{exit_open.png => exit/open.png}          | Bin
+ sprites2/{gear/gear_1_down.png => gear_1/down.png} | Bin
+ sprites2/{gear/gear_1_left.png => gear_1/left.png} | Bin
+ .../{gear/gear_1_right.png => gear_1/right.png}    | Bin
+ sprites2/{gear/gear_1_up.png => gear_1/up.png}     | Bin
+ sprites2/{gear/gear_2_down.png => gear_2/down.png} | Bin
+ sprites2/{gear/gear_2_left.png => gear_2/left.png} | Bin
+ .../{gear/gear_2_right.png => gear_2/right.png}    | Bin
+ sprites2/{gear/gear_2_up.png => gear_2/up.png}     | Bin
+ sprites2/{gear/gear_3_down.png => gear_3/down.png} | Bin
+ sprites2/{gear/gear_3_left.png => gear_3/left.png} | Bin
+ .../{gear/gear_3_right.png => gear_3/right.png}    | Bin
+ sprites2/{gear/gear_3_up.png => gear_3/up.png}     | Bin
+ sprites2/{gear/gear_4_down.png => gear_4/down.png} | Bin
+ sprites2/{gear/gear_4_left.png => gear_4/left.png} | Bin
+ .../{gear/gear_4_right.png => gear_4/right.png}    | Bin
+ sprites2/{gear/gear_4_up.png => gear_4/up.png}     | Bin
+ sprites2/{gear/gear_5_down.png => gear_5/down.png} | Bin
+ sprites2/{gear/gear_5_left.png => gear_5/left.png} | Bin
+ .../{gear/gear_5_right.png => gear_5/right.png}    | Bin
+ sprites2/{gear/gear_5_up.png => gear_5/up.png}     | Bin
+ sprites2/{gear/gear_6_down.png => gear_6/down.png} | Bin
+ sprites2/{gear/gear_6_left.png => gear_6/left.png} | Bin
+ .../{gear/gear_6_right.png => gear_6/right.png}    | Bin
+ sprites2/{gear/gear_6_up.png => gear_6/up.png}     | Bin
+ sprites2/{gear/gear_7_down.png => gear_7/down.png} | Bin
+ sprites2/{gear/gear_7_left.png => gear_7/left.png} | Bin
+ .../{gear/gear_7_right.png => gear_7/right.png}    | Bin
+ sprites2/{gear/gear_7_up.png => gear_7/up.png}     | Bin
+ sprites2/{gear/gear_8_down.png => gear_8/down.png} | Bin
+ sprites2/{gear/gear_8_left.png => gear_8/left.png} | Bin
+ .../{gear/gear_8_right.png => gear_8/right.png}    | Bin
+ sprites2/{gear/gear_8_up.png => gear_8/up.png}     | Bin
+ sprites2/gear_a/down.png                           | Bin 0 -> 3564 bytes
+ sprites2/gear_a/left.png                           | Bin 0 -> 3729 bytes
+ sprites2/gear_a/right.png                          | Bin 0 -> 3804 bytes
+ sprites2/gear_a/up.png                             | Bin 0 -> 3458 bytes
+ sprites2/gear_d/down.png                           | Bin 0 -> 4146 bytes
+ sprites2/gear_d/left.png                           | Bin 0 -> 4224 bytes
+ sprites2/gear_d/right.png                          | Bin 0 -> 4056 bytes
+ sprites2/gear_d/up.png                             | Bin 0 -> 4038 bytes
+ 48 files changed, 32 insertions(+), 42 deletions(-)
+
+commit d5de32608a44af21c2eed4bfdcd4fd153222ea5b
+Author: HeatherZheng <sz488@cornell.edu>
+Date:   Tue May 15 14:38:36 2018 -0400
+
+    add script for cutscene
+
+ init.ml | 47 ++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 44 insertions(+), 3 deletions(-)
+
+commit 87805b87988a182cdb2d5216e364ead63343b58c
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:14:26 2018 -0400
+
+    gear 3 * 3
+
+ init.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b05a5d1fe616f401484934a9757c06edaccc49aa
+Merge: cae19f2 37e9e5a
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:13:32 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit cae19f2331ae3ba267978483f0c730f68e419be1
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 14:13:21 2018 -0400
+
+    gear 3 * 3
+
+ init.ml                        |  50 ++++++++++++++++++++---------------------
+ sprites2/gear/gear_1_down.png  | Bin 0 -> 2603 bytes
+ sprites2/gear/gear_1_left.png  | Bin 0 -> 2549 bytes
+ sprites2/gear/gear_1_right.png | Bin 0 -> 2600 bytes
+ sprites2/gear/gear_1_up.png    | Bin 0 -> 2264 bytes
+ sprites2/gear/gear_2_down.png  | Bin 0 -> 3255 bytes
+ sprites2/gear/gear_2_left.png  | Bin 0 -> 3482 bytes
+ sprites2/gear/gear_2_right.png | Bin 0 -> 3542 bytes
+ sprites2/gear/gear_2_up.png    | Bin 0 -> 3081 bytes
+ sprites2/gear/gear_3_down.png  | Bin 0 -> 2514 bytes
+ sprites2/gear/gear_3_left.png  | Bin 0 -> 2621 bytes
+ sprites2/gear/gear_3_right.png | Bin 0 -> 2670 bytes
+ sprites2/gear/gear_3_up.png    | Bin 0 -> 2591 bytes
+ sprites2/gear/gear_4_down.png  | Bin 0 -> 3524 bytes
+ sprites2/gear/gear_4_left.png  | Bin 0 -> 3343 bytes
+ sprites2/gear/gear_4_right.png | Bin 0 -> 3339 bytes
+ sprites2/gear/gear_4_up.png    | Bin 0 -> 3593 bytes
+ sprites2/gear/gear_5_down.png  | Bin 0 -> 2501 bytes
+ sprites2/gear/gear_5_left.png  | Bin 0 -> 2652 bytes
+ sprites2/gear/gear_5_right.png | Bin 0 -> 2590 bytes
+ sprites2/gear/gear_5_up.png    | Bin 0 -> 2498 bytes
+ sprites2/gear/gear_6_down.png  | Bin 0 -> 3461 bytes
+ sprites2/gear/gear_6_left.png  | Bin 0 -> 3698 bytes
+ sprites2/gear/gear_6_right.png | Bin 0 -> 3634 bytes
+ sprites2/gear/gear_6_up.png    | Bin 0 -> 3266 bytes
+ sprites2/gear/gear_7_down.png  | Bin 0 -> 2591 bytes
+ sprites2/gear/gear_7_left.png  | Bin 0 -> 2670 bytes
+ sprites2/gear/gear_7_right.png | Bin 0 -> 2621 bytes
+ sprites2/gear/gear_7_up.png    | Bin 0 -> 2364 bytes
+ sprites2/gear/gear_8_down.png  | Bin 0 -> 3593 bytes
+ sprites2/gear/gear_8_left.png  | Bin 0 -> 3339 bytes
+ sprites2/gear/gear_8_right.png | Bin 0 -> 3343 bytes
+ sprites2/gear/gear_8_up.png    | Bin 0 -> 3374 bytes
+ 33 files changed, 25 insertions(+), 25 deletions(-)
+
+commit 37e9e5aec4a248f666cc64776689c85a1cee0e2e
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 14:12:32 2018 -0400
+
+    State bugfixes
+
+ Gui.ml               |   2 +-
+ sprites/invempty.png | Bin 0 -> 1139 bytes
+ sprites/larrow.png   | Bin 0 -> 1596 bytes
+ sprites/rarrow.png   | Bin 0 -> 1620 bytes
+ state.ml             |  30 +++++++++++++++++-------------
+ 5 files changed, 18 insertions(+), 14 deletions(-)
+
+commit eba31ed5a648839a5716280d711b2ed7fc38b421
+Merge: 8840ecb e2847ca
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 13:41:57 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit e2847ca124f32b3e96a4c08be37310be198f08c3
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 13:41:14 2018 -0400
+
+    blank
+
+ sprites2/blank.png | Bin 0 -> 1139 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 8840ecbdde59c423cac081578d173c921843c70d
+Merge: 0e12e74 85d8531
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 13:38:27 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 0e12e740909a2eac52826ff3747c815462df3187
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 13:38:25 2018 -0400
+
+    Add
+
+ init.ml                    |  70 ++++++++++++++++++++++-----------------------
+ parser_tests.ml            |   5 ++++
+ server.js                  |   1 +
+ server.ml                  |   2 +-
+ sprites/a.png              | Bin 0 -> 5667 bytes
+ sprites/b.png              | Bin 0 -> 5587 bytes
+ sprites/b_key.png          | Bin 0 -> 2628 bytes
+ sprites/book.png           | Bin 6792 -> 4385 bytes
+ sprites/c.png              | Bin 0 -> 5294 bytes
+ sprites/c_key.png          | Bin 0 -> 2211 bytes
+ sprites/clocktower_key.png | Bin 5867 -> 2817 bytes
+ sprites/d.png              | Bin 0 -> 5504 bytes
+ sprites/e.png              | Bin 0 -> 5493 bytes
+ sprites/e_key.png          | Bin 0 -> 2332 bytes
+ sprites/exit_closed.png    | Bin 0 -> 341 bytes
+ sprites/exit_open.png      | Bin 0 -> 642 bytes
+ sprites/handler.png        | Bin 0 -> 3544 bytes
+ sprites/ladder.png         | Bin 5129 -> 3887 bytes
+ sprites/player1_back.png   | Bin 5415 -> 0 bytes
+ sprites/player1_front.png  | Bin 5727 -> 0 bytes
+ sprites/player1_left.png   | Bin 5742 -> 0 bytes
+ sprites/player1_right.png  | Bin 5702 -> 0 bytes
+ sprites/player2_back.png   | Bin 5555 -> 0 bytes
+ sprites/player2_front.png  | Bin 5774 -> 0 bytes
+ sprites/player2_left.png   | Bin 5797 -> 0 bytes
+ sprites/player2_right.png  | Bin 5732 -> 0 bytes
+ sprites/rope.png           | Bin 5960 -> 3710 bytes
+ sprites/steel.png          | Bin 0 -> 4955 bytes
+ sprites/stick.png          | Bin 0 -> 2723 bytes
+ sprites/workshop_key.png   | Bin 6055 -> 2420 bytes
+ state.ml                   |  42 +++++++++++++++------------
+ 31 files changed, 65 insertions(+), 55 deletions(-)
+
+commit 85d853153df15b86527caf49c6b72b7457bb8757
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 13:37:56 2018 -0400
+
+    some id fix
+
+ init.ml | 256 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 128 insertions(+), 128 deletions(-)
+
+commit 74b1835ee08dfcb589a2073afde5eef0b97581cc
+Merge: ae7e0ab 7525e32
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 12:51:11 2018 -0400
+
+    Fixed
+
+commit ae7e0abae7a0bfa8451ae5e9ee9087c2f45ff082
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 12:50:48 2018 -0400
+
+    Server cleaning
+
+ client.ml                                       |  49 ------------------------
+ client.mli                                      |  27 -------------
+ cutscene.mli                                    |  20 ++++++++++
+ server.js                                       |  14 +++++--
+ server.ml                                       |  36 +++++++++++++++--
+ sprites/black.png                               | Bin
+ sprites/blue_bookshelf.png                      | Bin 3338 -> 4626 bytes
+ sprites/book.png                                | Bin 3890 -> 6792 bytes
+ sprites/clocktower_key.png                      | Bin 2435 -> 5867 bytes
+ sprites/debris.png                              | Bin 1504 -> 5883 bytes
+ sprites/desk_bottom.png                         | Bin 3936 -> 5835 bytes
+ sprites/desk_top.png                            | Bin 3122 -> 5590 bytes
+ {sprites2 => sprites}/floor.png                 | Bin
+ {sprites2 => sprites}/gear_a/gear_a_1_down.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_1_left.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_1_right.png | Bin
+ {sprites2 => sprites}/gear_a/gear_a_1_up.png    | Bin
+ {sprites2 => sprites}/gear_a/gear_a_2_down.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_2_left.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_2_right.png | Bin
+ {sprites2 => sprites}/gear_a/gear_a_2_up.png    | Bin
+ {sprites2 => sprites}/gear_a/gear_a_3_down.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_3_left.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_3_right.png | Bin
+ {sprites2 => sprites}/gear_a/gear_a_3_up.png    | Bin
+ {sprites2 => sprites}/gear_a/gear_a_4_down.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_4_left.png  | Bin
+ {sprites2 => sprites}/gear_a/gear_a_4_right.png | Bin
+ {sprites2 => sprites}/gear_a/gear_a_4_up.png    | Bin
+ sprites/gear_a_1.png                            | Bin 3458 -> 5470 bytes
+ {sprites2 => sprites}/gear_d/gear_d_1_down.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_1_left.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_1_right.png | Bin
+ {sprites2 => sprites}/gear_d/gear_d_1_up.png    | Bin
+ {sprites2 => sprites}/gear_d/gear_d_2_down.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_2_left.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_2_right.png | Bin
+ {sprites2 => sprites}/gear_d/gear_d_2_up.png    | Bin
+ {sprites2 => sprites}/gear_d/gear_d_3_down.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_3_left.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_3_right.png | Bin
+ {sprites2 => sprites}/gear_d/gear_d_3_up.png    | Bin
+ {sprites2 => sprites}/gear_d/gear_d_4_down.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_4_left.png  | Bin
+ {sprites2 => sprites}/gear_d/gear_d_4_right.png | Bin
+ {sprites2 => sprites}/gear_d/gear_d_4_up.png    | Bin
+ {sprites2 => sprites}/hall_handler_key.png      | Bin
+ {sprites2 => sprites}/handler_key.png           | Bin
+ sprites/ladder.png                              | Bin 2897 -> 5129 bytes
+ sprites/opening.png                             | Bin 0 -> 1263821 bytes
+ {sprites2 => sprites}/player1_back.png          | Bin
+ {sprites2 => sprites}/player1_front.png         | Bin
+ {sprites2 => sprites}/player1_left.png          | Bin
+ {sprites2 => sprites}/player1_right.png         | Bin
+ {sprites2 => sprites}/player2_back.png          | Bin
+ {sprites2 => sprites}/player2_front.png         | Bin
+ {sprites2 => sprites}/player2_left.png          | Bin
+ {sprites2 => sprites}/player2_right.png         | Bin
+ sprites/red_bookshelf.png                       | Bin 3931 -> 5100 bytes
+ sprites/rope.png                                | Bin 1965 -> 5960 bytes
+ sprites/transparent.png                         | Bin
+ sprites/workshop_desk_bottom.png                | Bin 3262 -> 5703 bytes
+ sprites/workshop_desk_top.png                   | Bin 3953 -> 5877 bytes
+ sprites/workshop_key.png                        | Bin 1512 -> 6055 bytes
+ sprites2/blue_bookshelf.png                     | Bin 4626 -> 0 bytes
+ sprites2/book.png                               | Bin 6792 -> 0 bytes
+ sprites2/clocktower_key.png                     | Bin 5867 -> 0 bytes
+ sprites2/debris.png                             | Bin 5883 -> 0 bytes
+ sprites2/desk_bottom.png                        | Bin 5835 -> 0 bytes
+ sprites2/desk_top.png                           | Bin 5590 -> 0 bytes
+ sprites2/gear_a_1.png                           | Bin 5470 -> 0 bytes
+ sprites2/ladder.png                             | Bin 5129 -> 0 bytes
+ sprites2/red_bookshelf.png                      | Bin 5100 -> 0 bytes
+ sprites2/rope.png                               | Bin 5960 -> 0 bytes
+ sprites2/workshop_desk_bottom.png               | Bin 5703 -> 0 bytes
+ sprites2/workshop_desk_top.png                  | Bin 5877 -> 0 bytes
+ sprites2/workshop_key.png                       | Bin 6055 -> 0 bytes
+ {sprites2 => sprites3}/black.png                | Bin
+ sprites3/blue_bookshelf.png                     | Bin 0 -> 3338 bytes
+ sprites3/book.png                               | Bin 0 -> 3890 bytes
+ sprites3/clocktower_key.png                     | Bin 0 -> 2435 bytes
+ sprites3/debris.png                             | Bin 0 -> 1504 bytes
+ sprites3/desk_bottom.png                        | Bin 0 -> 3936 bytes
+ sprites3/desk_top.png                           | Bin 0 -> 3122 bytes
+ sprites3/empty.png                              | Bin 0 -> 4991 bytes
+ sprites/gear_d_1.png => sprites3/gear_a_1.png   | Bin
+ {sprites => sprites3}/gear_a_2.png              | Bin
+ {sprites => sprites3}/gear_a_3.png              | Bin
+ {sprites => sprites3}/gear_a_4.png              | Bin
+ sprites3/gear_d_1.png                           | Bin 0 -> 3458 bytes
+ {sprites => sprites3}/gear_d_2.png              | Bin
+ {sprites => sprites3}/gear_d_3.png              | Bin
+ {sprites => sprites3}/gear_d_4.png              | Bin
+ {sprites => sprites3}/hall_handler_key copy.png | Bin
+ {sprites => sprites3}/handler_key.jpg           | Bin
+ {sprites => sprites3}/invempty.png              | Bin
+ sprites3/ladder.png                             | Bin 0 -> 2897 bytes
+ {sprites => sprites3}/larrow.png                | Bin
+ sprites3/opening.png                            | Bin 0 -> 1263821 bytes
+ sprites3/player1/down.png                       | Bin 0 -> 1638 bytes
+ sprites3/player1/left.png                       | Bin 0 -> 1651 bytes
+ sprites3/player1/right.png                      | Bin 0 -> 1635 bytes
+ sprites3/player1/up.png                         | Bin 0 -> 1439 bytes
+ sprites3/player2/down.png                       | Bin 0 -> 1847 bytes
+ sprites3/player2/left.png                       | Bin 0 -> 1874 bytes
+ sprites3/player2/right.png                      | Bin 0 -> 1881 bytes
+ sprites3/player2/up.png                         | Bin 0 -> 1551 bytes
+ {sprites => sprites3}/rarrow.png                | Bin
+ sprites3/red_bookshelf.png                      | Bin 0 -> 3931 bytes
+ sprites3/rope.png                               | Bin 0 -> 1965 bytes
+ {sprites2 => sprites3}/teeth.png                | Bin
+ {sprites2 => sprites3}/transparent.png          | Bin
+ {sprites2 => sprites3}/turbine.png              | Bin
+ {sprites2 => sprites3}/turbine_bottomleft.png   | Bin
+ {sprites2 => sprites3}/turbine_bottomright.png  | Bin
+ {sprites2 => sprites3}/turbine_topleft.png      | Bin
+ {sprites2 => sprites3}/turbine_topright.png     | Bin
+ {sprites2 => sprites3}/wood.png                 | Bin
+ sprites3/workshop_desk_bottom.png               | Bin 0 -> 3262 bytes
+ sprites3/workshop_desk_top.png                  | Bin 0 -> 3953 bytes
+ sprites3/workshop_key.png                       | Bin 0 -> 1512 bytes
+ 121 files changed, 62 insertions(+), 84 deletions(-)
+
+commit 7525e32b6596edfae3d73eb2865617a02ea1fca0
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 12:31:31 2018 -0400
+
+    transparent bg
+
+ sprites2/b_key.png            | Bin 5513 -> 2628 bytes
+ sprites2/book.png             | Bin 6792 -> 4385 bytes
+ sprites2/c_key.png            | Bin 5192 -> 2211 bytes
+ sprites2/clocktower_key.png   | Bin 5867 -> 2817 bytes
+ sprites2/e_key.png            | Bin 5403 -> 2332 bytes
+ sprites2/hall_handler_key.png | Bin 6235 -> 2730 bytes
+ sprites2/handler.png          | Bin 6709 -> 3544 bytes
+ sprites2/handler_key.png      | Bin 6112 -> 2903 bytes
+ sprites2/ladder.png           | Bin 5129 -> 3887 bytes
+ sprites2/rope.png             | Bin 5960 -> 3710 bytes
+ sprites2/steel.png            | Bin 6356 -> 4955 bytes
+ sprites2/stick.png            | Bin 6272 -> 2723 bytes
+ sprites2/turbine.png          | Bin 4307 -> 2911 bytes
+ sprites2/workshop_key.png     | Bin 6055 -> 2420 bytes
+ 14 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 946c956679e4690921282c28a3798dfa8b109dca
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 12:00:14 2018 -0400
+
+    more img
+
+ sprites2/exit_closed.png | Bin 0 -> 341 bytes
+ sprites2/exit_open.png   | Bin 0 -> 642 bytes
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 8fe15a916e52eea9a75e57224539ab4b42b864e8
+Merge: 26e16bd fc84cf0
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 11:56:35 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 26e16bdef6e47d33d0a9e760027788c4dbf79f7b
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 11:56:23 2018 -0400
+
+    more img
+
+ init.ml              |  12 ++++++------
+ sprites2/a.png       | Bin 0 -> 5667 bytes
+ sprites2/b.png       | Bin 0 -> 5587 bytes
+ sprites2/b_key.png   | Bin 0 -> 5513 bytes
+ sprites2/c.png       | Bin 0 -> 5294 bytes
+ sprites2/c_key.png   | Bin 0 -> 5192 bytes
+ sprites2/d.png       | Bin 0 -> 5504 bytes
+ sprites2/e.png       | Bin 0 -> 5493 bytes
+ sprites2/e_key.png   | Bin 0 -> 5403 bytes
+ sprites2/handler.png | Bin 0 -> 6709 bytes
+ sprites2/steel.png   | Bin 0 -> 6356 bytes
+ sprites2/stick.png   | Bin 0 -> 6272 bytes
+ 12 files changed, 6 insertions(+), 6 deletions(-)
+
+commit fc84cf060c5fc72094f0196c826fc3e190e27e51
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 11:36:28 2018 -0400
+
+    Gitignore
+
+ .gitignore                         |    1 +
+ GUI.ml                             |  463 -------
+ GUITesting/_build/_digests         |    6 -
+ GUITesting/_build/_log             |   12 -
+ GUITesting/_build/myocamlbuild     |  Bin 2446820 -> 0 bytes
+ GUITesting/_build/myocamlbuild.cmi |  Bin 602 -> 0 bytes
+ GUITesting/_build/myocamlbuild.cmx |  Bin 627 -> 0 bytes
+ GUITesting/_build/myocamlbuild.ml  |    1 -
+ GUITesting/_build/myocamlbuild.o   |  Bin 1504 -> 0 bytes
+ GUITesting/_build/ocamlc.where     |    1 -
+ GUITesting/_build/test.cmi         |  Bin 1290 -> 0 bytes
+ GUITesting/_build/test.cmo         |  Bin 7783 -> 0 bytes
+ GUITesting/_build/test.d.byte      |  Bin 7556612 -> 0 bytes
+ GUITesting/_build/test.d.cmi       |  Bin 1290 -> 0 bytes
+ GUITesting/_build/test.d.cmo       |  Bin 379212 -> 0 bytes
+ GUITesting/_build/test.d.js        |  861 ------------
+ GUITesting/_build/test.ml          |   82 --
+ GUITesting/_build/test.ml.depends  |    1 -
+ GUITesting/_tags                   |    3 -
+ _build/Gui.ml => Gui.ml            |    0
+ _build/Gui.cmi                     |  Bin 13734 -> 0 bytes
+ _build/Gui.cmo                     |  Bin 29325 -> 0 bytes
+ _build/Gui.d.byte                  |  Bin 11002990 -> 0 bytes
+ _build/Gui.d.cmi                   |  Bin 13734 -> 0 bytes
+ _build/Gui.d.cmo                   |  Bin 1231022 -> 0 bytes
+ _build/Gui.d.js                    | 2617 ------------------------------------
+ _build/Gui.ml.depends              |    1 -
+ _build/_digests                    |   38 -
+ _build/_log                        |   18 -
+ _build/cutscene.cmi                |  Bin 779 -> 0 bytes
+ _build/cutscene.cmo                |  Bin 511 -> 0 bytes
+ _build/cutscene.d.cmo              |  Bin 3227 -> 0 bytes
+ _build/cutscene.ml                 |   13 -
+ _build/cutscene.ml.depends         |    1 -
+ _build/cutscene.mli                |   10 -
+ _build/cutscene.mli.depends        |    1 -
+ _build/helper.cmi                  |  Bin 824 -> 0 bytes
+ _build/helper.cmo                  |  Bin 680 -> 0 bytes
+ _build/helper.d.cmi                |  Bin 824 -> 0 bytes
+ _build/helper.d.cmo                |  Bin 5218 -> 0 bytes
+ _build/helper.ml                   |   53 -
+ _build/helper.ml.depends           |    1 -
+ _build/init.cmi                    |  Bin 5226 -> 0 bytes
+ _build/init.cmo                    |  Bin 29812 -> 0 bytes
+ _build/init.ml                     |  687 ----------
+ _build/init.ml.depends             |    1 -
+ _build/json_parser.cmi             |  Bin 1780 -> 0 bytes
+ _build/json_parser.cmo             |  Bin 16318 -> 0 bytes
+ _build/json_parser.d.cmo           |  Bin 66398 -> 0 bytes
+ _build/json_parser.ml              |  341 -----
+ _build/json_parser.ml.depends      |    1 -
+ _build/json_parser.mli             |   23 -
+ _build/json_parser.mli.depends     |    1 -
+ _build/myocamlbuild                |  Bin 2446820 -> 0 bytes
+ _build/myocamlbuild.cmi            |  Bin 602 -> 0 bytes
+ _build/myocamlbuild.cmx            |  Bin 627 -> 0 bytes
+ _build/myocamlbuild.ml             |    1 -
+ _build/myocamlbuild.o              |  Bin 1504 -> 0 bytes
+ _build/ocamlc.where                |    1 -
+ _build/server.byte                 |  Bin 538128 -> 0 bytes
+ _build/server.cmi                  |  Bin 1647 -> 0 bytes
+ _build/server.cmo                  |  Bin 2532 -> 0 bytes
+ _build/server.ml                   |   41 -
+ _build/server.ml.depends           |    1 -
+ _build/state.cmi                   |  Bin 5501 -> 0 bytes
+ _build/state.cmo                   |  Bin 12746 -> 0 bytes
+ _build/state.d.cmo                 |  Bin 61005 -> 0 bytes
+ _build/state.ml                    |  632 ---------
+ _build/state.ml.depends            |    1 -
+ _build/state.mli                   |  123 --
+ _build/state.mli.depends           |    1 -
+ _tags                              |    5 -
+ parser_tests.ml                    |    1 +
+ 73 files changed, 2 insertions(+), 6043 deletions(-)
+
+commit 5961379d8eb6368d9c09783c81c153a3bbeb096a
+Merge: 64ced33 e67a76c
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 11:33:37 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 64ced331994117c64f284d63c81fe2f513503292
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 11:33:32 2018 -0400
+
+    Comments
+
+ GUI.ml                                             |   24 +-
+ Makefile                                           |    1 +
+ _build/Gui.cmi                                     |  Bin 13734 -> 13734 bytes
+ _build/Gui.cmo                                     |  Bin 28742 -> 29325 bytes
+ _build/Gui.d.byte                                  |  Bin 10982078 -> 11002990 bytes
+ _build/Gui.d.cmi                                   |  Bin 13734 -> 13734 bytes
+ _build/Gui.d.cmo                                   |  Bin 1209857 -> 1231022 bytes
+ _build/Gui.d.js                                    | 1003 ++++++++++----------
+ _build/Gui.ml                                      |   24 +-
+ _build/_digests                                    |   50 +-
+ _build/init.cmi                                    |  Bin 2602 -> 5226 bytes
+ _build/init.cmo                                    |  Bin 24146 -> 29812 bytes
+ _build/init.ml                                     |  280 ++++--
+ _build/json_parser.cmi                             |  Bin 1780 -> 1780 bytes
+ _build/json_parser.cmo                             |  Bin 16318 -> 16318 bytes
+ _build/json_parser.d.cmo                           |  Bin 66398 -> 66398 bytes
+ _build/server.byte                                 |  Bin 534629 -> 538128 bytes
+ _build/server.cmi                                  |  Bin 1647 -> 1647 bytes
+ _build/server.cmo                                  |  Bin 2532 -> 2532 bytes
+ _build/server.ml                                   |    2 +-
+ _build/state.cmi                                   |  Bin 5479 -> 5501 bytes
+ _build/state.cmo                                   |  Bin 13156 -> 12746 bytes
+ _build/state.d.cmo                                 |  Bin 61320 -> 61005 bytes
+ _build/state.ml                                    |  256 +----
+ _build/state.ml.depends                            |    2 +-
+ _build/state.mli                                   |   15 +-
+ json_parser.ml                                     |  253 ++++-
+ json_parser.mli                                    |   50 +
+ parser_tests.ml                                    |    1 +
+ server.js                                          |   16 +-
+ server.ml                                          |    2 +-
+ servertest.js                                      |   42 -
+ servertest.ml                                      |   47 -
+ some.json                                          |   21 -
+ sprites/1.png                                      |  Bin 2619 -> 0 bytes
+ sprites/2.png                                      |  Bin 3089 -> 0 bytes
+ sprites/3.png                                      |  Bin 2681 -> 0 bytes
+ sprites/4.png                                      |  Bin 3381 -> 0 bytes
+ sprites/5.png                                      |  Bin 3760 -> 0 bytes
+ sprites/6.png                                      |  Bin 3376 -> 0 bytes
+ sprites/7.png                                      |  Bin 2688 -> 0 bytes
+ sprites/7F72BDC5-88AA-4521-8405-45CB95CAD560.png   |  Bin 1154977 -> 0 bytes
+ sprites/8.png                                      |  Bin 3011 -> 0 bytes
+ sprites/9.png                                      |  Bin 2690 -> 0 bytes
+ sprites/D60C74EA-8E17-4866-88AF-3893431A685A.png   |  Bin 1149244 -> 0 bytes
+ sprites/FF734D7E-27D4-4056-98D6-B90CB8F038B4.png   |  Bin 356160 -> 0 bytes
+ sprites/_DS_Store                                  |  Bin 10244 -> 0 bytes
+ sprites/black.png                                  |  Bin 0 -> 233 bytes
+ sprites/{blue shelves.png => blue_bookshelf.png}   |  Bin
+ sprites/{golden key.png => clocktower_key.png}     |  Bin
+ sprites/debris.png                                 |  Bin 0 -> 1504 bytes
+ sprites/desk1.png                                  |  Bin 3747 -> 0 bytes
+ sprites/desk2.png                                  |  Bin 3133 -> 0 bytes
+ sprites/desk_bottom.png                            |  Bin 0 -> 3936 bytes
+ sprites/desk_top.png                               |  Bin 0 -> 3122 bytes
+ sprites/door1.png                                  |  Bin 4265 -> 0 bytes
+ sprites/door2.png                                  |  Bin 2951 -> 0 bytes
+ sprites/ending.png                                 |  Bin 1263821 -> 0 bytes
+ sprites/gear 1.png                                 |  Bin 4694 -> 0 bytes
+ sprites/gear 2.png                                 |  Bin 4985 -> 0 bytes
+ sprites/{gear c.png => gear_a_1.png}               |  Bin
+ sprites/{gear d.png => gear_a_2.png}               |  Bin
+ sprites/{gear a.png => gear_a_3.png}               |  Bin
+ sprites/{gear b.png => gear_a_4.png}               |  Bin
+ sprites/gear_d_1.png                               |  Bin 0 -> 3458 bytes
+ sprites/gear_d_2.png                               |  Bin 0 -> 3804 bytes
+ sprites/gear_d_3.png                               |  Bin 0 -> 3564 bytes
+ sprites/gear_d_4.png                               |  Bin 0 -> 3729 bytes
+ sprites/hall_handler_key copy.png                  |  Bin 0 -> 2324 bytes
+ sprites/handler_key.jpg                            |  Bin 0 -> 1705 bytes
+ sprites/invempty.png                               |  Bin 0 -> 575 bytes
+ sprites/iron plate.png                             |  Bin 3462 -> 0 bytes
+ sprites/{ladder1.png => ladder.png}                |  Bin
+ sprites/ladder2.png                                |  Bin 2600 -> 0 bytes
+ sprites/{Left.png => larrow.png}                   |  Bin
+ sprites/music box.png                              |  Bin 57931 -> 0 bytes
+ sprites/opening.png                                |  Bin 1263821 -> 0 bytes
+ sprites/pic 5.png                                  |  Bin 136664 -> 0 bytes
+ sprites/pic1.png                                   |  Bin 225822 -> 0 bytes
+ sprites/pic2.png                                   |  Bin 320180 -> 0 bytes
+ sprites/pic3.png                                   |  Bin 241726 -> 0 bytes
+ sprites/pic6.png                                   |  Bin 156464 -> 0 bytes
+ sprites/piles of steels.png                        |  Bin 2888 -> 0 bytes
+ sprites/player2/{CHARACTER2_Front.png => down.png} |  Bin
+ sprites/player2/{CHARACTER2_Left.png => left.png}  |  Bin
+ .../player2/{CHARACTER2_Right.png => right.png}    |  Bin
+ sprites/player2/{CHARACTER2_Back.png => up.png}    |  Bin
+ sprites/{R.png => rarrow.png}                      |  Bin
+ sprites/{book shelves.png => red_bookshelf.png}    |  Bin
+ .../{iron bar black background.png => teeth.png}   |  Bin
+ sprites/transparent.png                            |  Bin 0 -> 3337 bytes
+ sprites/{turbine3.png => turbine.png}              |  Bin
+ sprites/{turbine4.png => turbine_bottomleft.png}   |  Bin
+ sprites/turbine_bottomright.png                    |  Bin 0 -> 4307 bytes
+ sprites/{turbine 1.png => turbine_topleft.png}     |  Bin
+ sprites/{turbine2.png => turbine_topright.png}     |  Bin
+ sprites/{floor2.png => wood.png}                   |  Bin
+ sprites/workshop desk 1.png                        |  Bin 3872 -> 0 bytes
+ sprites/workshop desk 2.png                        |  Bin 3220 -> 0 bytes
+ sprites/workshop_desk_bottom.png                   |  Bin 0 -> 3262 bytes
+ sprites/workshop_desk_top.png                      |  Bin 0 -> 3953 bytes
+ sprites/{silver key.png => workshop_key.png}       |  Bin
+ state.ml                                           |  256 +----
+ state.mli                                          |   15 +-
+ 104 files changed, 1145 insertions(+), 1215 deletions(-)
+
+commit e67a76c352fe73e840a62760980696f1d29e8835
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 11:15:08 2018 -0400
+
+    id name update & sprites2
+
+ init.ml                            | 276 ++++++++++++++++++-------------------
+ sprites2/black.png                 | Bin 0 -> 233 bytes
+ sprites2/blue_bookshelf.png        | Bin 0 -> 4626 bytes
+ sprites2/book.png                  | Bin 0 -> 6792 bytes
+ sprites2/clocktower_key.png        | Bin 0 -> 5867 bytes
+ sprites2/debris.png                | Bin 0 -> 5883 bytes
+ sprites2/desk_bottom.png           | Bin 0 -> 5835 bytes
+ sprites2/desk_top.png              | Bin 0 -> 5590 bytes
+ sprites2/floor.png                 | Bin 0 -> 4991 bytes
+ sprites2/gear_a/gear_a_1_down.png  | Bin 0 -> 5521 bytes
+ sprites2/gear_a/gear_a_1_left.png  | Bin 0 -> 5750 bytes
+ sprites2/gear_a/gear_a_1_right.png | Bin 0 -> 5639 bytes
+ sprites2/gear_a/gear_a_1_up.png    | Bin 0 -> 5470 bytes
+ sprites2/gear_a/gear_a_2_down.png  | Bin 0 -> 5521 bytes
+ sprites2/gear_a/gear_a_2_left.png  | Bin 0 -> 5750 bytes
+ sprites2/gear_a/gear_a_2_right.png | Bin 0 -> 5639 bytes
+ sprites2/gear_a/gear_a_2_up.png    | Bin 0 -> 5470 bytes
+ sprites2/gear_a/gear_a_3_down.png  | Bin 0 -> 5521 bytes
+ sprites2/gear_a/gear_a_3_left.png  | Bin 0 -> 5750 bytes
+ sprites2/gear_a/gear_a_3_right.png | Bin 0 -> 5639 bytes
+ sprites2/gear_a/gear_a_3_up.png    | Bin 0 -> 5470 bytes
+ sprites2/gear_a/gear_a_4_down.png  | Bin 0 -> 5521 bytes
+ sprites2/gear_a/gear_a_4_left.png  | Bin 0 -> 5750 bytes
+ sprites2/gear_a/gear_a_4_right.png | Bin 0 -> 5639 bytes
+ sprites2/gear_a/gear_a_4_up.png    | Bin 0 -> 5470 bytes
+ sprites2/gear_a_1.png              | Bin 0 -> 5470 bytes
+ sprites2/gear_d/gear_d_1_down.png  | Bin 0 -> 5670 bytes
+ sprites2/gear_d/gear_d_1_left.png  | Bin 0 -> 5890 bytes
+ sprites2/gear_d/gear_d_1_right.png | Bin 0 -> 5789 bytes
+ sprites2/gear_d/gear_d_1_up.png    | Bin 0 -> 5643 bytes
+ sprites2/gear_d/gear_d_2_down.png  | Bin 0 -> 5670 bytes
+ sprites2/gear_d/gear_d_2_left.png  | Bin 0 -> 5890 bytes
+ sprites2/gear_d/gear_d_2_right.png | Bin 0 -> 5789 bytes
+ sprites2/gear_d/gear_d_2_up.png    | Bin 0 -> 5643 bytes
+ sprites2/gear_d/gear_d_3_down.png  | Bin 0 -> 5670 bytes
+ sprites2/gear_d/gear_d_3_left.png  | Bin 0 -> 5890 bytes
+ sprites2/gear_d/gear_d_3_right.png | Bin 0 -> 5789 bytes
+ sprites2/gear_d/gear_d_3_up.png    | Bin 0 -> 5643 bytes
+ sprites2/gear_d/gear_d_4_down.png  | Bin 0 -> 5670 bytes
+ sprites2/gear_d/gear_d_4_left.png  | Bin 0 -> 5890 bytes
+ sprites2/gear_d/gear_d_4_right.png | Bin 0 -> 5789 bytes
+ sprites2/gear_d/gear_d_4_up.png    | Bin 0 -> 5643 bytes
+ sprites2/hall_handler_key.png      | Bin 0 -> 6235 bytes
+ sprites2/handler_key.png           | Bin 0 -> 6112 bytes
+ sprites2/ladder.png                | Bin 0 -> 5129 bytes
+ sprites2/player1_back.png          | Bin 0 -> 5415 bytes
+ sprites2/player1_front.png         | Bin 0 -> 5727 bytes
+ sprites2/player1_left.png          | Bin 0 -> 5742 bytes
+ sprites2/player1_right.png         | Bin 0 -> 5702 bytes
+ sprites2/player2_back.png          | Bin 0 -> 5555 bytes
+ sprites2/player2_front.png         | Bin 0 -> 5774 bytes
+ sprites2/player2_left.png          | Bin 0 -> 5797 bytes
+ sprites2/player2_right.png         | Bin 0 -> 5732 bytes
+ sprites2/red_bookshelf.png         | Bin 0 -> 5100 bytes
+ sprites2/rope.png                  | Bin 0 -> 5960 bytes
+ sprites2/teeth.png                 | Bin 0 -> 2032 bytes
+ sprites2/transparent.png           | Bin 0 -> 3337 bytes
+ sprites2/turbine.png               | Bin 0 -> 4307 bytes
+ sprites2/turbine_bottomleft.png    | Bin 0 -> 4333 bytes
+ sprites2/turbine_bottomright.png   | Bin 0 -> 4307 bytes
+ sprites2/turbine_topleft.png       | Bin 0 -> 4377 bytes
+ sprites2/turbine_topright.png      | Bin 0 -> 4281 bytes
+ sprites2/wood.png                  | Bin 0 -> 4477 bytes
+ sprites2/workshop_desk_bottom.png  | Bin 0 -> 5703 bytes
+ sprites2/workshop_desk_top.png     | Bin 0 -> 5877 bytes
+ sprites2/workshop_key.png          | Bin 0 -> 6055 bytes
+ 66 files changed, 138 insertions(+), 138 deletions(-)
+
+commit e20ebefa757a0966d6f561245c4580964c105373
+Merge: a34d359 9f59377
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 01:32:39 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit a34d3592379f451a3883305aa0f408f9fa422d26
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 15 01:32:17 2018 -0400
+
+    I'm a monster
+
+ .gitignore                                       |    1 +
+ GUI.ml                                           |    4 +-
+ _build/Gui.cmi                                   |  Bin 13732 -> 13734 bytes
+ _build/Gui.cmo                                   |  Bin 28628 -> 28742 bytes
+ _build/Gui.d.byte                                |  Bin 10983900 -> 10982078 bytes
+ _build/Gui.d.cmi                                 |  Bin 13732 -> 13734 bytes
+ _build/Gui.d.cmo                                 |  Bin 1209368 -> 1209857 bytes
+ _build/Gui.d.js                                  | 2639 +++++++++++-----------
+ _build/Gui.ml                                    |    4 +-
+ _build/_digests                                  |   22 +-
+ _build/_log                                      |   30 +-
+ _build/json_parser.cmo                           |  Bin 17841 -> 16318 bytes
+ _build/json_parser.d.cmo                         |  Bin 68868 -> 66398 bytes
+ _build/json_parser.ml                            |  632 +++---
+ _build/json_parser.ml.depends                    |    2 +-
+ _build/server.byte                               |  Bin 535957 -> 534629 bytes
+ json_parser.ml                                   |  632 +++---
+ sprites/1.png                                    |  Bin 0 -> 2619 bytes
+ sprites/2.png                                    |  Bin 0 -> 3089 bytes
+ sprites/3.png                                    |  Bin 0 -> 2681 bytes
+ sprites/4.png                                    |  Bin 0 -> 3381 bytes
+ sprites/5.png                                    |  Bin 0 -> 3760 bytes
+ sprites/6.png                                    |  Bin 0 -> 3376 bytes
+ sprites/7.png                                    |  Bin 0 -> 2688 bytes
+ sprites/7F72BDC5-88AA-4521-8405-45CB95CAD560.png |  Bin 0 -> 1154977 bytes
+ sprites/8.png                                    |  Bin 0 -> 3011 bytes
+ sprites/9.png                                    |  Bin 0 -> 2690 bytes
+ sprites/D60C74EA-8E17-4866-88AF-3893431A685A.png |  Bin 0 -> 1149244 bytes
+ sprites/FF734D7E-27D4-4056-98D6-B90CB8F038B4.png |  Bin 0 -> 356160 bytes
+ sprites/Left.png                                 |  Bin 0 -> 1596 bytes
+ sprites/R.png                                    |  Bin 0 -> 1620 bytes
+ sprites/_DS_Store                                |  Bin 0 -> 10244 bytes
+ sprites/blue shelves.png                         |  Bin 0 -> 3338 bytes
+ sprites/book shelves.png                         |  Bin 0 -> 3931 bytes
+ sprites/book.png                                 |  Bin 0 -> 3890 bytes
+ sprites/desk1.png                                |  Bin 0 -> 3747 bytes
+ sprites/desk2.png                                |  Bin 0 -> 3133 bytes
+ sprites/door1.png                                |  Bin 0 -> 4265 bytes
+ sprites/door2.png                                |  Bin 0 -> 2951 bytes
+ sprites/empty.png                                |  Bin 164 -> 4991 bytes
+ sprites/ending.png                               |  Bin 0 -> 1263821 bytes
+ sprites/floor2.png                               |  Bin 0 -> 4477 bytes
+ sprites/gear 1.png                               |  Bin 0 -> 4694 bytes
+ sprites/gear 2.png                               |  Bin 0 -> 4985 bytes
+ sprites/gear a.png                               |  Bin 0 -> 3564 bytes
+ sprites/gear b.png                               |  Bin 0 -> 3729 bytes
+ sprites/gear c.png                               |  Bin 0 -> 3458 bytes
+ sprites/gear d.png                               |  Bin 0 -> 3804 bytes
+ sprites/golden key.png                           |  Bin 0 -> 2435 bytes
+ sprites/iron bar black background.png            |  Bin 0 -> 2032 bytes
+ sprites/iron plate.png                           |  Bin 0 -> 3462 bytes
+ sprites/ladder1.png                              |  Bin 0 -> 2897 bytes
+ sprites/ladder2.png                              |  Bin 0 -> 2600 bytes
+ sprites/music box.png                            |  Bin 0 -> 57931 bytes
+ sprites/pic 5.png                                |  Bin 0 -> 136664 bytes
+ sprites/pic1.png                                 |  Bin 0 -> 225822 bytes
+ sprites/pic2.png                                 |  Bin 0 -> 320180 bytes
+ sprites/pic3.png                                 |  Bin 0 -> 241726 bytes
+ sprites/pic6.png                                 |  Bin 0 -> 156464 bytes
+ sprites/piles of steels.png                      |  Bin 0 -> 2888 bytes
+ sprites/{CHARACTER1.png => player1/down.png}     |  Bin
+ sprites/player1/left.png                         |  Bin 0 -> 1651 bytes
+ sprites/player1/right.png                        |  Bin 0 -> 1635 bytes
+ sprites/player1/up.png                           |  Bin 0 -> 1439 bytes
+ sprites/player2/CHARACTER2_Back.png              |  Bin 0 -> 1551 bytes
+ sprites/player2/CHARACTER2_Front.png             |  Bin 0 -> 1847 bytes
+ sprites/player2/CHARACTER2_Left.png              |  Bin 0 -> 1874 bytes
+ sprites/player2/CHARACTER2_Right.png             |  Bin 0 -> 1881 bytes
+ sprites/rope.png                                 |  Bin 0 -> 1965 bytes
+ sprites/silver key.png                           |  Bin 0 -> 1512 bytes
+ sprites/turbine 1.png                            |  Bin 0 -> 4377 bytes
+ sprites/turbine2.png                             |  Bin 0 -> 4281 bytes
+ sprites/turbine3.png                             |  Bin 0 -> 4307 bytes
+ sprites/turbine4.png                             |  Bin 0 -> 4333 bytes
+ sprites/workshop desk 1.png                      |  Bin 0 -> 3872 bytes
+ sprites/workshop desk 2.png                      |  Bin 0 -> 3220 bytes
+ sprites1/CHARACTER1.png                          |  Bin 0 -> 1638 bytes
+ sprites/invempty.png => sprites1/empty.png       |  Bin
+ {sprites => sprites1}/exit_closed.png            |  Bin
+ {sprites => sprites1}/exit_open.png              |  Bin
+ sprites1/invempty.png                            |  Bin 0 -> 164 bytes
+ {sprites => sprites1}/item1.png                  |  Bin
+ {sprites => sprites1}/item2.png                  |  Bin
+ {sprites => sprites1}/item3.png                  |  Bin
+ {sprites => sprites1}/item4.png                  |  Bin
+ {sprites => sprites1}/item5.png                  |  Bin
+ {sprites => sprites1}/kl1_false.png              |  Bin
+ {sprites => sprites1}/kl1_true.png               |  Bin
+ {sprites => sprites1}/larrow.png                 |  Bin
+ {sprites => sprites1}/mov1.png                   |  Bin
+ sprites1/opening.png                             |  Bin 0 -> 1263821 bytes
+ {sprites => sprites1}/player1.png                |  Bin
+ {sprites => sprites1}/player2.png                |  Bin
+ {sprites => sprites1}/rarrow.png                 |  Bin
+ {sprites => sprites1}/rotate_down.png            |  Bin
+ {sprites => sprites1}/rotate_left.png            |  Bin
+ {sprites => sprites1}/rotate_right.png           |  Bin
+ {sprites => sprites1}/rotate_up.png              |  Bin
+ {sprites => sprites1}/test.png                   |  Bin
+ {sprites => sprites1}/wall.png                   |  Bin
+ 100 files changed, 1951 insertions(+), 2015 deletions(-)
+
+commit 9f5937776d6130d10c95a9ffcde79fca908477ad
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 15 00:28:37 2018 -0400
+
+    map update
+
+ init.ml | 280 +++++++++++++++++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 196 insertions(+), 84 deletions(-)
+
+commit 10ab6a009d998a7d796398be236792ce53f20913
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 22:28:14 2018 -0400
+
+    Rebuild
+
+ .gitignore                         |    2 -
+ GUITesting/_build/_digests         |    6 +
+ GUITesting/_build/_log             |   12 +
+ GUITesting/_build/myocamlbuild     |  Bin 0 -> 2446820 bytes
+ GUITesting/_build/myocamlbuild.cmi |  Bin 0 -> 602 bytes
+ GUITesting/_build/myocamlbuild.cmx |  Bin 0 -> 627 bytes
+ GUITesting/_build/myocamlbuild.ml  |    1 +
+ GUITesting/_build/myocamlbuild.o   |  Bin 0 -> 1504 bytes
+ GUITesting/_build/ocamlc.where     |    1 +
+ GUITesting/_build/test.cmi         |  Bin 0 -> 1290 bytes
+ GUITesting/_build/test.cmo         |  Bin 0 -> 7783 bytes
+ GUITesting/_build/test.d.byte      |  Bin 0 -> 7556612 bytes
+ GUITesting/_build/test.d.cmi       |  Bin 0 -> 1290 bytes
+ GUITesting/_build/test.d.cmo       |  Bin 0 -> 379212 bytes
+ GUITesting/_build/test.d.js        |  861 ++++++++++++
+ GUITesting/_build/test.ml          |   82 ++
+ GUITesting/_build/test.ml.depends  |    1 +
+ GUITesting/_tags                   |    3 +
+ _build/Gui.cmi                     |  Bin 0 -> 13732 bytes
+ _build/Gui.cmo                     |  Bin 0 -> 28628 bytes
+ _build/Gui.d.byte                  |  Bin 0 -> 10983900 bytes
+ _build/Gui.d.cmi                   |  Bin 0 -> 13732 bytes
+ _build/Gui.d.cmo                   |  Bin 0 -> 1209368 bytes
+ _build/Gui.d.js                    | 2633 ++++++++++++++++++++++++++++++++++++
+ _build/Gui.ml                      |  455 +++++++
+ _build/Gui.ml.depends              |    1 +
+ _build/_digests                    |   38 +
+ _build/_log                        |   40 +
+ _build/cutscene.cmi                |  Bin 0 -> 779 bytes
+ _build/cutscene.cmo                |  Bin 0 -> 511 bytes
+ _build/cutscene.d.cmo              |  Bin 0 -> 3227 bytes
+ _build/cutscene.ml                 |   13 +
+ _build/cutscene.ml.depends         |    1 +
+ _build/cutscene.mli                |   10 +
+ _build/cutscene.mli.depends        |    1 +
+ _build/helper.cmi                  |  Bin 0 -> 824 bytes
+ _build/helper.cmo                  |  Bin 0 -> 680 bytes
+ _build/helper.d.cmi                |  Bin 0 -> 824 bytes
+ _build/helper.d.cmo                |  Bin 0 -> 5218 bytes
+ _build/helper.ml                   |   53 +
+ _build/helper.ml.depends           |    1 +
+ _build/init.cmi                    |  Bin 0 -> 2602 bytes
+ _build/init.cmo                    |  Bin 0 -> 24146 bytes
+ _build/init.ml                     |  575 ++++++++
+ _build/init.ml.depends             |    1 +
+ _build/json_parser.cmi             |  Bin 0 -> 1780 bytes
+ _build/json_parser.cmo             |  Bin 0 -> 17841 bytes
+ _build/json_parser.d.cmo           |  Bin 0 -> 68868 bytes
+ _build/json_parser.ml              |  353 +++++
+ _build/json_parser.ml.depends      |    1 +
+ _build/json_parser.mli             |   23 +
+ _build/json_parser.mli.depends     |    1 +
+ _build/myocamlbuild                |  Bin 0 -> 2446820 bytes
+ _build/myocamlbuild.cmi            |  Bin 0 -> 602 bytes
+ _build/myocamlbuild.cmx            |  Bin 0 -> 627 bytes
+ _build/myocamlbuild.ml             |    1 +
+ _build/myocamlbuild.o              |  Bin 0 -> 1504 bytes
+ _build/ocamlc.where                |    1 +
+ _build/server.byte                 |  Bin 0 -> 535957 bytes
+ _build/server.cmi                  |  Bin 0 -> 1647 bytes
+ _build/server.cmo                  |  Bin 0 -> 2532 bytes
+ _build/server.ml                   |   41 +
+ _build/server.ml.depends           |    1 +
+ _build/state.cmi                   |  Bin 0 -> 5479 bytes
+ _build/state.cmo                   |  Bin 0 -> 13156 bytes
+ _build/state.d.cmo                 |  Bin 0 -> 61320 bytes
+ _build/state.ml                    |  832 ++++++++++++
+ _build/state.ml.depends            |    1 +
+ _build/state.mli                   |  124 ++
+ _build/state.mli.depends           |    1 +
+ init.ml                            |    2 +-
+ server.js                          |    2 +
+ 72 files changed, 6172 insertions(+), 3 deletions(-)
+
+commit b81c5b26950f5814d6af03d572f6ca37ebb78ba8
+Merge: 94eb331 624a4f3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 22:06:43 2018 -0400
+
+    Merge
+
+commit 94eb331ac2183714f70a144707cb7545826671d9
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 22:06:04 2018 -0400
+
+    Built server functionality
+
+ GUI.ml          |  4 +--
+ Makefile        |  3 +-
+ clienttest.byte |  1 -
+ init.ml         | 24 ++--------------
+ init.mli        |  5 ----
+ server.ml       | 86 +++++++++++++++++++++++----------------------------------
+ server_simp.ml  | 30 --------------------
+ servertest.byte |  1 -
+ servertest.js   |  3 +-
+ 9 files changed, 43 insertions(+), 114 deletions(-)
+
+commit 624a4f32479c704ae63ab9cce2f50722d906c99a
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 21:41:49 2018 -0400
+
+    delete func
+
+ init.mli | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit ce0a80e55016f8310a1493e73ba041dd3c547299
+Merge: 4386d1b f54f6fe
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 21:41:31 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 4386d1beb1f0f2d18663e6cfc1a9bd811f9537b0
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 21:41:25 2018 -0400
+
+    Changed inventory to list
+
+ GUI.ml         | 39 ++++++++++++++++++++++++++++++---------
+ index.html     |  3 ++-
+ json_parser.ml | 14 ++++----------
+ server.js      |  5 +----
+ server.ml      |  4 ----
+ servertest.ml  |  2 +-
+ state.ml       | 29 +++++++++++++++--------------
+ state.mli      |  4 ++--
+ 8 files changed, 55 insertions(+), 45 deletions(-)
+
+commit aba597720f0a59f7ff40abf866bc9000ec9f20db
+Merge: 06510e9 ce0a80e
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 21:36:11 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 06510e93eb3f64311db9c1b56813761c0f4480a2
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 21:35:33 2018 -0400
+
+    change do' function
+
+ init.ml | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
+
+commit f54f6fefeba1089e4768c19a98eadb954008dc58
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 20:40:21 2018 -0400
+
+    second floor map
+
+ init.ml | 208 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 208 insertions(+)
+
+commit 5a1a3b9e9666cdc2f198a6ec0c67cac3d5bbf7f3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 20:27:24 2018 -0400
+
+    Stuff
+
+ json_parser.ml  | 9 +++++++++
+ json_parser.mli | 6 ++++++
+ server.js       | 4 ++--
+ 3 files changed, 17 insertions(+), 2 deletions(-)
+
+commit fc791498cff18cc6e089a7790d609b1eec3bc7bf
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 20:14:07 2018 -0400
+
+    input addr
+
+ server.ml      | 4 ----
+ server_simp.ml | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+commit b4793dca598b16f6f8e52658cd0dda353384f5af
+Merge: f30f496 d2d5edb
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 20:09:50 2018 -0400
+
+    Bugfixes
+
+commit f30f4960ebdb041d2b7b2cbfe26830bbb7fb99c4
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 20:07:45 2018 -0400
+
+    Stuff
+
+ GUI.ml              | 143 +++++++++++++++++++++++++++++++---------------------
+ index.html          |   6 +++
+ json_parser.ml      |  14 ++---
+ json_parser.mli     |   2 +-
+ server.js           |  46 +++++++++++++----
+ server.ml           |  16 ------
+ sprites/opening.png | Bin 0 -> 1263821 bytes
+ 7 files changed, 134 insertions(+), 93 deletions(-)
+
+commit d2d5edb58237c5d533c899d40aaf13c73ecb339f
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 19:39:51 2018 -0400
+
+    init update
+
+ init.ml        | 5 ++++-
+ server_simp.ml | 2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 12b704a5748f7078ab6acf23af7e73f994dd8a8a
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 18:31:00 2018 -0400
+
+    server simplify
+
+ init.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit bcc496dce201924dcab3c155ec99e120839e91f5
+Merge: 5f86b49 af1c490
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 18:18:42 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 5f86b4932f9e8071832a527e2a62ceacd3556ec7
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Mon May 14 18:18:09 2018 -0400
+
+    server simplify
+
+ init.ml        |  6 ++++++
+ init.mli       |  2 ++
+ server.ml      | 22 +++++-----------------
+ server_simp.ml | 30 ++++++++++++++++++++++++++++++
+ 4 files changed, 43 insertions(+), 17 deletions(-)
+
+commit af1c49060d2fb53e096b84dd3f3c83a592009bec
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 18:03:32 2018 -0400
+
+    parser done
+
+ json_parser.ml  | 12 +++++++++---
+ json_parser.mli |  2 +-
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+commit 71e62d24e03d721b10b0c1ef528105fa03c6b570
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 17:58:39 2018 -0400
+
+    json update
+
+ Makefile        |   2 +-
+ json_parser.ml  | 339 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ json_parser.mli |  10 +-
+ one_log.json    |   9 ++
+ 4 files changed, 348 insertions(+), 12 deletions(-)
+
+commit 457f03bf79ac723861ce3775df7dbdcf0ab2d347
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 16:11:07 2018 -0400
+
+    Rename
+
+ json.ml => json_parser.ml   | 0
+ json.mli => json_parser.mli | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 61e2840d754ff25b446cc12170070465e1ef2a78
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 16:09:25 2018 -0400
+
+    Still need to fix json
+
+ json.ml  | 179 +++------------------------------------------------------------
+ json.mli |   1 -
+ 2 files changed, 7 insertions(+), 173 deletions(-)
+
+commit acf0e0f7061dc9d06470c48c555500c73e4b3dd7
+Merge: 9e8dde0 a46408b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 16:07:49 2018 -0400
+
+    Need to fix json
+
+commit 9e8dde00678ec60f29782575b70595ae32cc3a48
+Merge: 1ffd87b 4ea3726
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 15:59:38 2018 -0400
+
+    Server stuff
+
+commit a46408ba5e2bfd0c9c4111900490de329d231970
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 15:58:53 2018 -0400
+
+    json.ml
+
+ Makefile          |   1 +
+ client.ml         |  35 +++++------
+ fake.txt          |  18 ------
+ in.txt            |   1 +
+ init.ml           |  33 +++++-----
+ init.mli          |   2 +-
+ json.ml           | 179 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ out.txt           |   0
+ server.ml         |  60 +++---------------
+ state.ml          | 164 -------------------------------------------------
+ state.mli         |   2 -
+ string_to_json.ml |  10 ---
+ 12 files changed, 223 insertions(+), 282 deletions(-)
+
+commit fa515e906d406b7344695f8878f8f91e8efda2d1
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 13:31:37 2018 -0400
+
+    server fix
+
+ in.txt  |  1 -
+ out.txt | 18 ------------------
+ 2 files changed, 19 deletions(-)
+
+commit cbdb07b992cbe0b6d397d66e78208abeba6ebada
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 13:31:14 2018 -0400
+
+    server fix
+
+ client.ml |  2 +-
+ fake.txt  | 18 ++++++++++++++++++
+ in.txt    |  1 +
+ out.txt   | 18 ++++++++++++++++++
+ server.ml |  8 ++++----
+ 5 files changed, 42 insertions(+), 5 deletions(-)
+
+commit d3bb5ba3ce2b8eff71c05ff65b202ff22bdd0f6b
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon May 14 13:22:33 2018 -0400
+
+    roommap update
+
+ init.ml | 93 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 75 insertions(+), 18 deletions(-)
+
+commit 1ffd87b1ae6d2b9836c590f0822c8038607f26dd
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon May 14 12:55:17 2018 -0400
+
+    Checkpoint
+
+ fake.txt                                           |    4 +
+ node_modules/async-limiter/.travis.yml             |    7 +
+ node_modules/async-limiter/LICENSE                 |    8 +
+ node_modules/async-limiter/coverage/coverage.json  |    1 +
+ .../coverage/lcov-report/async-throttle/index.html |   73 +
+ .../lcov-report/async-throttle/index.js.html       |  246 ++
+ .../async-limiter/coverage/lcov-report/base.css    |  182 ++
+ .../async-limiter/coverage/lcov-report/index.html  |   73 +
+ .../coverage/lcov-report/prettify.css              |    1 +
+ .../async-limiter/coverage/lcov-report/prettify.js |    1 +
+ .../coverage/lcov-report/sort-arrow-sprite.png     |  Bin 0 -> 209 bytes
+ .../async-limiter/coverage/lcov-report/sorter.js   |  156 ++
+ node_modules/async-limiter/coverage/lcov.info      |   74 +
+ node_modules/async-limiter/index.js                |   67 +
+ node_modules/async-limiter/package.json            |   69 +
+ node_modules/async-limiter/readme.md               |  132 +
+ node_modules/debug/.coveralls.yml                  |    1 +
+ node_modules/debug/.eslintrc                       |   11 +
+ node_modules/debug/.npmignore                      |    9 +
+ node_modules/debug/.travis.yml                     |   14 +
+ node_modules/debug/CHANGELOG.md                    |  362 +++
+ node_modules/debug/LICENSE                         |   19 +
+ node_modules/debug/Makefile                        |   50 +
+ node_modules/debug/README.md                       |  312 +++
+ node_modules/debug/component.json                  |   19 +
+ node_modules/debug/karma.conf.js                   |   70 +
+ node_modules/debug/node.js                         |    1 +
+ node_modules/debug/package.json                    |   88 +
+ node_modules/debug/src/browser.js                  |  185 ++
+ node_modules/debug/src/debug.js                    |  202 ++
+ node_modules/debug/src/index.js                    |   10 +
+ node_modules/debug/src/inspector-log.js            |   15 +
+ node_modules/debug/src/node.js                     |  248 ++
+ node_modules/is-typedarray/LICENSE.md              |   18 +
+ node_modules/is-typedarray/README.md               |   16 +
+ node_modules/is-typedarray/index.js                |   41 +
+ node_modules/is-typedarray/package.json            |   59 +
+ node_modules/is-typedarray/test.js                 |   34 +
+ node_modules/ms/index.js                           |  152 ++
+ node_modules/ms/license.md                         |   21 +
+ node_modules/ms/package.json                       |   69 +
+ node_modules/ms/readme.md                          |   51 +
+ node_modules/nan/CHANGELOG.md                      |  492 ++++
+ node_modules/nan/LICENSE.md                        |   13 +
+ node_modules/nan/README.md                         |  456 ++++
+ node_modules/nan/doc/asyncworker.md                |  146 ++
+ node_modules/nan/doc/buffers.md                    |   54 +
+ node_modules/nan/doc/callback.md                   |   76 +
+ node_modules/nan/doc/converters.md                 |   41 +
+ node_modules/nan/doc/errors.md                     |  226 ++
+ node_modules/nan/doc/json.md                       |   62 +
+ node_modules/nan/doc/maybe_types.md                |  583 +++++
+ node_modules/nan/doc/methods.md                    |  659 +++++
+ node_modules/nan/doc/new.md                        |  147 ++
+ node_modules/nan/doc/node_misc.md                  |  123 +
+ node_modules/nan/doc/object_wrappers.md            |  263 ++
+ node_modules/nan/doc/persistent.md                 |  295 +++
+ node_modules/nan/doc/scopes.md                     |   73 +
+ node_modules/nan/doc/script.md                     |   38 +
+ node_modules/nan/doc/string_bytes.md               |   62 +
+ node_modules/nan/doc/v8_internals.md               |  199 ++
+ node_modules/nan/doc/v8_misc.md                    |   85 +
+ node_modules/nan/include_dirs.js                   |    1 +
+ node_modules/nan/nan.h                             | 2761 ++++++++++++++++++++
+ node_modules/nan/nan_callbacks.h                   |   88 +
+ node_modules/nan/nan_callbacks_12_inl.h            |  512 ++++
+ node_modules/nan/nan_callbacks_pre_12_inl.h        |  520 ++++
+ node_modules/nan/nan_converters.h                  |   72 +
+ node_modules/nan/nan_converters_43_inl.h           |   48 +
+ node_modules/nan/nan_converters_pre_43_inl.h       |   42 +
+ node_modules/nan/nan_define_own_property_helper.h  |   29 +
+ node_modules/nan/nan_implementation_12_inl.h       |  399 +++
+ node_modules/nan/nan_implementation_pre_12_inl.h   |  263 ++
+ node_modules/nan/nan_json.h                        |  166 ++
+ node_modules/nan/nan_maybe_43_inl.h                |  369 +++
+ node_modules/nan/nan_maybe_pre_43_inl.h            |  316 +++
+ node_modules/nan/nan_new.h                         |  340 +++
+ node_modules/nan/nan_object_wrap.h                 |  155 ++
+ node_modules/nan/nan_persistent_12_inl.h           |  132 +
+ node_modules/nan/nan_persistent_pre_12_inl.h       |  242 ++
+ node_modules/nan/nan_private.h                     |   73 +
+ node_modules/nan/nan_string_bytes.h                |  305 +++
+ node_modules/nan/nan_typedarray_contents.h         |   90 +
+ node_modules/nan/nan_weak.h                        |  432 +++
+ node_modules/nan/package.json                      |   97 +
+ node_modules/nan/tools/1to2.js                     |  412 +++
+ node_modules/nan/tools/README.md                   |   14 +
+ node_modules/nan/tools/package.json                |   19 +
+ node_modules/typedarray-to-buffer/.airtap.yml      |   15 +
+ node_modules/typedarray-to-buffer/.travis.yml      |   11 +
+ node_modules/typedarray-to-buffer/LICENSE          |   21 +
+ node_modules/typedarray-to-buffer/README.md        |   85 +
+ node_modules/typedarray-to-buffer/index.js         |   25 +
+ node_modules/typedarray-to-buffer/package.json     |   75 +
+ node_modules/typedarray-to-buffer/test/basic.js    |   50 +
+ node_modules/websocket/.jshintrc                   |   88 +
+ node_modules/websocket/CHANGELOG.md                |  231 ++
+ node_modules/websocket/LICENSE                     |  177 ++
+ node_modules/websocket/Makefile                    |   11 +
+ node_modules/websocket/README.md                   |  273 ++
+ node_modules/websocket/binding.gyp                 |   18 +
+ node_modules/websocket/builderror.log              |   19 +
+ node_modules/websocket/gulpfile.js                 |   14 +
+ node_modules/websocket/index.js                    |    1 +
+ node_modules/websocket/lib/BufferUtil.fallback.js  |   52 +
+ node_modules/websocket/lib/BufferUtil.js           |   17 +
+ node_modules/websocket/lib/Deprecation.js          |   32 +
+ node_modules/websocket/lib/Validation.fallback.js  |   12 +
+ node_modules/websocket/lib/Validation.js           |   17 +
+ node_modules/websocket/lib/W3CWebSocket.js         |  257 ++
+ node_modules/websocket/lib/WebSocketClient.js      |  348 +++
+ node_modules/websocket/lib/WebSocketConnection.js  |  894 +++++++
+ node_modules/websocket/lib/WebSocketFrame.js       |  279 ++
+ node_modules/websocket/lib/WebSocketRequest.js     |  524 ++++
+ node_modules/websocket/lib/WebSocketRouter.js      |  157 ++
+ .../websocket/lib/WebSocketRouterRequest.js        |   54 +
+ node_modules/websocket/lib/WebSocketServer.js      |  245 ++
+ node_modules/websocket/lib/browser.js              |   42 +
+ node_modules/websocket/lib/utils.js                |   60 +
+ node_modules/websocket/lib/version.js              |    1 +
+ node_modules/websocket/lib/websocket.js            |   11 +
+ node_modules/websocket/package.json                |   95 +
+ node_modules/websocket/src/bufferutil.cc           |  121 +
+ node_modules/websocket/src/validation.cc           |  148 ++
+ node_modules/websocket/vendor/FastBufferList.js    |  193 ++
+ node_modules/ws/LICENSE                            |   21 +
+ node_modules/ws/README.md                          |  389 +++
+ node_modules/ws/index.js                           |    9 +
+ node_modules/ws/lib/buffer-util.js                 |   72 +
+ node_modules/ws/lib/constants.js                   |   10 +
+ node_modules/ws/lib/event-target.js                |  170 ++
+ node_modules/ws/lib/extension.js                   |  211 ++
+ node_modules/ws/lib/permessage-deflate.js          |  516 ++++
+ node_modules/ws/lib/receiver.js                    |  513 ++++
+ node_modules/ws/lib/sender.js                      |  401 +++
+ node_modules/ws/lib/validation.js                  |   29 +
+ node_modules/ws/lib/websocket-server.js            |  350 +++
+ node_modules/ws/lib/websocket.js                   |  821 ++++++
+ node_modules/ws/package.json                       |   79 +
+ node_modules/yaeti/.jscsrc                         |    6 +
+ node_modules/yaeti/.jshintrc                       |   27 +
+ node_modules/yaeti/.npmignore                      |    1 +
+ node_modules/yaeti/LICENSE                         |   21 +
+ node_modules/yaeti/README.md                       |   98 +
+ node_modules/yaeti/gulpfile.js                     |   23 +
+ node_modules/yaeti/index.js                        |    4 +
+ node_modules/yaeti/lib/Event.browser.js            |    5 +
+ node_modules/yaeti/lib/Event.js                    |   13 +
+ node_modules/yaeti/lib/EventTarget.js              |  119 +
+ node_modules/yaeti/package.json                    |   57 +
+ package-lock.json                                  |   66 +
+ server.js                                          |   12 +-
+ 152 files changed, 23873 insertions(+), 4 deletions(-)
+
+commit 4ea372659832cd1cde195d8272a38bb47f6d2ba5
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun May 13 18:54:25 2018 -0400
+
+    cleanup
+
+ fake.txt |  2 --
+ in.txt   |  1 -
+ log.json | 28 ----------------------------
+ out.txt  |  2 --
+ 4 files changed, 33 deletions(-)
+
+commit 8a0755ec5858905afc448ca3b259ef29e3f18622
+Merge: 16067ed 6e2e9d7
+Author: Orca <31905390+yilin-lu@users.noreply.github.com>
+Date:   Sun May 13 18:41:50 2018 -0400
+
+    Merge pull request #12 from yilin-lu/test
+    
+    Connection & Json methods
+
+commit 6e2e9d7865ba99b1d9765f3ac888861756bc3658
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun May 13 18:39:45 2018 -0400
+
+    log to string and back
+
+ init.ml           |  16 ++++++++-
+ some.json         |  21 ++++++++++++
+ state.ml          | 101 ++++++++++++++++++++++++++++--------------------------
+ string_to_json.ml |  10 ++++++
+ 4 files changed, 99 insertions(+), 49 deletions(-)
+
+commit c3860d53a423f480be06efeab70896adbcc926a7
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun May 13 15:18:15 2018 -0400
+
+    log->string done
+
+ client.ml    |  24 ++++-----
+ cutscene.mli |   4 +-
+ fake.txt     |   2 +
+ in.txt       |   1 +
+ init.ml      |   4 +-
+ out.txt      |   2 +
+ server.ml    | 112 +++++++++++++++++++++-------------------
+ state.ml     | 166 +++++++++++++++++++++++++++++++++++++++++++++++------------
+ state.mli    |   9 +++-
+ 9 files changed, 220 insertions(+), 104 deletions(-)
+
+commit 745f3b97e1d23922fbfad064667ae080cf465bae
+Merge: 117de48 ee77d29
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Sun May 13 11:18:15 2018 -0400
+
+    Merge pull request #11 from yilin-lu/clientserver
+    
+    merge with init
+
+commit 117de48600b18b5f0bd653dc3099027422e54cb3
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun May 13 11:17:19 2018 -0400
+
+    init
+
+ Makefile        |  1 +
+ init.ml         | 22 +++++++++++-----------
+ init.mli        |  3 +++
+ log.json        | 28 ++++++++++++++++++++++++++++
+ state.ml        | 57 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ state_test.byte |  1 -
+ 6 files changed, 100 insertions(+), 12 deletions(-)
+
+commit ee77d299391e843b01e5302327da95e663557f17
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sun May 13 10:28:12 2018 -0400
+
+    merge with init
+
+ server.ml | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
+
+commit 16067ed223fb18fc09dbdf4f4921ab3aeea465a2
+Merge: 1a9976b 58324b8
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sat May 12 18:17:10 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 1a9976b536c4b33b94c8cf62e117383f45222491
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sat May 12 18:17:05 2018 -0400
+
+    More massive changes
+
+ .merlin         |  2 +-
+ GUI.ml          | 19 +++++++++++++++----
+ Makefile        |  4 ++++
+ _tags           |  1 +
+ clienttest.byte |  1 +
+ fake.txt        |  0
+ server.byte     |  1 +
+ server.js       | 13 +++++++++++++
+ server.ml       |  6 ++++--
+ server.mli      | 10 ----------
+ servertest.js   |  2 ++
+ servertest.ml   |  1 +
+ 12 files changed, 43 insertions(+), 17 deletions(-)
+
+commit 58324b8702375df1cd7566bc513f5f3703b028bd
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Sat May 12 16:25:26 2018 -0400
+
+    parse_command init_Do'
+
+ init.ml  |  4 ++++
+ state.ml | 31 +++++++++++++++++++------------
+ 2 files changed, 23 insertions(+), 12 deletions(-)
+
+commit d036a83bb8e2e40e6b6e341042fd8793881c3f57
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Sat May 12 16:04:40 2018 -0400
+
+    parse_command
+
+ state.ml | 94 +++++++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 55 insertions(+), 39 deletions(-)
+
+commit d026c4fff6dba833c0ec1f9831a81bfe82af8fcf
+Merge: de0fddd 2741b2b
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Sat May 12 13:10:00 2018 -0400
+
+    Merge pull request #10 from yilin-lu/clientserver
+    
+    Parallel Client & Server can send command to both clients
+
+commit 2741b2b916a5ee0f51b3879e63d2623e481c58a0
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sat May 12 13:07:19 2018 -0400
+
+    fix bugs
+
+ client.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit c0650bb7a2494b6976234d5a3edd0bd5d4b88c6c
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sat May 12 12:53:53 2018 -0400
+
+    change client
+
+ client.ml | 8 +++-----
+ server.ml | 9 +++++----
+ 2 files changed, 8 insertions(+), 9 deletions(-)
+
+commit e146d2840decd0f41cb8dc6a44ee2d4d22221878
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sat May 12 01:54:02 2018 -0400
+
+    fix bugs
+
+ server.ml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit c023f1c2ddb3ae2679d024edec6c1e2e5e4040a1
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sat May 12 01:41:14 2018 -0400
+
+    client change
+
+ client.ml | 37 +++++++++++++++++++++++++++++++------
+ 1 file changed, 31 insertions(+), 6 deletions(-)
+
+commit de0fddd719d5719d4e6d209d87d2ee5e6e91af2f
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 11 23:32:42 2018 -0400
+
+    Not really full functionality in state and gui
+
+ GUI.ml           |  94 +++++++++++++++++++++++++++---------
+ cutscene.ml      |  15 +++---
+ cutscene.mli     |   6 +--
+ sprites/test.png | Bin 0 -> 77709 bytes
+ state.ml         | 144 ++++++++++++++++++++++++++++++++++++++++---------------
+ state.mli        |   5 +-
+ 6 files changed, 190 insertions(+), 74 deletions(-)
+
+commit 144a5c085fa8e6dfe8fa06789e37a984e05dc874
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 23:18:15 2018 -0400
+
+    server improve
+
+ client.ml |  6 ------
+ server.ml | 12 ++++++++++--
+ 2 files changed, 10 insertions(+), 8 deletions(-)
+
+commit b42a77cfc77b8f348fa7bed0a0b1ba6b3df7cb5b
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 21:13:34 2018 -0400
+
+    send command to two client
+
+ server.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 692948f5a25f283457b92660b5e15b639e37414f
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 21:09:54 2018 -0400
+
+    send command to two client
+
+ server.ml | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+commit 615122b5b34cbb446d0803a1b4876ca4082d85eb
+Merge: 0ec121e 2466664
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 11 21:08:25 2018 -0400
+
+    Rotate
+
+commit 0ec121eb837283c0a9104ef860e1966a83d7df30
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 11 21:07:14 2018 -0400
+
+    Rotated
+
+ GUI.ml                   |  48 ++++++++++++++-------
+ sprites/rotate_down.png  | Bin 0 -> 1038 bytes
+ sprites/rotate_left.png  | Bin 0 -> 1024 bytes
+ sprites/rotate_right.png | Bin 0 -> 1039 bytes
+ sprites/rotate_up.png    | Bin 0 -> 1052 bytes
+ state.ml                 | 106 ++++++++++++++++++++++++++++++++++++-----------
+ state.mli                |   7 ++--
+ 7 files changed, 118 insertions(+), 43 deletions(-)
+
+commit f21d30995061711825756429032fe0bd8591b161
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 21:06:57 2018 -0400
+
+    send command to two client
+
+ server.ml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit c97cba62ed355158fe2442115793f7355e56012e
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 20:48:45 2018 -0400
+
+    send command to two client
+
+ server.ml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+commit 2466664a0b2835f08baa0526184eaeb939263c0e
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Fri May 11 20:43:56 2018 -0400
+
+    map0
+
+ Makefile |   3 +-
+ init.ml  | 242 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 2 files changed, 213 insertions(+), 32 deletions(-)
+
+commit 5edd30a2724c6b0dd899663e963f0df3f9b37e95
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 20:43:00 2018 -0400
+
+    send command to two client
+
+ server.ml | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+commit 591cbe2453755c34a911b3deb9d42e2ada205001
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 18:08:37 2018 -0400
+
+    fix according to changes
+
+ state.ml | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+commit 68d35e9befd71538aeec6cb0b2a96d6fcfbde17a
+Merge: 7b957b4 a9d20e9
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:59:45 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 7b957b46c3695b89451fcb67b21bf9b1b999b6a8
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:59:33 2018 -0400
+
+    s&l fixed
+
+ state.ml  | 50 +++++++++++++++++++++++++++-----------------------
+ test.json |  2 +-
+ 2 files changed, 28 insertions(+), 24 deletions(-)
+
+commit a9d20e961544525ed04d2115a98e710b20cb1f86
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 11 17:50:01 2018 -0400
+
+    More stuff
+
+ cutscene.ml  | 14 ++++++++++++++
+ cutscene.mli | 10 ++++++++++
+ state.ml     |  3 ++-
+ state.mli    |  2 +-
+ 4 files changed, 27 insertions(+), 2 deletions(-)
+
+commit a041ea51824918b68e2255f583b851b915404853
+Merge: 1edf088 f2032a2
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:40:04 2018 -0400
+
+    merge
+
+commit 1edf088424ef2a534ed31716f8bc7156af815d05
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:38:12 2018 -0400
+
+    fixing sl
+
+ init.ml   | 27 ++++++++++++++++++++-------
+ state.ml  | 15 +++++++++------
+ test.json |  2 +-
+ 3 files changed, 30 insertions(+), 14 deletions(-)
+
+commit f2032a2cdaa8212da3761d3da2161c759fc302ca
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 11 17:38:06 2018 -0400
+
+    Rotatable
+
+ sprites/invempty.png | Bin 1015 -> 164 bytes
+ state.ml             |  25 ++++++++++---------------
+ state.mli            |   3 +--
+ 3 files changed, 11 insertions(+), 17 deletions(-)
+
+commit 25caaab984efcdef7a719200a6cbf9e60101487b
+Merge: 4b71b70 85f8c43
+Author: Orca <31905390+yilin-lu@users.noreply.github.com>
+Date:   Fri May 11 17:14:11 2018 -0400
+
+    Merge pull request #9 from yilin-lu/click
+    
+    Click
+
+commit 0c679c30ec25c652659bcb49db2b5364dc4837a7
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 17:11:38 2018 -0400
+
+    player save
+
+ server.ml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 85f8c4380cf3b20ea2950e7223d552a1bf462903
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:11:33 2018 -0400
+
+    more clean up
+
+ init.mli  | 49 --------------------------------
+ state.mli | 95 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ 2 files changed, 71 insertions(+), 73 deletions(-)
+
+commit 513f48bb307c66dbbe276376b1a48425ec703fde
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Fri May 11 17:09:19 2018 -0400
+
+    cleanup state.ml
+
+ init.ml  | 86 ++---------------------------------------------------------
+ state.ml | 92 +++++++++++++++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 67 insertions(+), 111 deletions(-)
+
+commit 6c29d8f8fb9e861be875cb93589cfbc876666d9a
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 16:34:52 2018 -0400
+
+    player save
+
+ server.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit ac7536690253a41561ae50e7ed6f1c9a7d42c254
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 16:26:46 2018 -0400
+
+    player save
+
+ server.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5dc96a58f6a3af96cdc59e485e8a5c48433d4c48
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 11 16:20:18 2018 -0400
+
+    player save
+
+ server.ml | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+commit 4b71b70d92dde7617ff22a54cacc2c307a20cf74
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Fri May 11 15:35:15 2018 -0400
+
+    click init
+
+ init.ml  | 141 +++++++++++++++++++++++++++++++++------------------------------
+ state.ml |  17 +++++++-
+ 2 files changed, 88 insertions(+), 70 deletions(-)
+
+commit 1db012c601e1fdec4b492a93622923a4644731e2
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Fri May 11 14:23:48 2018 -0400
+
+    init.ml data
+
+ init.ml   | 190 +++++++++++++++++++++++++++++++++++++
+ init.mli  |  49 ++++++++++
+ state.ml  | 317 +++++++++++++++++++++++++++++++++-----------------------------
+ state.mli |  59 ++++--------
+ 4 files changed, 426 insertions(+), 189 deletions(-)
+
+commit 7061bfb37bd9d7e0766f5a47cde92afaf6af1b18
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 4 20:43:54 2018 -0400
+
+    Built inventory
+
+ GUI.ml                         |  64 +++++++++++++++++++++++++++++++++++------
+ helper.ml                      |  16 ++++++++++-
+ sprites/item2.png              | Bin 0 -> 1007 bytes
+ sprites/{inv.png => item3.png} | Bin
+ sprites/item4.png              | Bin 0 -> 1039 bytes
+ sprites/item5.png              | Bin 0 -> 1052 bytes
+ state.ml                       |   2 +-
+ 7 files changed, 71 insertions(+), 11 deletions(-)
+
+commit 4b98ed974b7abf4f305eb70ddcabb4abe128a620
+Merge: 0ba3971 82cb0b3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 4 19:53:07 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 0ba3971ebd551c9d9b27a6ad58487bcbecf3f8ef
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Fri May 4 19:53:03 2018 -0400
+
+    Changes to state
+
+ GUI.ml                                      |  85 +++++++++++++------
+ sprites/CHARACTER1.png                      | Bin 0 -> 1638 bytes
+ sprites/{exitclosed.png => exit_closed.png} | Bin
+ sprites/{exitopen.png => exit_open.png}     | Bin
+ sprites/invempty.png                        | Bin 0 -> 1015 bytes
+ state.ml                                    | 122 +++++++++++++---------------
+ state.mli                                   |   8 +-
+ 7 files changed, 122 insertions(+), 93 deletions(-)
+
+commit 22f9cfea4fe1892052b54cb5f62a7e76515e144d
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 4 19:31:40 2018 -0400
+
+    save user
+
+ server.ml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 82cb0b396252dc3ed693e803711664b7ca117f52
+Merge: 6e818d0 6f0a364
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Fri May 4 18:32:19 2018 -0400
+
+    Merge pull request #8 from yilin-lu/clientserver
+    
+    synchronized server
+
+commit 6f0a364b670a620fdec0d1466cd32dd1dc34bac8
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 4 18:08:57 2018 -0400
+
+    server test works
+
+ server.ml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+commit 889cd68ddc8e913f56fd0aed45eb1f438dc0f976
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 4 17:49:01 2018 -0400
+
+    rewrite socket
+
+ server.ml | 79 +++++++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 42 insertions(+), 37 deletions(-)
+
+commit 2ee54be14d984a0fdf11d2f18be240a522b6bce8
+Merge: c88571b b68ffe0
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 4 16:40:52 2018 -0400
+
+    Merge branch 'clientserver' of https://github.com/yilin-lu/2Escape into clientserver
+
+commit c88571bd764e1483a6a349f244c450289abf0132
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Fri May 4 16:40:39 2018 -0400
+
+    import lwt
+
+ server.ml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit b68ffe00604e52913a03f317b4c5a4c801fb6314
+Merge: 387b7f4 6e818d0
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Fri May 4 16:38:06 2018 -0400
+
+    Merge pull request #7 from yilin-lu/master
+    
+    merge
+
+commit 6e818d06b0bbd35ba9cdf60f09f596ba90a38a8e
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu May 3 12:11:51 2018 -0400
+
+    Started building inventory
+
+ GUI.ml             |  46 ++++++++++++++++++++++++++++++++++++++++++++--
+ sprites/empty.png  | Bin 745 -> 164 bytes
+ sprites/inv.png    | Bin 0 -> 745 bytes
+ sprites/larrow.png | Bin 0 -> 423 bytes
+ sprites/rarrow.png | Bin 0 -> 435 bytes
+ sprites/wall.png   | Bin 0 -> 309 bytes
+ 6 files changed, 44 insertions(+), 2 deletions(-)
+
+commit d32110fac52b5a8d417bbe11ed831e554da34ff3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 21:29:51 2018 -0400
+
+    State is built
+
+ GUI.ml | 34 +++++++++++++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
+
+commit f5aa921528ec7851e20f2abcb4884dfefab65019
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 21:18:44 2018 -0400
+
+    State functionality completely built
+
+ GUI.ml                 |  25 +++++++-----
+ sprites/exitclosed.png | Bin 0 -> 341 bytes
+ sprites/exitopen.png   | Bin 0 -> 642 bytes
+ sprites/kl1.png        | Bin 1007 -> 0 bytes
+ sprites/kl1_false.png  | Bin 0 -> 433 bytes
+ sprites/kl1_true.png   | Bin 0 -> 417 bytes
+ sprites/player1.png    | Bin 959 -> 633 bytes
+ sprites/player2.png    | Bin 980 -> 959 bytes
+ state.ml               | 103 +++++++++++++++++++++++++++++++++++--------------
+ 9 files changed, 88 insertions(+), 40 deletions(-)
+
+commit 6bf92bd1ead09a68a5cffd60e9a35e6aea7d70e1
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 20:21:07 2018 -0400
+
+    Most functionality built
+
+ GUI.ml          |   7 ++++++-
+ sprites/kl1.png | Bin 0 -> 1007 bytes
+ state.ml        |  16 ++++++++++------
+ 3 files changed, 16 insertions(+), 7 deletions(-)
+
+commit 1f61b15e9857a918d410d4db69f9cb16fff3c7d3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 20:06:00 2018 -0400
+
+    Mov created
+
+ GUI.ml           |   4 ++++
+ sprites/mov1.png | Bin 0 -> 918 bytes
+ state.ml         |  47 ++++++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 48 insertions(+), 3 deletions(-)
+
+commit cc01fa1473a246f0f9b951e5b658dffe4b652b97
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 17:34:44 2018 -0400
+
+    Built Take and Drop
+
+ GUI.ml            |  10 +-
+ Gui.d.js          | 648 ------------------------------------------------------
+ index.html        |   2 +-
+ sprites/item1.png | Bin 0 -> 1093 bytes
+ state.ml          | 163 ++++++++++----
+ state.mli         |   2 +-
+ 6 files changed, 132 insertions(+), 693 deletions(-)
+
+commit c99ea4b97ededb9f65cb2cbcda78e3887608bd9b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 10:54:32 2018 -0400
+
+    Changed back
+
+ state.ml  | 14 +++++---------
+ state.mli |  2 +-
+ 2 files changed, 6 insertions(+), 10 deletions(-)
+
+commit 6f99fd2ed56353ec89ef62d19212a59c517d0e3d
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 10:52:00 2018 -0400
+
+    Changed exit
+
+ state.ml  | 32 +++++++++++++++++++++-----------
+ state.mli |  2 +-
+ 2 files changed, 22 insertions(+), 12 deletions(-)
+
+commit b07774033613a296bdff0fd22dd97205481ac066
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 10:31:44 2018 -0400
+
+    inventory added to log
+
+ state.ml  | 81 +++++++++++++++++++++++++++++++++++++--------------------------
+ state.mli |  8 ++++++-
+ 2 files changed, 55 insertions(+), 34 deletions(-)
+
+commit 1828c9a5684cbf8b3137fa90b65793335771e0ef
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Wed May 2 10:04:10 2018 -0400
+
+    Changes to kl
+
+ state.ml  | 3 ++-
+ state.mli | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit fa5b990bbea7df63d01afd2bb9d3899994a4aff4
+Merge: b2a3e2b c1662a2
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 21:02:17 2018 -0400
+
+    Final prototype
+
+commit b2a3e2b89fa9cbe0bb3470d53091984bae4b5ec5
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 20:41:27 2018 -0400
+
+    More comments
+
+ .merlin    |  3 ++-
+ GUI.ml     | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ server.ml  | 25 +++++++++++++++++++++----
+ server.mli | 12 +++++++++---
+ state.ml   | 60 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 5 files changed, 140 insertions(+), 21 deletions(-)
+
+commit c1662a2a19f19e29aed7a893a39e84430d61cb88
+Merge: dba8abd c3b9633
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 20:23:50 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape into Prototype
+
+commit c3b96332d9f4c407a447309759093e3112a66c2c
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 20:21:07 2018 -0400
+
+    msg test
+
+ state.ml      |  3 ++-
+ state_test.ml | 26 +++++++++++++++++++++++---
+ test.json     |  2 +-
+ 3 files changed, 26 insertions(+), 5 deletions(-)
+
+commit dba8abdbe3de15d814ef69f369da9677f3b36961
+Merge: 7202eba 2c1b2a8
+Author: Orca <31905390+yilin-lu@users.noreply.github.com>
+Date:   Tue May 1 20:04:10 2018 -0400
+
+    Merge pull request #6 from yilin-lu/master
+    
+    Master to prototype
+
+commit 2c1b2a8527cae398e2572907033f45155c3d9452
+Merge: 7276c79 5fe8f86
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 19:54:54 2018 -0400
+
+    testcase done
+
+commit 39decc295d1b6380bead406ba467c0b35688d4db
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 19:38:36 2018 -0400
+
+    Comments
+
+ GUI.ml     | 80 +++++++++++++++++++++++++++++++++++++++++++++-----------------
+ client.ml  | 25 ++++++++++++--------
+ client.mli | 32 ++++++++++++++++++-------
+ helper.ml  | 13 +++-------
+ 4 files changed, 100 insertions(+), 50 deletions(-)
+
+commit 7276c79b1fc8bfe9f02f84735e7aa15caef03388
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 19:26:21 2018 -0400
+
+    take drop test done
+
+ state.ml      |   6 +--
+ state_test.ml | 144 +++++++++++++++++++++++++++++++---------------------------
+ test.json     |   2 +-
+ 3 files changed, 82 insertions(+), 70 deletions(-)
+
+commit 5fe8f865c51fc3a26983e5427f47033437d2a7b9
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Tue May 1 19:08:01 2018 -0400
+
+    go test cast
+
+ Makefile      |  0
+ state_test.ml | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+)
+
+commit 586f1c177b74b9496dc943243c2115f0c0c6a380
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 18:12:02 2018 -0400
+
+    take drop test
+
+ state.ml      |   2 +-
+ state_test.ml | 109 +++++++++++++++++++++++++++++++++++++++++++---------------
+ 2 files changed, 83 insertions(+), 28 deletions(-)
+
+commit 0485daaaaf2b74e42fda818697a5068e092d0926
+Merge: 3d722ee 2f592b8
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 17:19:47 2018 -0400
+
+    merge try
+
+commit 2f592b8ae205ed9bc109e537572522cbf11892f4
+Merge: b628baf 387b7f4
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Tue May 1 16:17:08 2018 -0500
+
+    Merge pull request #4 from yilin-lu/clientserver
+    
+    auto server addr
+
+commit 3d722ee38ffa35b3094f6b50c0efac889994f207
+Merge: 84f818b 7202eba
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 17:16:38 2018 -0400
+
+    merge
+
+commit 84f818b2a01962c276a314e668936febbe20d846
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 17:15:09 2018 -0400
+
+    state test initial
+
+ .merlin           |   4 +-
+ Makefile          |   2 +
+ _tags             |   1 +
+ state.ml          |  10 +--
+ state_test.byte   |   1 +
+ state_test.ml     |  61 ++++++++++++++++
+ state_testing.ml  | 214 ------------------------------------------------------
+ state_testing.mli |  66 -----------------
+ test.json         |   2 +-
+ 9 files changed, 70 insertions(+), 291 deletions(-)
+
+commit 7202eba3e1c9379fa3d75b83f3e145c9e7f68c4e
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 17:14:52 2018 -0400
+
+    Pull
+
+ helper.ml         |  17 ++++-
+ state_testing.ml  | 214 ------------------------------------------------------
+ state_testing.mli |  66 -----------------
+ types.ml          |   0
+ types.mli         |   0
+ 5 files changed, 15 insertions(+), 282 deletions(-)
+
+commit 33983e6a8580ea0482a005dbf0dbfdc486945674
+Merge: abd1cef 387b7f4
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Tue May 1 16:11:21 2018 -0500
+
+    Merge pull request #5 from yilin-lu/clientserver
+    
+    Clientserver
+
+commit 387b7f435521b2141b0b1f338eabdbed2ea42a4b
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Tue May 1 17:08:23 2018 -0400
+
+    specification
+
+ client.ml  | 8 ++++++++
+ client.mli | 4 ++++
+ server.ml  | 3 +++
+ server.mli | 1 +
+ 4 files changed, 16 insertions(+)
+
+commit b628baf21ae23e0357fcafdbbce086e0775d7fd7
+Merge: 1b3c3e0 e71881b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 17:03:34 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit abd1cef9151743bb1b79ff7ab81ece70b1376de3
+Merge: a55116e e71881b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 17:03:14 2018 -0400
+
+    Merge
+
+commit a55116e89575224ee9f2a1d6a39c275b8ff847f3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 17:02:00 2018 -0400
+
+    Changed format for submission
+
+ GUI.ml         | 283 +++++++++++++++++--------
+ Gui.d.js       | 648 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Gui2.ml        | 210 -------------------
+ Makefile       |   2 +-
+ controller.ml  |   9 -
+ controller.mli |   9 -
+ index.html     |   2 +-
+ 7 files changed, 851 insertions(+), 312 deletions(-)
+
+commit 1b3c3e0fc6e66206f9ec7861b6150209be2a4f53
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 16:51:51 2018 -0400
+
+    Stash
+
+ .merlin  | 3 ++-
+ Gui2.ml  | 2 +-
+ Makefile | 4 +++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 80639418487d351ef3a20d581b06f7cc60f7fa42
+Merge: 50b98af 4708aea
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 10:38:59 2018 -0400
+
+    Merge branch 'prototype'
+
+commit 4708aea553b15ddce5902ce3680f989e4293ec87
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue May 1 10:38:37 2018 -0400
+
+    Bugfix js stoppropogation
+
+ Gui2.ml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit e71881b3876514615d1995c3ad73aa0bad8d7b2a
+Merge: 073ebd4 8063941
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Tue May 1 10:35:00 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 073ebd4914edd15446829e025623c2d010b4ee0a
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Tue May 1 10:34:43 2018 -0400
+
+    sl checked
+
+ state.json | 62 --------------------------------------------------------------
+ state.ml   | 16 ++++++++++++----
+ test.json  |  1 +
+ 3 files changed, 13 insertions(+), 66 deletions(-)
+
+commit 50b98afe23db30c8f2809b3c263d88234147844c
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Tue May 1 09:17:20 2018 -0400
+
+    remove incorrect compile files
+
+ state.byte   | 2 +-
+ state.native | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+commit a82915082614107eeba928b496d9809d2bb21d64
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue May 1 01:25:20 2018 -0400
+
+    save & load
+
+ state.ml | 103 +++++++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 91 insertions(+), 12 deletions(-)
+
+commit cd5c61d5f353b862a40efb419b8a2589a85abd18
+Merge: 9ef0b6c 261e068
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon Apr 30 23:33:56 2018 -0400
+
+    merge
+
+commit 9ef0b6cea3955a91bac5f2dc22b5b0449c5b2516
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon Apr 30 23:32:40 2018 -0400
+
+    parsing json
+
+ Makefile     |  6 ++--
+ _tags        |  4 +--
+ state.byte   |  1 +
+ state.json   | 12 ++++----
+ state.ml     | 93 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ state.mli    |  4 ++-
+ state.native |  1 +
+ 7 files changed, 101 insertions(+), 20 deletions(-)
+
+commit 261e068e2ed5f548937d057a49abee863cd8af01
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 23:25:25 2018 -0400
+
+    Built single player
+
+ Gui2.ml             |  13 +++++++++++--
+ sprites/player2.png | Bin 0 -> 980 bytes
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+commit 528f6cb216a017a47cc48b74c9269029f9ed02db
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 23:11:21 2018 -0400
+
+    GUI2 is functional + state bugfixes
+
+ Gui2.ml   | 58 +++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ state.ml  | 43 ++++++++++++++++++++++++++++++++-----------
+ state.mli | 15 ++++++++++++---
+ 3 files changed, 97 insertions(+), 19 deletions(-)
+
+commit 5b253465b7585aa216c2ea7afb0ced53ea6158f6
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 16:19:02 2018 -0400
+
+    Successful prototype branch
+
+ GUI.ml                               |   4 +--
+ Gui2.ml                              |  53 ++++++++++++++++++++++++++---------
+ index.html                           |   2 +-
+ sprites/{grass.png => empty.png}     | Bin
+ sprites/{boulder.png => player1.png} | Bin
+ 5 files changed, 42 insertions(+), 17 deletions(-)
+
+commit b22ff6fc3f2c58cb4295c7d4b5b7e6ee1303d0ae
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 15:08:49 2018 -0400
+
+    Branched
+
+ Gui2.ml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 7066d52b2efa2f3064ba7953856d59abf6f1ef33
+Merge: 7183273 00194cd
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 14:49:17 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 7183273b62a469dc1a822933c00d858fd5b842ee
+Merge: 82e2593 87114ba
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 14:49:11 2018 -0400
+
+    Merge
+
+commit 00194cd66df319902b4fb2c199e77a9785dbc200
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Mon Apr 30 11:36:11 2018 -0400
+
+    char fix
+
+ state.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 77713f7786343e7cd5803e5a84668463b76c0377
+Author: yilin-lu <yl668@cornell.edu>
+Date:   Mon Apr 30 11:32:53 2018 -0400
+
+    state.json
+
+ state.json | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
+
+commit 82e25937d7c015d3837850089940c84ef810c4f5
+Merge: a4696a6 97b77e1
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 10:37:12 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 87114ba96e256053a6475a7b10106f10267b379d
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 30 10:36:50 2018 -0400
+
+    GUI2 clean
+
+ GUI.ml      |  10 ++-
+ Gui2.ml     |  85 ++++++++++++++++++++++++--
+ command.ml  |  20 +-----
+ command.mli |  21 ++-----
+ state.ml    |  40 ++++++------
+ state.mli   |  14 ++++-
+ types.ml    | 200 ------------------------------------------------------------
+ types.mli   |  93 ----------------------------
+ 8 files changed, 126 insertions(+), 357 deletions(-)
+
+commit 97b77e1de2e0c98d8551651719d1e0c35816479a
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Mon Apr 30 00:12:01 2018 -0400
+
+    updated drop take
+
+ state.ml | 114 ++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 95 insertions(+), 19 deletions(-)
+
+commit a4696a659edde4e63c052979bf34171da09f609c
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 23:17:32 2018 -0400
+
+    Some fixes, need to branch ASAP
+
+ Gui2.ml     | 27 ++++++++++++++++++++++---
+ command.ml  | 67 -------------------------------------------------------------
+ command.mli | 18 -----------------
+ helper.ml   | 18 ++++++++++++++++-
+ types.ml    |  7 +++++++
+ 5 files changed, 48 insertions(+), 89 deletions(-)
+
+commit 3f62fbf789fab6e3090df5e8c4f09b93882e2f9b
+Merge: e37b84c db0ac8a
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 29 23:14:13 2018 -0400
+
+    try merge
+
+commit e37b84c421b24332c00dd7c8cad556e0269a583f
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 29 23:13:07 2018 -0400
+
+    drop/take done
+
+ state_testing.ml  | 131 +++++++++++++++++++++++++++++++++++++++++++++++++-----
+ state_testing.mli |  16 +++++--
+ 2 files changed, 133 insertions(+), 14 deletions(-)
+
+commit db0ac8a436dbd6a7b35db81599ccf3cccd30dfc5
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 22:42:46 2018 -0400
+
+    basic movement compiled
+
+ Gui2.ml           |  28 ++++++++++++
+ Makefile          |   4 +-
+ command.mli       |   6 +--
+ state.ml          | 127 +++++++++++++++++++++++++++++++++++++++++-------------
+ state.mli         |  77 +++++++++++++++++++++------------
+ state_testing.ml  | 103 -------------------------------------------
+ state_testing.mli |  58 -------------------------
+ 7 files changed, 181 insertions(+), 222 deletions(-)
+
+commit 6c37b77cc81939aaef946f3ad78183a6e9af0977
+Merge: e75a8ca 618412b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 21:15:57 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit e75a8ca38cb3dcf28dabde06c0bbc6c269cc0114
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 21:15:55 2018 -0400
+
+    More testing
+
+ GUI.ml            | 2 +-
+ state_testing.ml  | 2 +-
+ state_testing.mli | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 618412b48e12ab42ca1c6fc585bb7b6fbcaec557
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 29 18:37:34 2018 -0400
+
+    go comd done
+
+ state_testing.ml  | 73 +++++++++++++++++++++++++++++++++++--------------------
+ state_testing.mli | 11 +++++----
+ 2 files changed, 53 insertions(+), 31 deletions(-)
+
+commit 8809973161f50e8a279a05a36f8add51603099de
+Merge: 2cdc646 b3517f5
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 17:34:48 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 2cdc64672f1d2d27486d91e827bb5f447be33d7e
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 17:34:44 2018 -0400
+
+    State_testing
+
+ GUI.ml            |  2 +-
+ Makefile          |  2 +-
+ command.ml        |  6 ++--
+ helper.ml         | 17 ++++++++++++
+ state_testing.ml  | 82 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ state_testing.mli | 57 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 161 insertions(+), 5 deletions(-)
+
+commit 57eaccd35e5d5051ae17bab5382b6e09e6d8edbf
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sun Apr 29 16:46:24 2018 -0400
+
+    auto server addr
+
+ server.ml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit b3517f5c0b96f72721cdd6166ca15680ae35cf6c
+Merge: aa47f42 50ae6c8
+Author: heatherzheng <31715250+heatherzheng@users.noreply.github.com>
+Date:   Sun Apr 29 14:51:02 2018 -0500
+
+    Merge pull request #2 from yilin-lu/clientserver
+    
+    set up client & server
+
+commit 50ae6c843e238151f29008ad47c39a18acbb6710
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Sun Apr 29 15:47:57 2018 -0400
+
+    set up client & server
+
+ .idea/2Escape.iml   |   9 ++
+ .idea/modules.xml   |   8 ++
+ .idea/vcs.xml       |   6 ++
+ .idea/workspace.xml | 273 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ client.ml           |  27 +++++-
+ client.mli          |   2 +-
+ server.ml           |  28 +++++-
+ server.mli          |   2 +-
+ 8 files changed, 345 insertions(+), 10 deletions(-)
+
+commit aa47f420515ea0b095b85f3a9be1ee3a4a3b7dee
+Merge: 3192951 6dbd683
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 15:38:36 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape into GUItesting
+
+commit 3192951924d125948c21b7c61cb5b5cff058a2d7
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 29 15:38:11 2018 -0400
+
+    Finialize branch
+
+ .gitignore          |   4 +--
+ GUI.byte            |   1 -
+ GUI.ml              |  97 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ GUI.mli             |   1 -
+ Makefile            |   7 ++--
+ _tags               |   4 ++-
+ index.html          |   7 ++++
+ myocamlbuild.ml     |   1 +
+ sprites/boulder.png | Bin 0 -> 959 bytes
+ sprites/grass.png   | Bin 0 -> 745 bytes
+ state.ml            |  42 +++++++++++++++++++++--
+ state.mli           |  19 ++++++----
+ types.ml            |   2 --
+ 13 files changed, 167 insertions(+), 18 deletions(-)
+
+commit 6dbd6832eb40319d7955cad864f6771e17639bf4
+Merge: 809ab61 b649cec
+Author: Orca <31905390+yilin-lu@users.noreply.github.com>
+Date:   Sun Apr 29 00:15:58 2018 -0400
+
+    Merge pull request #1 from yilin-lu/state
+    
+    textmsg
+
+commit b649cec03fb9ada13906f749eb719b79f5e621b1
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 29 00:13:19 2018 -0400
+
+    textmsg
+
+ GUI.byte   |  1 -
+ command.ml | 30 +++++++++++++++++++++++-------
+ types.ml   | 12 ++++++++++--
+ 3 files changed, 33 insertions(+), 10 deletions(-)
+
+commit 809ab61a43ff24809896eb28900cd05564c0cf3f
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Apr 26 14:28:17 2018 -0400
+
+    Update GitIgnore
+
+ .gitignore                 |   4 ++-
+ _build/GUI.byte            | Bin 19242 -> 0 bytes
+ _build/GUI.cmi             | Bin 732 -> 0 bytes
+ _build/GUI.cmo             | Bin 646 -> 0 bytes
+ _build/GUI.ml              |   1 -
+ _build/GUI.ml.depends      |   1 -
+ _build/GUI.mli             |   1 -
+ _build/GUI.mli.depends     |   0
+ _build/command.cmi         | Bin 652 -> 0 bytes
+ _build/command.cmo         | Bin 203 -> 0 bytes
+ _build/command.ml          |  10 ------
+ _build/command.ml.depends  |   1 -
+ _build/command.mli         |  10 ------
+ _build/command.mli.depends |   1 -
+ _build/ocamlc.where        |   1 -
+ _build/state.cmi           | Bin 493 -> 0 bytes
+ _build/state.cmo           | Bin 417 -> 0 bytes
+ _build/state.ml            |   9 -----
+ _build/state.ml.depends    |   1 -
+ _build/state.mli           |   7 ----
+ _build/state.mli.depends   |   1 -
+ _build/test_gui.byte       | Bin 139674 -> 0 bytes
+ _build/test_gui.ml.depends |   1 -
+ _build/types.cmi           | Bin 4209 -> 0 bytes
+ _build/types.cmo           | Bin 175 -> 0 bytes
+ _build/types.ml            |  82 ---------------------------------------------
+ _build/types.ml.depends    |   1 -
+ _build/types.mli           |  82 ---------------------------------------------
+ _build/types.mli.depends   |   1 -
+ 29 files changed, 3 insertions(+), 212 deletions(-)
+
+commit e20c1002ed073708ae7c58de47247098c471dce2
+Merge: 577923a e7c5a8e
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Apr 26 14:24:55 2018 -0400
+
+    Merge
+
+commit e7c5a8e2c4136219b0fc31c6e9e3550b7fe67be9
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 22 16:32:58 2018 -0400
+
+    command and log
+
+ command.ml  | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ command.mli | 28 +++++++++++++++++++++++----
+ 2 files changed, 87 insertions(+), 5 deletions(-)
+
+commit 577923a5464f577f9497b3b538789205c332c38a
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 22 16:16:42 2018 -0400
+
+    Gui-testing
+
+ .DS_Store                     | Bin 6148 -> 6148 bytes
+ GUITesting/_build/_digests    |  14 ++---
+ GUITesting/_build/_log        |   4 +-
+ GUITesting/_build/test.cmi    | Bin 1209 -> 1209 bytes
+ GUITesting/_build/test.cmo    | Bin 3651 -> 6636 bytes
+ GUITesting/_build/test.d.byte | Bin 7312485 -> 7489446 bytes
+ GUITesting/_build/test.d.cmi  | Bin 1209 -> 1209 bytes
+ GUITesting/_build/test.d.cmo  | Bin 134441 -> 311898 bytes
+ GUITesting/_build/test.d.js   | 133 ++++++++++++++++++++++++++++++++++++------
+ GUITesting/_build/test.ml     |  35 ++++++++++-
+ GUITesting/grass.png          | Bin 0 -> 745 bytes
+ GUITesting/index.html         |   1 -
+ GUITesting/test.ml            |  35 ++++++++++-
+ 13 files changed, 189 insertions(+), 33 deletions(-)
+
+commit cd9e5983a23efafb98fa1ce664a2377c27a5c36e
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sat Apr 21 22:27:10 2018 -0400
+
+    types.nl done
+
+ types.ml  | 64 +++++++++++++++++++++++++++++++++++++++++++++++--------------
+ types.mli | 66 +++++++++++++++++++++++++++++++++------------------------------
+ 2 files changed, 85 insertions(+), 45 deletions(-)
+
+commit d27d6c2028bbcd668262ac5989c1f947c691619d
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sat Apr 21 20:01:04 2018 -0400
+
+    visible;movable;storable;room done
+
+ command.ml |   4 +-
+ types.ml   | 141 +++++++++++++++++++++++++++++++++++++++++++++----------------
+ 2 files changed, 106 insertions(+), 39 deletions(-)
+
+commit 8ffa15381cfb18e0d129322e51ebea6a24b8070e
+Merge: e0a93aa 21a0435
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sat Apr 21 17:01:06 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape into state
+
+commit 1d177a0becb7952ebaed46dbc65f627e0987eaf3
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue Apr 17 12:09:53 2018 -0400
+
+    GUITesting first iter
+
+ .gitignore                         |   2 +-
+ .merlin                            |   3 +-
+ GUI.byte                           |   1 +
+ GUITesting/.merlin                 |   3 +
+ GUITesting/Makefile                |  10 +
+ GUITesting/_build/_digests         |  12 +
+ GUITesting/_build/_log             |  18 +
+ GUITesting/_build/main.cmi         | Bin 0 -> 1208 bytes
+ GUITesting/_build/main.cmo         | Bin 0 -> 2283 bytes
+ GUITesting/_build/main.d.byte      | Bin 0 -> 7265555 bytes
+ GUITesting/_build/main.d.cmi       | Bin 0 -> 1208 bytes
+ GUITesting/_build/main.d.cmo       | Bin 0 -> 87346 bytes
+ GUITesting/_build/main.d.js        | 238 ++++++++++++
+ GUITesting/_build/main.ml          |  22 ++
+ GUITesting/_build/main.ml.depends  |   1 +
+ GUITesting/_build/myocamlbuild     | Bin 0 -> 2446820 bytes
+ GUITesting/_build/myocamlbuild.cmi | Bin 0 -> 602 bytes
+ GUITesting/_build/myocamlbuild.cmx | Bin 0 -> 627 bytes
+ GUITesting/_build/myocamlbuild.ml  |   1 +
+ GUITesting/_build/myocamlbuild.o   | Bin 0 -> 1504 bytes
+ GUITesting/_build/ocamlc.where     |   1 +
+ GUITesting/_build/test.cmi         | Bin 0 -> 1209 bytes
+ GUITesting/_build/test.cmo         | Bin 0 -> 3651 bytes
+ GUITesting/_build/test.d.byte      | Bin 0 -> 7312485 bytes
+ GUITesting/_build/test.d.cmi       | Bin 0 -> 1209 bytes
+ GUITesting/_build/test.d.cmo       | Bin 0 -> 134441 bytes
+ GUITesting/_build/test.d.js        | 756 +++++++++++++++++++++++++++++++++++++
+ GUITesting/_build/test.ml          |  43 +++
+ GUITesting/_build/test.ml.depends  |   1 +
+ GUITesting/boulder.png             | Bin 0 -> 959 bytes
+ GUITesting/cat.png                 | Bin 0 -> 13252 bytes
+ GUITesting/index.html              |   8 +
+ GUITesting/main.ml                 |  22 ++
+ GUITesting/myocamlbuild.ml         |   1 +
+ GUITesting/test.ml                 |  43 +++
+ Makefile                           |   5 +-
+ _build/_digests                    |   2 +-
+ _build/_log                        |   2 +-
+ index.html                         |   5 -
+ test_gui.byte                      |   1 -
+ test_gui.js                        | 233 ------------
+ 41 files changed, 1187 insertions(+), 247 deletions(-)
+
+commit e0a93aa0f49d98bd654933b24a4387af871269be
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 15 17:19:32 2018 -0400
+
+    log
+
+ command.mli |  2 +-
+ state.mli   | 13 ++++++++++---
+ types.mli   |  8 ++++----
+ 3 files changed, 15 insertions(+), 8 deletions(-)
+
+commit 21a043508e750bea1c1d3da546ec705fd06caac7
+Merge: 8140965 72e9636
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 17:09:45 2018 -0400
+
+    "."
+
+commit 72e9636eb46f7939adac7e18bd94c92bbb085fc9
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 15 17:01:21 2018 -0400
+
+    help remove
+
+ state.ml | 8 --------
+ 1 file changed, 8 deletions(-)
+
+commit 81409651702bd275970d0317bebd6cf0e524cde9
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 17:00:00 2018 -0400
+
+    remove
+
+ command.mli | 10 +++++++++-
+ state.mli   | 18 ++++++++++--------
+ types.mli   | 11 ++---------
+ 3 files changed, 21 insertions(+), 18 deletions(-)
+
+commit 007b147f99931c2ce2a6f7ff9ed6821ea81e3a9d
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 16:59:28 2018 -0400
+
+    remove
+
+ state.ml | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit e157ef4ad5f841ed6d4e41236b1f9f1b327fa51d
+Merge: dd95284 5b548b8
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 15 16:59:27 2018 -0400
+
+    merge
+
+commit dd95284429eef19a802dfde8ada477b74cc9d683
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 15 16:57:59 2018 -0400
+
+    fun and spec
+
+ command.mli | 10 +++++++++-
+ state.mli   | 16 ++++++++++------
+ types.mli   | 11 ++---------
+ 3 files changed, 21 insertions(+), 16 deletions(-)
+
+commit 5b548b8e9d0a5c53ef9247e9268751fb4c9aa10b
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 16:56:57 2018 -0400
+
+    state
+
+ .DS_Store | Bin 8196 -> 8196 bytes
+ state.ml  |  14 ++++++++++----
+ state.mli |   4 ++++
+ types.mli |  14 ++++++++++++++
+ 4 files changed, 28 insertions(+), 4 deletions(-)
+
+commit 48c8bd1222052962a7d919c9da3dfd6babc83a42
+Merge: 85ee657 dfd5a0d
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 16:34:11 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit dfd5a0dbea714694fc5f263bd3c57991489dd85a
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Sun Apr 15 16:33:51 2018 -0400
+
+    state spec init
+
+ _build/GUI.mli.depends |  1 -
+ _build/_digests        |  7 ++++---
+ _build/_log            |  9 ++++-----
+ state.mli              | 17 ++++++++++++++++-
+ 4 files changed, 24 insertions(+), 10 deletions(-)
+
+commit 85ee65751f4452a7d62159c9f4565585fb67aa07
+Merge: 28ad243 792f066
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 16:20:26 2018 -0400
+
+    x
+
+commit 28ad243c92bb3becb9cf7db143ffeaed79dc1411
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Sun Apr 15 16:18:53 2018 -0400
+
+    "changes"
+
+ .DS_Store | Bin 8196 -> 8196 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 792f066693ad61a49372e784589c379c97cbf19b
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 15 14:49:22 2018 -0400
+
+    Update gitignore 3rd time
+
+ .gitignore | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit bee8c5dd9d4482601306474e905c20c855332983
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 15 14:49:00 2018 -0400
+
+    Update gitignore
+
+ .gitignore | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 274f5568a952ffc3281b6f7708db33d7060dc5e1
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Sun Apr 15 14:48:32 2018 -0400
+
+    Update gitignore
+
+ .gitignore                 |   1 +
+ GUI.byte                   |   1 -
+ Makefile                   |   5 +-
+ _build/_digests            |   8 +-
+ _build/_log                |  42 ++------
+ _build/test_gui.byte       | Bin 0 -> 139674 bytes
+ _build/test_gui.ml.depends |   1 +
+ index.html                 |   5 +
+ test_gui.byte              |   1 +
+ test_gui.js                | 233 +++++++++++++++++++++++++++++++++++++++++++++
+ 10 files changed, 258 insertions(+), 39 deletions(-)
+
+commit 57c9aedead218da6054afd1042c8c4a325290ce6
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Mon Apr 2 16:22:53 2018 -0400
+
+    Basic files
+
+ GUI.byte                  |   1 +
+ GUI.ml                    |   1 +
+ GUI.mli                   |   2 +-
+ Makefile                  |   2 +-
+ _build/GUI.byte           | Bin 0 -> 19242 bytes
+ _build/GUI.cmi            | Bin 0 -> 732 bytes
+ _build/GUI.cmo            | Bin 0 -> 646 bytes
+ _build/GUI.ml             |   1 +
+ _build/GUI.ml.depends     |   1 +
+ _build/GUI.mli            |   2 +-
+ _build/_digests           |  32 +++++++++++++-----
+ _build/_log               |  56 +++++++++++++++++++------------
+ _build/command.cmi        | Bin 610 -> 652 bytes
+ _build/command.cmo        | Bin 0 -> 203 bytes
+ _build/command.ml         |  10 ++++++
+ _build/command.ml.depends |   1 +
+ _build/command.mli        |   4 +--
+ _build/state.cmi          | Bin 493 -> 493 bytes
+ _build/state.cmo          | Bin 0 -> 417 bytes
+ _build/state.ml           |   9 +++++
+ _build/state.ml.depends   |   1 +
+ _build/types.cmo          | Bin 0 -> 175 bytes
+ _build/types.ml           |  82 ++++++++++++++++++++++++++++++++++++++++++++++
+ _build/types.ml.depends   |   1 +
+ _tags                     |   1 +
+ client.ml                 |   7 ++++
+ command.ml                |  10 ++++++
+ controller.ml             |   9 +++++
+ server.ml                 |   4 +++
+ state.ml                  |   9 +++++
+ types.ml                  |  82 ++++++++++++++++++++++++++++++++++++++++++++++
+ 31 files changed, 293 insertions(+), 35 deletions(-)
+
+commit 4423bfb5e403d411ad7f22742a8852ab216d23b0
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:48:43 2018 -0400
+
+    Updated make for interfaces
+
+ Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit b029d82bdece46ab81ac5e4a6e10c2b1b1106628
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:46:47 2018 -0400
+
+    Delete game.mli
+
+ game.mli | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit d4cba598df196390cdebb9d5e80a051da0622c07
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:34:23 2018 -0400
+
+    Cleanup
+
+ .DS_Store             | Bin 8196 -> 6148 bytes
+ design.zip            | Bin 4822 -> 0 bytes
+ design/GUI.mli        |   1 -
+ design/client.mli     |   7 -----
+ design/command.mli    |  13 --------
+ design/controller.mli |   9 ------
+ design/game.mli       |   1 -
+ design/server.mli     |   3 --
+ design/state.mli      |   3 --
+ design/types.mli      |  82 --------------------------------------------------
+ 10 files changed, 119 deletions(-)
+
+commit 6b34eca7f4786ca5df00ea5afaa7274280c258cb
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:31:00 2018 -0400
+
+    Bugfix
+
+ command.mli | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit 6cb2afa8a4d4d40c8e118009e64deec5ae58159f
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:30:05 2018 -0400
+
+    Created gitignore
+
+ .gitignore | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit fe8bfa6bd5f3420580fa8606d058f05c4130fec2
+Merge: 33980dc 5e69032
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:29:38 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 33980dc53beeba6e55a2e7fb5c7c928f21f91b47
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 22:29:33 2018 -0400
+
+    Bugfixes
+
+ .merlin                  |   2 +-
+ Makefile                 |   2 +-
+ _build/_digests          |   6 +++---
+ _build/_log              |  26 +++++++++++++-------------
+ _build/state.cmi         | Bin 412 -> 493 bytes
+ _build/state.mli         |   7 +++++--
+ _build/state.mli.depends |   2 +-
+ client.mli               |   6 +++---
+ command.mli              |   2 ++
+ server.mli               |   2 +-
+ state.mli                |   8 ++++++--
+ 11 files changed, 36 insertions(+), 27 deletions(-)
+
+commit 5e690323ce947aff09380eeeb703fcb2fe11c1e0
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Thu Mar 29 21:35:58 2018 -0400
+
+    design
+
+ .DS_Store             | Bin 6148 -> 8196 bytes
+ design.zip            | Bin 0 -> 4822 bytes
+ design/GUI.mli        |   1 +
+ design/client.mli     |   7 +++++
+ design/command.mli    |  13 ++++++++
+ design/controller.mli |   9 ++++++
+ design/game.mli       |   1 +
+ design/server.mli     |   3 ++
+ design/state.mli      |   3 ++
+ design/types.mli      |  82 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 10 files changed, 119 insertions(+)
+
+commit 63b0ee8a377b44e5a39b44fa99a453340e00c139
+Merge: 048c675 18d82ef
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Thu Mar 29 21:30:37 2018 -0400
+
+    finalize
+
+commit 048c67552693598ece1d5a9b082dff5f1c66a602
+Merge: 909c3a6 55851d8
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Thu Mar 29 21:29:18 2018 -0400
+
+    finalize
+
+commit 18d82ef29d3dcb02a20d28b4de5b04c8a536bd66
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 20:27:32 2018 -0400
+
+    renaming
+
+ controller.mli | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 0fcea154dca16605713e210b42fd890990276457
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 13:28:38 2018 -0400
+
+    MLI changes
+
+ GUI.mli                    |   2 +-
+ _build/GUI.mli             |   2 +-
+ _build/_digests            |  19 ++++++-----
+ _build/_log                |   6 +++-
+ _build/command.cmi         | Bin 569 -> 610 bytes
+ _build/command.mli         |   8 +++--
+ _build/command.mli.depends |   2 +-
+ _build/state.cmi           | Bin 382 -> 412 bytes
+ _build/state.mli           |   4 +--
+ _build/types.cmi           | Bin 0 -> 4209 bytes
+ _build/types.mli           |  82 +++++++++++++++++++++++++++++++++++++++++++++
+ _build/types.mli.depends   |   1 +
+ client.mli                 |  30 +++--------------
+ controller.mli             |   9 +++++
+ game.mli                   |   0
+ server.mli                 |  25 ++------------
+ state.mli                  |   3 +-
+ 17 files changed, 125 insertions(+), 68 deletions(-)
+
+commit 9a554ef069ed7b54e8fb4c066115652c62b353d4
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Thu Mar 29 10:44:19 2018 -0400
+
+    Changes to mli files
+
+ command.mli | 8 +++++---
+ state.mli   | 4 ++--
+ types.mli   | 5 +++++
+ 3 files changed, 12 insertions(+), 5 deletions(-)
+
+commit 03e354e538db40ee94757dd04ce5dd41700d9b6b
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue Mar 27 18:06:48 2018 -0400
+
+    add textMessage
+
+ types.mli | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+commit 16295d823dedd418c4907dc10e95f2a77a47f371
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue Mar 27 18:00:58 2018 -0400
+
+    types.mli done 1
+
+ types.mli | 57 ++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 42 insertions(+), 15 deletions(-)
+
+commit 909c3a621fc9b6c99b9f0597747ac205feec3790
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Tue Mar 27 17:19:43 2018 -0400
+
+    Command
+
+ .DS_Store   | Bin 0 -> 6148 bytes
+ command.mli |   8 ++------
+ game.ml     |   0
+ game.mli    |   1 +
+ 4 files changed, 3 insertions(+), 6 deletions(-)
+
+commit bbdc2afb49b1246cde06bc4ac7060f7df4dfe669
+Merge: 4fb45cd 55851d8
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue Mar 27 17:19:07 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 4fb45cd96fd277bd1a60594963f6f5be3252e582
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue Mar 27 17:18:43 2018 -0400
+
+    types.mli update
+
+ types.mli | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
+
+commit 55851d8f149c4b68b09394a88a94a8f3b3760b6b
+Merge: 6ef246c 9817c64
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue Mar 27 17:14:38 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 6ef246c3869305608b01a9cc52814981d65dcac2
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue Mar 27 17:14:32 2018 -0400
+
+    Cleanup
+
+ GUI.mli                    |   2 +-
+ Makefile                   |   2 ++
+ _build/GUI.mli             |   1 +
+ _build/GUI.mli.depends     |   1 +
+ _build/_digests            |   8 ++++++++
+ _build/_log                |  18 ++++++++++++++++++
+ _build/command.cmi         | Bin 0 -> 569 bytes
+ _build/command.mli         |   8 ++++++++
+ _build/command.mli.depends |   1 +
+ _build/ocamlc.where        |   1 +
+ _build/state.cmi           | Bin 0 -> 382 bytes
+ _build/state.mli           |   4 ++++
+ _build/state.mli.depends   |   1 +
+ command.mli                |  12 ++----------
+ game.ml => game.mli        |   0
+ state.mli                  |   2 +-
+ 16 files changed, 49 insertions(+), 12 deletions(-)
+
+commit 9817c64831936f2bf5fbcc58a73c1e1547e351c2
+Merge: 4c61ca7 a0bfa4c
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Tue Mar 27 17:09:31 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit 4c61ca709d236bc3e02b1c899f9423f38081d014
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Tue Mar 27 17:08:55 2018 -0400
+
+    add new function in client
+
+ client.mli | 6 ++++++
+ server.mli | 4 +---
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+commit a0bfa4cd77802eace2cdc343316a858e80513931
+Merge: c4891e2 8a58f03
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Tue Mar 27 17:06:23 2018 -0400
+
+    Merge branch 'master' of https://github.com/yilin-lu/2Escape
+
+commit c4891e217161f0e31afb0032aa2dace460df376d
+Author: BetsyFu <zf48@cornell.edu>
+Date:   Tue Mar 27 17:06:14 2018 -0400
+
+    Command.mli built
+
+ command.mli | 16 ++++++++++++++++
+ game.ml     |  0
+ 2 files changed, 16 insertions(+)
+
+commit 8a58f03cc3cd982c845677c10015e3315304ccf4
+Author: Anneliese Lu <yl668@cornell.edu>
+Date:   Tue Mar 27 17:06:05 2018 -0400
+
+    types.mli init
+
+ types.mli | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+
+commit 25091132a9e4da28d3c305c9efe8a93b0e94bdca
+Author: Aaron Lou <al968@cornell.edu>
+Date:   Tue Mar 27 16:57:05 2018 -0400
+
+    More Basic Functionality
+
+ .merlin   | 2 ++
+ GUI.mli   | 1 +
+ Makefile  | 0
+ README.md | 3 +++
+ state.mli | 4 ++++
+ 5 files changed, 10 insertions(+)
+
+commit 8e013f1a5192ef40ea662674bf52aa0efa62ef7c
+Author: heatherzheng <sz488@cornell.edu>
+Date:   Tue Mar 27 16:10:44 2018 -0400
+
+    client-server mli
+
+ client.mli | 23 +++++++++++++++++++++++
+ server.mli | 26 ++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
+
+commit 9831947787f8b6090ef65a397a015bda64443220
+Author: Anneliese Lu <31905390+yilin-lu@users.noreply.github.com>
+Date:   Sat Mar 17 16:06:37 2018 -0400
+
+    Initial commit
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)

@@ -189,7 +189,7 @@ let workshop_key_loc = {
   id = "cross";
   key = "workshop_key";
   is_solved = false;
-  exit_effect = [("workshop",1,4)];
+  exit_effect = [("workshop",3,0)];
   immovable_effect = []
 }
 

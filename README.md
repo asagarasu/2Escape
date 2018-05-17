@@ -9,14 +9,21 @@ Team Members: Aaron Lou, Betsy Fu, Yilin Lu, Siyan Zheng,
 ### Installation
 We assume that you had some experience with Ocaml. If you don't have Ocaml installed, please refer to: http://www.cs.cornell.edu/courses/cs3110/2018sp/install.html
 
-Install: js_of_ocaml, yojson, nodejs, websocket
+Packages: js_of_ocaml, js_of_ocaml-lwt, yojson
+
+Non-ocaml dependencies: nodejs, npm install websocket
 
 ### How it plays
-Comile: 
+Compile: 
 
- make build -> builds GUI.
- make server -> makes ocaml server. Will prompt you for port number.
- node server.js [ocamlport] [jsport] -> ocamlport is the port you entered earlier. You will receive a string with you server's ip. 
+ ####make build 
+    builds GUI.
+
+ ####make server 
+    makes ocaml server. Will prompt you for port number.
+
+ ####node server.js [ocamlport] [jsport] 
+    ocamlport is the port you entered earlier. You will receive a string with you server's ip. 
  
 Play: 
  
@@ -24,7 +31,7 @@ Play:
 
 ### Sample Screenshots
 
-![alt text](https://raw.githubusercontent.com/betsyfu/2Escape/screen.png)
+![alt text](/imgs/screen.png)
 
 ### Acknowledgement
 Course professor: Professor Nate Poster. 

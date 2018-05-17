@@ -423,51 +423,19 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                rot.rotate <- next_dir rot.rotate;
                if rot.rotate = rot.correct then
                 begin
-                  let startEntries =
-                    match room1_string, room2_string with
-                  | a, b when a = curr_room_id && b = curr_room_id ->
-                    [{ row = next_player_y; col = next_player_x; newtile = newtile}],
-                    [{ row = next_player_y; col = next_player_x; newtile = newtile}]
-                  | a, _ when a = curr_room_id ->
-                    [{ row = next_player_y; col = next_player_x; newtile = newtile}], []
-                  | _, a when a = curr_room_id ->
-                    [], [{ row = next_player_y; col = next_player_x; newtile = newtile}]
-                  | _ -> [], [] in
-                  let changedExitsEntries = List.fold_left (fun curr_entries ex_effect ->
+                  List.iter (fun ex_effect ->
                   let alteredroom = Hashtbl.find st.roommap (fst_third ex_effect) in
                   let alteredrow = thd_third ex_effect in
                   let alteredcol = snd_third ex_effect in
                   let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
-                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open;
-                  match room1_string, room2_string with
-                  | a, b when a = room1_string && b = room2_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | a, _ when a = room1_string ->
-                  { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    (snd curr_entries)
-                  | _, a when a = room2_string ->
-                    (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | _ -> curr_entries) startEntries rot.exit_effect in
-                let allEntries = List.fold_left (fun curr_entries imm_effect ->
+                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open) rot.exit_effect;
+                List.iter(fun imm_effect ->
                   let alteredroom = Hashtbl.find st.roommap (fst_third imm_effect) in
                   let alteredrow = thd_third imm_effect in
                   let alteredcol = snd_third imm_effect in
                   let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
-                  alteredtile.immov <- None;
-                  match room1_string, room2_string with
-                  | a, b when a = room1_string && b = room2_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | a, _ when a = room1_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    snd curr_entries
-                  | _, a when a = room2_string ->
-                    fst curr_entries,
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | _ -> curr_entries) changedExitsEntries rot.immovable_effect in
-                  create_log room1 (fst allEntries), create_log room2 (snd allEntries)
+                  alteredtile.immov <- None) rot.immovable_effect;
+                  logify 1 st, logify 2 st
                 end
                else
                 begin
@@ -529,54 +497,21 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
               begin
                 tile.store <- Some {id = item};
                 kl.is_solved <- true;
-                let stentryl =
-                  match room1_string, room2_string with
-                  | a, b when a = curr_room_id && b = curr_room_id ->
-                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}],
-                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}]
-                  | a, _ when a = curr_room_id ->
-                    [{ row = curr_player_y; col = curr_player_x; newtile = tile}], []
-                  | _, a when a = curr_room_id ->
-                    [], [{ row = curr_player_y; col = curr_player_x; newtile = tile}]
-                  | _ -> [], []
-                 in
-                let changedExitsEntries = List.fold_left (fun curr_entries ex_effect ->
+                List.iter (fun ex_effect ->
                   let alteredroom = Hashtbl.find st.roommap (fst_third ex_effect) in
                   let alteredrow = thd_third ex_effect in
                   let alteredcol = snd_third ex_effect in
                   let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
-                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open;
-                  match room1_string, room2_string with
-                  | a, b when a = room1_string && b = room2_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | a, _ when a = room1_string ->
-                  { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    (snd curr_entries)
-                  | _, a when a = room2_string ->
-                    (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | _ -> curr_entries) stentryl kl.exit_effect in
-                let allEntries = List.fold_left (fun curr_entries imm_effect ->
+                  (access_opt alteredtile.ex).is_open <- not (access_opt alteredtile.ex).is_open) kl.exit_effect;
+                List.iter(fun imm_effect ->
                   let alteredroom = Hashtbl.find st.roommap (fst_third imm_effect) in
                   let alteredrow = thd_third imm_effect in
                   let alteredcol = snd_third imm_effect in
                   let alteredtile = alteredroom.tiles.(alteredrow).(alteredcol) in
-                  alteredtile.immov <- None;
-                  match room1_string, room2_string with
-                  | a, b when a = room1_string && b = room2_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | a, _ when a = room1_string ->
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (fst curr_entries),
-                    snd curr_entries
-                  | _, a when a = room2_string ->
-                    fst curr_entries,
-                    { row = alteredrow; col = alteredcol; newtile = alteredtile} :: (snd curr_entries)
-                  | _ -> curr_entries) changedExitsEntries kl.immovable_effect in
+                  alteredtile.immov <- None) kl.immovable_effect;
                   (if playerid = 1 then st.pl1_inv <- List.filter (fun x -> x <> item) st.pl1_inv
                   else st.pl2_inv <- List.filter (fun x -> x <> item) st.pl2_inv);
-                drop_item_logs (create_log room1 (fst allEntries), create_log room2 (snd allEntries)) playerid item
+                drop_item_logs (logify 1 st, logify 2 st) playerid item
               end
             else create_empty_logs room1 room2
           end
@@ -615,23 +550,11 @@ let do_command (playerid : int) (comm : command) (st : t) : log' * log' =
                       st.pl1_loc <- newroom_string, newroom_x, newroom_y 
                       else
                       st.pl2_loc <- newroom_string, newroom_x, newroom_y);
-                    let curr_player_log = logify playerid st in
-                    let other_player_entries =
-                      (match other_room_id with
-                       | x when x = curr_room_id ->
-                         [{row = curr_player_y; col = curr_player_x; newtile = tile}]
-                       | x when x = newroom_string ->
-                         [{row = newroom_y; col = newroom_x; newtile = newroom_tile}]
-                       | _ -> []
-                      ) in
-                    let curr_player_log' =
-                      if bool_opt exit.cscene then
-                        add_cutscene curr_player_log (access_opt exit.cscene)
-                      else
-                        curr_player_log
-                        in
-                    (if playerid = 1 then curr_player_log', create_log room2 other_player_entries
-                    else create_log room1 other_player_entries, curr_player_log')
+                    if bool_opt exit.cscene then 
+                      (if playerid = 1 then add_cutscene (logify 1 st) (access_opt exit.cscene), logify 2 st
+                      else logify 1 st, add_cutscene (logify 2 st) (access_opt exit.cscene))
+                    else 
+                      (logify 1 st, logify 2 st)
                   end
             end
           else
