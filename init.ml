@@ -691,6 +691,6 @@ let roommap =
 
 let gamestate =
   {roommap = roommap;
-   pl1_loc = ("gears", 0, 0); pl2_loc = ("gears", 15, 0);
+   pl1_loc = ("hall", 2, 8); pl2_loc = ("hall", 4, 7);
    pl1_inv = ["book"]; pl2_inv = [];
    chat = []}
