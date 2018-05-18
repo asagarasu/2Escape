@@ -1,5 +1,7 @@
 *.zip
 *.pdf
+*.byte
+*.native
 _build/
 .DS_Store
 _tags

@@ -14,8 +14,10 @@ state:
 	ocamlbuild -use-ocamlfind json_parser.cmo -r
 	ocamlbuild -use-ocamlfind init.cmo -r
 server:
-	ocamlbuild -use-ocamlfind server.byte && ./server.byte
+	ocamlbuild -use-ocamlfind server.byte && ./parser_tests.byte
 dependencies:
 	opam install js_of_ocaml
 	opam install js_of_ocaml-lwt
 	npm install websocket
+clean:
+	ocamlbuild -clean
