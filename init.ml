@@ -403,11 +403,11 @@ let clocktower_loc = {
 
 
 let gear_a_1 = {id = "gear_a"; rotate = Left; correct = Up;
-                exit_effect = []; immovable_effect = [("gears",13,4)]}
+                exit_effect = []; immovable_effect = [("gears",14,4)]}
 let gear_a_2 = {id = "gear_a"; rotate = Up; correct = Right;
-                exit_effect = []; immovable_effect = [("gears",13,5)]}
+                exit_effect = []; immovable_effect = [("gears",14,5)]}
 let gear_a_3 = {id = "gear_a"; rotate = Right; correct = Down;
-                exit_effect = []; immovable_effect = [("gears",12,5)]}
+                exit_effect = []; immovable_effect = [("gears",13,5)]}
 let gear_a_4 = {id = "gear_a"; rotate = Down; correct = Left;
                 exit_effect = []; immovable_effect = [("gears",8,2)]}
 
@@ -457,18 +457,19 @@ let gear_d_4 = {id = "gear_d"; rotate = Up; correct = Left;
 let gear_e_1 = {id = "gear_1"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",14,7)]}
 let gear_e_2 = {id = "gear_2"; rotate = Right; correct = Up;
-                exit_effect = []; immovable_effect = [("gears",14,8)]}
+                exit_effect = []; immovable_effect = [("gears",9,2)]}
 let gear_e_3 = {id = "gear_3"; rotate = Right; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,8)]}
 let gear_e_4 = {id = "gear_4"; rotate = Left; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",15,9)]}
 let gear_e_5 = {id = "gear_5"; rotate = Down; correct = Up;
-                exit_effect = []; immovable_effect = [("gears",14,9)]}
-let gear_e_6 = {id = "gear_6"; rotate = Down; correct = Up;
+                exit_effect = []; immovable_effect = [("gears",13,7)]}
+
+let gear_e_6 = {id = "gear_6"; rotate = Up; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,9)]}
-let gear_e_7 = {id = "gear_7"; rotate = Left; correct = Up;
+let gear_e_7 = {id = "gear_7"; rotate = Up; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",13,8)]}
-let gear_e_8 = {id = "gear_8"; rotate = Right; correct = Up;
+let gear_e_8 = {id = "gear_8"; rotate = Up; correct = Up;
                 exit_effect = []; immovable_effect = [("gears",9,2)]}
 
 let gears =
@@ -690,6 +691,6 @@ let roommap =
 
 let gamestate =
   {roommap = roommap;
-   pl1_loc = ("hall", 2, 8); pl2_loc = ("hall", 4, 7);
+   pl1_loc = ("gears", 0, 0); pl2_loc = ("gears", 15, 0);
    pl1_inv = ["book"]; pl2_inv = [];
    chat = []}
