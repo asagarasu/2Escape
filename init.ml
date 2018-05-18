@@ -156,7 +156,7 @@ let basement =
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
-         {ch = None; mov = Some {id = "ladder"}; store = None; immov = None; ex = None; kl = None; rt = None}|];
+         {ch = None; mov = None; store = Some {id = "ladder"}; immov = None; ex = None; kl = None; rt = None}|];
 
        [|{ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
          {ch = None; mov = None; store = None; immov = None; ex = None; kl = None; rt = None};
